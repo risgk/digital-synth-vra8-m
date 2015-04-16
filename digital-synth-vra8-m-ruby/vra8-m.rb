@@ -1,4 +1,4 @@
-# VRA8.rb
+# VRA8-M.rb
 
 require './common'
 require './synth'

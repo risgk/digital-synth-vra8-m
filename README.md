@@ -1,7 +1,7 @@
-# Digital Synth VRA8 5.1.1
+# Digital Synth VRA8-M 5.1.1
 
-2015-02-26 ISGK Instruments  
-[https://github.com/risgk/DigitalSynthVRA8](https://github.com/risgk/DigitalSynthVRA8)
+2015-04-16 ISGK Instruments  
+[https://github.com/risgk/DigitalSynthVRA8](https://github.com/risgk/DigitalSynthVRA8M)
 
 ## Concept
 
@@ -9,35 +9,35 @@
 - No Keyboard, MIDI Sound Module
 - For Arduino Uno
 
-## VRA8 Features
+## VRA8-M Features
 
 - Sketch for Arduino Uno
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
-    - "DigitalSynthVRA8.ino" for Arduino Uno
+    - "DigitalSynthVRA8M.ino" for Arduino Uno
     - "MakeSampleWavFile.cc" for Debugging on PC, makes a sample WAV file
 
-## VRA8.rb Features
+## VRA8-M.rb Features
 
-- Simulator of VRA8, Software Synthesizer for Windows
+- Simulator of VRA8-M, Software Synthesizer for Windows
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
 - Using Ruby (JRuby), UniMIDI, and win32-sound
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
-    - `jruby vra8.rb` starts VRA8.rb
-    - `jruby vra8.rb sample_midi_stream.bin` makes a sample WAV file
+    - `jruby vra8-m.rb` starts VRA8-M.rb
+    - `jruby vra8-m.rb sample_midi_stream.bin` makes a sample WAV file
 - Known Issues
     - VRA8.rb uses the full power of 2 CPU cores...
 
-## VRA8 CTRL Features
+## VRA8-M CTRL Features
 
-- Parameter Editor (MIDI Controller) for VRA8, HTML5 App
+- Parameter Editor (MIDI Controller) for VRA8-M, HTML5 App
 - Please enable Web MIDI API of Google Chrome
     - `chrome://flags/#enable-web-midi`
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8
+- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
 
 ## Synth Modules
 
@@ -80,8 +80,8 @@
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2015-02-26       
-      Model  Digital Synth VRA8       MIDI Implementation Chart       Version: 5.1.1         
+      [Virtual Analog Synthesizer]                                    Date: 2015-04-16       
+      Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+
