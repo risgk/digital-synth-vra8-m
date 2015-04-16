@@ -1,16 +1,58 @@
 MIDI_CH            = 0
+SERIAL_SPEED       = 38400
 SAMPLING_RATE      = 15625
 NOTE_NUMBER_MIN    = 24
 NOTE_NUMBER_MAX    = 96
 EG_UPDATE_INTERVAL = 25
 
-SUB_OSC_LEAD = 0
-SAW_LEAD     = 1
-SQUERE_LEAD  = 2
-SYNTH_PAD    = 3
-SYNTH_BASS   = 4
+SAWTOOTH   = 0
+SQUARE     = 1
+TRIANGLE   = 2
+SINE       = 3
+PULSE_25   = 4
+PULSE_12   = 5
+PSEUDO_TRI = 6
 
+ON  = 127
+OFF = 0
+
+DATA_BYTE_MAX         = 0x7F
+STATUS_BYTE_INVALID   = 0x7F
+DATA_BYTE_INVALID     = 0x80
+STATUS_BYTE_MIN       = 0x80
 NOTE_OFF              = 0x80
 NOTE_ON               = 0x90
-PROGRAM_CHANGE        = 0xC0
+CONTROL_CHANGE        = 0xB0
+SYSTEM_MESSAGE_MIN    = 0xF0
+SYSTEM_EXCLUSIVE      = 0xF0
+TIME_CODE             = 0xF1
+SONG_POSITION         = 0xF2
+SONG_SELECT           = 0xF3
+TUNE_REQUEST          = 0xF6
+EOX                   = 0xF7
+REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
+
+VCO_1_WAVEFORM        = 14
+VCO_1_COARSE_TUNE     = 15
+VCO_2_WAVEFORM        = 16
+VCO_2_COARSE_TUNE     = 17
+VCO_2_FINE_TUNE       = 18
+VCO_3_WAVEFORM        = 19
+VCO_3_COARSE_TUNE     = 20
+VCO_3_FINE_TUNE       = 21
+VCF_CUTOFF_FREQUENCY  = 22
+VCF_RESONANCE         = 23
+VCF_ENVELOPE_AMOUNT   = 24
+EG_ATTACK_TIME        = 25
+EG_DECAY_TIME         = 26
+EG_SUSTAIN_LEVEL      = 27
+ALL_NOTES_OFF         = 123
+
+def high_byte(ui16)
+  ui16 >> 8
+end
+
+def low_byte(ui16)
+  ui16 & 0xFF
+end

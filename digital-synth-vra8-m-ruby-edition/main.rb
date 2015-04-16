@@ -1,9 +1,11 @@
-# VRA8-M.rb
+# VRA8-M Ruby Edition
 
 require './common'
 require './synth'
 require './audio-out'
 require './wav-file-out'
+
+OPTION_RECORDING = false
 
 $synth = Synth.new
 

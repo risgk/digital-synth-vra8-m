@@ -1,5 +1,4 @@
 require './common'
-require './program-table'
 require './vco'
 require './vcf'
 require './vca'
@@ -21,7 +20,6 @@ class Synth
     @running_status = STATUS_BYTE_INVALID
     @first_data = DATA_BYTE_INVALID
     @note_number = 60
-    program_change(0)
   end
 
   def receive_midi_byte(b)
@@ -47,8 +45,6 @@ class Synth
           note_off(@first_data)
           @first_data = DATA_BYTE_INVALID
         end
-      elsif (@running_status == (PROGRAM_CHANGE | MIDI_CH))
-        program_change(b)
       elsif (@running_status == (CONTROL_CHANGE | MIDI_CH))
         if (!data_byte?(@first_data))
           @first_data = b
@@ -106,26 +102,6 @@ class Synth
   end
 
   def note_on(note_number)
-    if (OPTION_BLACK_KEY_PROGRAM_CHANGE)
-      case (note_number)
-      when 97  # C#7
-        program_change(0)
-        return
-      when 99  # D#7
-        program_change(1)
-        return
-      when 102  # F#7
-        program_change(2)
-        return
-      when 104  # G#7
-        program_change(3)
-        return
-      when 106  # A#7
-        program_change(4)
-        return
-      end
-    end
-
     pitch_1 = note_number + $vco_1.coarse_tune
     if (pitch_1 < (NOTE_NUMBER_MIN + 64) || pitch_1 > (NOTE_NUMBER_MAX + 64))
       return
@@ -273,26 +249,5 @@ class Synth
 
   def all_notes_off(value)
     $eg.note_off
-  end
-
-  def program_change(program_number)
-    sound_off
-    i = program_number * PROGRAM_SIZE
-    $vco_1.set_waveform($program_table[i + 0])
-    $vco_1.set_coarse_tune($program_table[i + 1])
-    $vco_1.set_fine_tune(64)
-    $vco_2.set_waveform($program_table[i + 2])
-    $vco_2.set_coarse_tune($program_table[i + 3])
-    $vco_2.set_fine_tune($program_table[i + 4])
-    $vco_3.set_waveform($program_table[i + 5])
-    $vco_3.set_coarse_tune($program_table[i + 6])
-    $vco_3.set_fine_tune($program_table[i + 7])
-    $vcf.set_cutoff_frequency($program_table[i + 8])
-    $vcf.set_resonance($program_table[i + 9])
-    $vcf.set_envelope_amount($program_table[i + 10])
-    $eg.set_attack_time($program_table[i + 11])
-    $eg.set_decay_time($program_table[i + 12])
-    $eg.set_sustain_level($program_table[i + 13])
-    reset_phase
   end
 end

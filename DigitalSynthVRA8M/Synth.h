@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Common.h"
-#include "ProgramTable.h"
 #include "VCO.h"
 #include "VCF.h"
 #include "VCA.h"
@@ -19,7 +18,6 @@ class Synth
 public:
   static void initialize()
   {
-    programChange(0);
   }
 
   static void receiveMIDIByte(uint8_t b)
@@ -46,8 +44,6 @@ public:
           noteOff(m_firstData);
           m_firstData = DATA_BYTE_INVALID;
         }
-      } else if (m_runningStatus == (PROGRAM_CHANGE | MIDI_CH)) {
-        programChange(b);
       } else if (m_runningStatus == (CONTROL_CHANGE | MIDI_CH)) {
         if (!IsDataByte(m_firstData)) {
           m_firstData = b;
@@ -120,28 +116,6 @@ public:
 
   static void noteOn(uint8_t noteNumber)
   {
-#ifdef OPTION_BLACK_KEY_PROGRAM_CHANGE
-    if (noteNumber > 96) {
-      switch (noteNumber) {
-      case 97:  // C#7
-        programChange(0);
-        return;
-      case 99:  // D#7
-        programChange(1);
-        return;
-      case 102:  // F#7
-        programChange(2);
-        return;
-      case 104:  // G#7
-        programChange(3);
-        return;
-      case 106:  // A#7
-        programChange(4);
-        return;
-      }
-    }
-#endif
-
     uint8_t pitch1 = noteNumber + VCO<1>::coarseTune();
     if (pitch1 < (uint8_t) (NOTE_NUMBER_MIN + (uint8_t) 64) ||
         pitch1 > (uint8_t) (NOTE_NUMBER_MAX + (uint8_t) 64)) {
@@ -326,27 +300,6 @@ public:
   static void allNotesOff(uint8_t value)
   {
     EG::noteOff();
-  }
-
-  static void programChange(uint8_t programNumber)
-  {
-    soundOff();
-    const uint8_t* p = g_programTable + (uint16_t) (programNumber * PROGRAM_SIZE);
-    VCO<1>::setWaveform(*p++);
-    VCO<1>::setCoarseTune(*p++);
-    VCO<2>::setWaveform(*p++);
-    VCO<2>::setCoarseTune(*p++);
-    VCO<2>::setFineTune(*p++);
-    VCO<3>::setWaveform(*p++);
-    VCO<3>::setCoarseTune(*p++);
-    VCO<3>::setFineTune(*p++);
-    VCF::setCutoffFrequency(*p++);
-    VCF::setResonance(*p++);
-    VCF::setEnvelopeAmount(*p++);
-    EG::setAttackTime(*p++);
-    EG::setDecayTime(*p++);
-    EG::setSustainLevel(*p++);
-    resetPhase();
   }
 };
 
