@@ -1,7 +1,6 @@
 require './common'
 require './freq-table'
 require './wave-table'
-require './wave-table-2'
 
 class VCO
   def initialize
@@ -15,25 +14,6 @@ class VCO
 
   def reset_phase
     @phase = 0
-  end
-
-  def set_waveform(waveform)
-    case (waveform)
-    when SAWTOOTH
-      @wave_tables = $wave_tables_sawtooth
-    when SQUARE
-      @wave_tables = $wave_tables_square
-    when TRIANGLE
-      @wave_tables = $wave_tables_triangle
-    when SINE
-      @wave_tables = $wave_tables_sine
-    when PULSE_25
-      @wave_tables = $wave_tables_pulse_25
-    when PULSE_12
-      @wave_tables = $wave_tables_pulse_12
-    when PSEUDO_TRI
-      @wave_tables = $wave_tables_pseudo_tri
-    end
   end
 
   def set_coarse_tune(coarse_tune)

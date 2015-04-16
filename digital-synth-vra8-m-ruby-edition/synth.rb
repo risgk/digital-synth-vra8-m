@@ -142,18 +142,12 @@ class Synth
 
   def control_change(controller_number, value)
     case (controller_number)
-    when VCO_1_WAVEFORM
-      set_vco_1_waveform(value)
     when VCO_1_COARSE_TUNE
       set_vco_1_coarse_tune(value)
-    when VCO_2_WAVEFORM
-      set_vco_2_waveform(value)
     when VCO_2_COARSE_TUNE
       set_vco_2_coarse_tune(value)
     when VCO_2_FINE_TUNE
       set_vco_2_fine_tune(value)
-    when VCO_3_WAVEFORM
-      set_vco_3_waveform(value)
     when VCO_3_COARSE_TUNE
       set_vco_3_coarse_tune(value)
     when VCO_3_FINE_TUNE
@@ -175,21 +169,9 @@ class Synth
     end
   end
 
-  def set_vco_1_waveform(value)
-    sound_off
-    $vco_1.set_waveform(value)
-    reset_phase
-  end
-
   def set_vco_1_coarse_tune(value)
     sound_off
     $vco_1.set_coarse_tune(value)
-    reset_phase
-  end
-
-  def set_vco_2_waveform(value)
-    sound_off
-    $vco_2.set_waveform(value)
     reset_phase
   end
 
@@ -202,12 +184,6 @@ class Synth
   def set_vco_2_fine_tune(value)
     sound_off
     $vco_2.set_fine_tune(value)
-    reset_phase
-  end
-
-  def set_vco_3_waveform(value)
-    sound_off
-    $vco_3.set_waveform(value)
     reset_phase
   end
 

@@ -7,14 +7,6 @@ const uint8_t  NOTE_NUMBER_MIN    = 24;
 const uint8_t  NOTE_NUMBER_MAX    = 96;
 const uint8_t  EG_UPDATE_INTERVAL = 25;
 
-const uint8_t SAWTOOTH   = 0;
-const uint8_t SQUARE     = 1;
-const uint8_t TRIANGLE   = 2;
-const uint8_t SINE       = 3;
-const uint8_t PULSE_25   = 4;
-const uint8_t PULSE_12   = 5;
-const uint8_t PSEUDO_TRI = 6;
-
 const uint8_t ON  = 127;
 const uint8_t OFF = 0;
 
@@ -35,12 +27,9 @@ const uint8_t EOX                   = 0xF7;
 const uint8_t REAL_TIME_MESSAGE_MIN = 0xF8;
 const uint8_t ACTIVE_SENSING        = 0xFE;
 
-const uint8_t VCO_1_WAVEFORM        = 14;
 const uint8_t VCO_1_COARSE_TUNE     = 15;
-const uint8_t VCO_2_WAVEFORM        = 16;
 const uint8_t VCO_2_COARSE_TUNE     = 17;
 const uint8_t VCO_2_FINE_TUNE       = 18;
-const uint8_t VCO_3_WAVEFORM        = 19;
 const uint8_t VCO_3_COARSE_TUNE     = 20;
 const uint8_t VCO_3_FINE_TUNE       = 21;
 const uint8_t VCF_CUTOFF_FREQUENCY  = 22;

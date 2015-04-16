@@ -30,12 +30,9 @@ def play_cdefgabc(c)
 end
 
 control_change(ALL_NOTES_OFF,        0)
-control_change(VCO_1_WAVEFORM,       SAWTOOTH)
 control_change(VCO_1_COARSE_TUNE,    64)
-control_change(VCO_2_WAVEFORM,       SAWTOOTH)
 control_change(VCO_2_COARSE_TUNE,    64)
 control_change(VCO_2_FINE_TUNE,      70)
-control_change(VCO_3_WAVEFORM,       TRIANGLE)
 control_change(VCO_3_COARSE_TUNE,    52)
 control_change(VCO_3_FINE_TUNE,      64)
 control_change(VCF_CUTOFF_FREQUENCY, 85)

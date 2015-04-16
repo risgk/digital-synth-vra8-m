@@ -166,23 +166,14 @@ public:
     case ALL_NOTES_OFF:
       allNotesOff(value);
       break;
-    case VCO_1_WAVEFORM:
-      setVCO1Waveform(value);
-      break;
     case VCO_1_COARSE_TUNE:
       setVCO1CoarseTune(value);
-      break;
-    case VCO_2_WAVEFORM:
-      setVCO2Waveform(value);
       break;
     case VCO_2_COARSE_TUNE:
       setVCO2CoarseTune(value);
       break;
     case VCO_2_FINE_TUNE:
       setVCO2FineTune(value);
-      break;
-    case VCO_3_WAVEFORM:
-      setVCO3Waveform(value);
       break;
     case VCO_3_COARSE_TUNE:
       setVCO3CoarseTune(value);
@@ -211,24 +202,10 @@ public:
     }
   }
 
-  static void setVCO1Waveform(uint8_t value)
-  {
-    soundOff();
-    VCO<1>::setWaveform(value);
-    resetPhase();
-  }
-
   static void setVCO1CoarseTune(uint8_t value)
   {
     soundOff();
     VCO<1>::setCoarseTune(value);
-    resetPhase();
-  }
-
-  static void setVCO2Waveform(uint8_t value)
-  {
-    soundOff();
-    VCO<2>::setWaveform(value);
     resetPhase();
   }
 
@@ -243,13 +220,6 @@ public:
   {
     soundOff();
     VCO<2>::setFineTune(value);
-    resetPhase();
-  }
-
-  static void setVCO3Waveform(uint8_t value)
-  {
-    soundOff();
-    VCO<3>::setWaveform(value);
     resetPhase();
   }
 

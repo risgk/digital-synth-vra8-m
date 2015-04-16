@@ -42,17 +42,11 @@
 ## Synth Modules
 
 - VCO 1
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
-      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
 - VCO 2
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
-      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
     - Fine Tune: -9.375(58), 0(64), +9.375(70) [cent]
 - VCO 3
-    - Waveform: Sawtooth(0), Square(1), Triangle(2), Sine(3),  
-      Pulse-25%(4), Pulse-12.5%(5), Pseudo-Triangle(6)
     - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
     - Fine Tune: -9.375(58), 0(64), +9.375(70) [cent]
 - VCF
@@ -91,12 +85,9 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    14 | x             | o             | VCO 1 Waveform        |
-    | Change                     15 | x             | o             | VCO 1 Coarse Tune     |
-    |                            16 | x             | o             | VCO 2 Waveform        |
-    |                            17 | x             | o             | VCO 2 Coarse Tune     |
+    | Control                    15 | x             | o             | VCO 1 Coarse Tune     |
+    | Change                     17 | x             | o             | VCO 2 Coarse Tune     |
     |                            18 | x             | o             | VCO 2 Fine Tune       |
-    |                            19 | x             | o             | VCO 3 Waveform        |
     |                            20 | x             | o             | VCO 3 Coarse Tune     |
     |                            21 | x             | o             | VCO 3 Fine Tune       |
     |                            22 | x             | o             | VCF Cutoff Frequency  |
