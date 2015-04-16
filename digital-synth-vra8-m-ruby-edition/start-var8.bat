@@ -1,1 +1,1 @@
-jruby vra8-m.rb
+jruby main.rb

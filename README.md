@@ -27,8 +27,8 @@
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
-    - `jruby vra8-m.rb` starts VRA8-M Ruby Edition
-    - `jruby vra8-m.rb sample-midi-stream.bin` makes a sample WAV file
+    - `jruby main.rb` starts VRA8-M Ruby Edition
+    - `jruby main.rb sample-midi-stream.bin` makes a sample WAV file
 - Known Issues
     - VRA8-M Ruby Edition uses the full power of 2 CPU cores...
 
