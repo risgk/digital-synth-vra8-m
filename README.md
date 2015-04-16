@@ -19,7 +19,7 @@
     - "DigitalSynthVRA8M.ino" for Arduino Uno
     - "MakeSampleWavFile.cc" for Debugging on PC, makes a sample WAV file
 
-## VRA8-M for Ruby Features
+## VRA8-M Ruby Edition Features
 
 - Simulator of VRA8-M, Software Synthesizer for Windows
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
@@ -27,10 +27,10 @@
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
-    - `jruby vra8-m.rb` starts VRA8-M for Ruby
+    - `jruby vra8-m.rb` starts VRA8-M Ruby Edition
     - `jruby vra8-m.rb sample-midi-stream.bin` makes a sample WAV file
 - Known Issues
-    - VRA8-M for Ruby uses the full power of 2 CPU cores...
+    - VRA8-M Ruby Edition uses the full power of 2 CPU cores...
 
 ## VRA8-M CTRL Features
 
