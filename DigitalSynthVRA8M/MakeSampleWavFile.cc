@@ -36,7 +36,7 @@ int main()
 {
   // setup
   Synth::initialize();
-  FILE* binFile = ::fopen("./sample_midi_stream.bin", "rb");
+  FILE* binFile = ::fopen("./sample-midi-stream.bin", "rb");
   WAVFileOut::open("./a.wav");
 
   // loop
