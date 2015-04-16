@@ -62,7 +62,7 @@ $fft_pulse_25 = fft($pulse_25)
 $fft_pulse_12 = fft($pulse_12)
 $fft_pseudo_tri = fft($pseudo_tri)
 
-$file = File::open("wave_table_2.rb", "w")
+$file = File::open("wave-table-2.rb", "w")
 
 def generate_wave_table(max, name, amp, ffta)
   $file.printf("$wave_table_%s_m%d = [\n  ", name, max)

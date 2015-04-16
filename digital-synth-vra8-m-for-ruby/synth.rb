@@ -1,5 +1,5 @@
 require './common'
-require './program_table'
+require './program-table'
 require './vco'
 require './vcf'
 require './vca'

@@ -4,7 +4,7 @@
 
 require './common'
 
-$file = File::open("lpf_table.rb", "w")
+$file = File::open("lpf-table.rb", "w")
 
 def generate_lpf_table(name, q)
   $file.printf("$lpf_table_%s = [\n  ", name)

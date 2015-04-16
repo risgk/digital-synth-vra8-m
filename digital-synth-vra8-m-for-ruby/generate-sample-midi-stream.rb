@@ -1,6 +1,6 @@
 require './common'
 
-$file = File::open("sample_midi_stream.bin", "wb")
+$file = File::open("sample-midi-stream.bin", "wb")
 
 def program_change(program_number)
     $file.write([(PROGRAM_CHANGE | MIDI_CH), program_number].pack("C*"))

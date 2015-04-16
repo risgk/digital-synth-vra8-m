@@ -1,7 +1,8 @@
 # Digital Synth VRA8-M 5.1.1
 
-2015-04-16 ISGK Instruments  
-[https://github.com/risgk/DigitalSynthVRA8](https://github.com/risgk/DigitalSynthVRA8M)
+2015-04-16 ISGK Instruments
+
+<https://github.com/risgk/DigitalSynthVRA8M>
 
 ## Concept
 
@@ -19,7 +20,7 @@
     - "DigitalSynthVRA8M.ino" for Arduino Uno
     - "MakeSampleWavFile.cc" for Debugging on PC, makes a sample WAV file
 
-## VRA8-M.rb Features
+## VRA8-M for Ruby Features
 
 - Simulator of VRA8-M, Software Synthesizer for Windows
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
@@ -27,10 +28,10 @@
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
-    - `jruby vra8-m.rb` starts VRA8-M.rb
-    - `jruby vra8-m.rb sample_midi_stream.bin` makes a sample WAV file
+    - `jruby vra8-m.rb` starts VRA8-M for Ruby
+    - `jruby vra8-m.rb sample-midi-stream.bin` makes a sample WAV file
 - Known Issues
-    - VRA8.rb uses the full power of 2 CPU cores...
+    - VRA8-M for Ruby uses the full power of 2 CPU cores...
 
 ## VRA8-M CTRL Features
 

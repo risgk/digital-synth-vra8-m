@@ -2,8 +2,8 @@
 
 require './common'
 require './synth'
-require './audio_out'
-require './wav_file_out'
+require './audio-out'
+require './wav-file-out'
 
 $synth = Synth.new
 

@@ -1,6 +1,6 @@
 require './common'
 
-$file = File::open("env_table.rb", "w")
+$file = File::open("env-table.rb", "w")
 
 $file.printf("$env_table_attack_rate_from_time = [\n  ")
 (0..127).each do |time|

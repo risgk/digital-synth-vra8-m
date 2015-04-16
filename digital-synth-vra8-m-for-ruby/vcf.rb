@@ -1,5 +1,5 @@
 require './common'
-require './lpf_table'
+require './lpf-table'
 
 class VCF
   def initialize
