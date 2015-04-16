@@ -1,8 +1,7 @@
-# Digital Synth VRA8-M 5.1.1
+# Digital Synth VRA8-M 0.0.0
 
-2015-04-16 ISGK Instruments
-
-<https://github.com/risgk/DigitalSynthVRA8M>
+- 2015-04-16 ISGK Instruments
+- <https://github.com/risgk/DigitalSynthVRA8M>
 
 ## Concept
 
