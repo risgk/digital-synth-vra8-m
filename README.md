@@ -1,6 +1,6 @@
 # Digital Synth VRA8-M 0.0.0
 
-- 2015-04-16 ISGK Instruments
+- 2015-04-21 ISGK Instruments
 - <https://github.com/risgk/DigitalSynthVRA8M>
 
 ## Concept
@@ -39,30 +39,33 @@
     - `chrome://flags/#enable-web-midi`
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
 
-## Synth Modules
+## Controllers
 
-- VCO 1
-    - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
-- VCO 2
-    - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
-    - Fine Tune: -9.375(58), 0(64), +9.375(70) [cent]
-- VCO 3
-    - Coarse Tune: -64(0), ..., 0(64), ..., +63(127) [semitone]
-    - Fine Tune: -9.375(58), 0(64), +9.375(70) [cent]
-- VCF
-    - Filter Type: LPF, Attenuation Slope: -12 [dB/oct]
-    - Cutoff Frequency: 488.3(0), ..., 971.2(42), ..., 1963.8(85), ..., 3906.3(127) [Hz]
-    - Resonance: Q=0.7(0), Q=1.4(127)
-    - Envelope Amount: 0(0), ..., 50.4(64), ..., 100(127) [%]
-- VCA
-- EG
-    - Attack Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
-    - Decay Time: 10(0), ..., 98.2(42), ..., 1018.3(85), ..., 10000(127) [ms]
-    - Sustain Level: 0(0), ..., 50.4(64), ..., 100(127) [%]
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | Controller     | 0        | 42       | 64        | 85        | 127        | Notes           |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | VCO Mix        | Saw 100% | ...      | ...       | ...       | Pulse 100% | Saw/Pulse       |
+    | VCO SS         | -360 deg | ...      | -270 deg  | ...       | 181.4 deg  | Saw Shift       |
+    | VCO SS LFO Amt | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
+    | VCO PW         | 1/2      | ...      | 1/4       | ...       | 1/128      | Pulse Width     |
+    | VCO PW LFO Amt | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | VCF Cutoff     | 488.3 Hz | 971.2 Hz | ...       | 1963.8 Hz | 3906.3 Hz  |                 |
+    | VCF Resonance  | Q = 0.7  | Q = 1.0  | ...       | Q = 1.4   | Q = 2.0    | Only 4 patterns |
+    | VCF EG Amt     | -100%    | ...      | 0%        | ...       | +98.4%     |                 |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | EG Attack      | 10 ms    | 98.2 ms  |           | 1018.3 ms | 10000 ms   |                 |
+    | EG Decay       | 10 ms    | 98.2 ms  |           | 1018.3 ms | 10000 ms   |                 |
+    | EG Sustain     | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | LFO Rate       | 0.07 Hz  | ...      | 4.2 Hz    | ...       | 8.4 Hz     |                 |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    | Portamento     |          | ...      |   cent/ms |           |            |                 |
+    +----------------+----------+----------+-----------+-----------+------------+-----------------+
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2015-04-16       
+      [Virtual Analog Synthesizer]                                    Date: 2015-04-21       
       Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
@@ -85,17 +88,19 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    15 | x             | o             | VCO 1 Coarse Tune     |
-    | Change                     17 | x             | o             | VCO 2 Coarse Tune     |
-    |                            18 | x             | o             | VCO 2 Fine Tune       |
-    |                            20 | x             | o             | VCO 3 Coarse Tune     |
-    |                            21 | x             | o             | VCO 3 Fine Tune       |
-    |                            22 | x             | o             | VCF Cutoff Frequency  |
-    |                            23 | x             | o             | VCF Resonance         |
-    |                            24 | x             | o             | VCF Envelope Amount   |
-    |                            25 | x             | o             | EG Attack Time        |
-    |                            26 | x             | o             | EG Decay Time         |
-    |                            27 | x             | o             | EG Sustain Level      |
+    | Control                    14 | x             | o             | VCO Mix               |
+    | Change                     15 | x             | o             | VCO SS                |
+    |                            16 | x             | o             | VCO SS LFO Amt        |
+    |                            17 | x             | o             | VCO PW                |
+    |                            18 | x             | o             | VCO PW LFO Amt        |
+    |                            19 | x             | o             | VCF Cutoff            |
+    |                            20 | x             | o             | VCF Resonance         |
+    |                            21 | x             | o             | VCF EG Amt            |
+    |                            22 | x             | o             | EG Attack             |
+    |                            23 | x             | o             | EG Decay              |
+    |                            24 | x             | o             | EG Sustain            |
+    |                            25 | x             | o             | LFO Rate              |
+    |                            26 | x             | o             | Portamento            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |
