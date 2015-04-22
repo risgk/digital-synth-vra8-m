@@ -1,13 +1,11 @@
 # Digital Synth VRA8-M 0.0.0
 
-- 2015-04-21 ISGK Instruments
+- 2015-04-22 ISGK Instruments
 - <https://github.com/risgk/DigitalSynthVRA8M>
 
 ## Concept
 
-- 8-bit Virtual Analog (Monophonic) Synthesizer
-- No Keyboard, MIDI Sound Module
-- For Arduino Uno
+- Virtual Analog Synthesizer (MIDI Sound Module) for Arduino Uno
 
 ## VRA8-M Features
 
@@ -17,20 +15,20 @@
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
     - "DigitalSynthVRA8M.ino" for Arduino Uno
-    - "MakeSampleWavFile.cc" for Debugging on PC, makes a sample WAV file
+    - "MakeSampleWavFile.cc" for Debugging on PC, that makes a sample WAV file
 
 ## VRA8-M Ruby Edition Features
 
 - Simulator of VRA8-M, Software Synthesizer for Windows
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
-- Using Ruby (JRuby), UniMIDI, and win32-sound
+- Requiring Ruby (JRuby), UniMIDI, and win32-sound
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
     - `jruby main.rb` starts VRA8-M Ruby Edition
     - `jruby main.rb sample-midi-stream.bin` makes a sample WAV file
 - Known Issues
-    - VRA8-M Ruby Edition uses the full power of 2 CPU cores...
+    - VRA8-M Ruby Edition spends the full power of 2 CPU cores...
 
 ## VRA8-M CTRL Features
 
@@ -41,31 +39,32 @@
 
 ## Controllers
 
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | Controller     | 0        | 42       | 64        | 85        | 127        | Notes           |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | VCO Mix        | Saw 100% | ...      | ...       | ...       | Pulse 100% | Saw/Pulse       |
-    | VCO SS         | -360 deg | ...      | -270 deg  | ...       | 181.4 deg  | Saw Shift       |
-    | VCO SS LFO Amt | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
-    | VCO PW         | 1/2      | ...      | 1/4       | ...       | 1/128      | Pulse Width     |
-    | VCO PW LFO Amt | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | VCF Cutoff     | 488.3 Hz | 971.2 Hz | ...       | 1963.8 Hz | 3906.3 Hz  |                 |
-    | VCF Resonance  | Q = 0.7  | Q = 1.0  | ...       | Q = 1.4   | Q = 2.0    | Only 4 patterns |
-    | VCF EG Amt     | -100%    | ...      | 0%        | ...       | +98.4%     |                 |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | EG Attack      | 10 ms    | 98.2 ms  |           | 1018.3 ms | 10000 ms   |                 |
-    | EG Decay       | 10 ms    | 98.2 ms  |           | 1018.3 ms | 10000 ms   |                 |
-    | EG Sustain     | 0%       | ...      | 50.4%     | ...       | 100%       |                 |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | LFO Rate       | 0.07 Hz  | ...      | 4.2 Hz    | ...       | 8.4 Hz     |                 |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
-    | Portamento     |          | ...      |   cent/ms |           |            |                 |
-    +----------------+----------+----------+-----------+-----------+------------+-----------------+
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | Controller     | 0         | 42       | 64        | 85        | 127         | Notes       |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | VCO Mix        | Saw 100%  | ...      | Saw 50%   | ...       | Saw 0.8%    |             |
+    |                | Pulse 0%  | ...      | Pulse 50% | ...       | Pulse 99.2% |             |
+    | VCO SS         | 0%        | ...      | 25%       | ...       | 49.6%       | Saw Shift   |
+    | VCO SS LFO Amt | 0%        | ...      | 50%       | ...       | 99.2%       |             |
+    | VCO PW         | 50%       | ...      | 25%       | ...       | 0.8%        | Pulse Width |
+    | VCO PW LFO Amt | 0%        | ...      | 50%       | ...       | 99.2%       |             |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | VCF Cutoff     | 488.3 Hz  | 971.2 Hz | ...       | 1963.8 Hz | 3906.3 Hz   |             |
+    | VCF Resonance  | Q = 0.7   | Q = 1.0  | ...       | Q = 1.4   | Q = 2.0     | 4 Steps     |
+    | VCF EG Amt     | -100%     | ...      | 0%        | ...       | +98.4%      |             |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | EG Attack      | 10 ms     | 98.2 ms  | ...       | 1018.3 ms | 10000 ms    |             |
+    | EG Decay       | 10 ms     | 98.2 ms  | ...       | 1018.3 ms | 10000 ms    |             |
+    | EG Sustain     | 0%        | ...      | 50%       | ...       | 99.2%       |             |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | LFO Rate       | 0.07 Hz   | ...      | 4.2 Hz    | ...       | 8.4 Hz      |             |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
+    | Portamento     | 0 cent/ms | ...      | 2 cent/ms | ...       | 4 cent/ms   |             |
+    +----------------+-----------+----------+-----------+-----------+-------------+-------------+
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2015-04-21       
+      [Virtual Analog Synthesizer]                                    Date: 2015-04-22       
       Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
