@@ -1,6 +1,6 @@
 require './common'
 
-FREQ_MAX = 8768  # refs "freq_table.rb"
+FREQ_MAX = 4389  # refs "freq_table.rb"
 
 $file = File::open("wave-table.rb", "w")
 

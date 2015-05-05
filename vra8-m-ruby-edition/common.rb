@@ -2,8 +2,8 @@ MIDI_CH            = 0
 SERIAL_SPEED       = 38400
 SAMPLING_RATE      = 15625
 BIT_DEPTH          = 8
-NOTE_NUMBER_MIN    = 36
-NOTE_NUMBER_MAX    = 96
+NOTE_NUMBER_MIN    = 24
+NOTE_NUMBER_MAX    = 84
 EG_UPDATE_INTERVAL = 25
 
 SAMPLES_PER_CYCLE  = 256
@@ -44,4 +44,12 @@ end
 
 def low_byte(ui16)
   ui16 & 0xFF
+end
+
+def high_word(ui32)
+  ui32 >> 16
+end
+
+def low_word(ui32)
+  ui32 & 0xFFFF
 end

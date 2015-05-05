@@ -42,18 +42,17 @@ class VCF
       a2_over_a0   = $lpf_table_q_1_over_sqrt_2[i + 2]
     end
 
-    x0 = a
-    tmp = -(a2_over_a0 * @y2)        >> 16;
-    tmp += (b2_over_a0 * x0)         >> 16;
-    tmp += ((b2_over_a0 << 1) * @x1) >> 16;
-    tmp += (b2_over_a0 * @x2)        >> 16;
-    tmp += (a1_over_a0_i * @y1)      >> 16;
+    x0 = a << 8
+    r = x0 + (@x1 << 1) + @x2
+    tmp = -high_word(a2_over_a0 * @y2)
+    tmp += high_word(b2_over_a0 * r)
+    tmp += high_word(a1_over_a0_i * @y1)
     y0 = tmp << (0x8000 / LPF_TABLE_ONE)
     @x2 = @x1
     @y2 = @y1
     @x1 = x0
     @y1 = y0
 
-    return y0
+    return high_byte(y0)
   end
 end
