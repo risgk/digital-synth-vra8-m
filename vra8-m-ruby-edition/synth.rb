@@ -3,13 +3,11 @@ require './vco'
 require './vcf'
 require './vca'
 require './eg'
-require './mixer'
 
 $vco = VCO.new
 $vcf = VCF.new
 $vca = VCA.new
 $eg = EG.new
-$mixer = Mixer.new
 
 class Synth
   def initialize
@@ -77,7 +75,7 @@ class Synth
   end
 
   def clock
-    level = $mixer.clock($vco.clock, 0, 0)
+    level = $vco.clock
     eg_output = $eg.clock
     level = $vcf.clock(level, eg_output)
     level = $vca.clock(level, eg_output)
