@@ -5,9 +5,7 @@ require './vca'
 require './eg'
 require './mixer'
 
-$vco_1 = VCO.new
-$vco_2 = VCO.new
-$vco_3 = VCO.new
+$vco = VCO.new
 $vcf = VCF.new
 $vca = VCA.new
 $eg = EG.new
@@ -79,7 +77,7 @@ class Synth
   end
 
   def clock
-    level = $mixer.clock($vco_1.clock, $vco_2.clock, $vco_3.clock)
+    level = $mixer.clock($vco.clock, 0, 0)
     eg_output = $eg.clock
     level = $vcf.clock(level, eg_output)
     level = $vca.clock(level, eg_output)
@@ -102,25 +100,13 @@ class Synth
   end
 
   def note_on(note_number)
-    pitch_1 = note_number + $vco_1.coarse_tune
-    if (pitch_1 < (NOTE_NUMBER_MIN + 64) || pitch_1 > (NOTE_NUMBER_MAX + 64))
-      return
-    end
-
-    pitch_2 = note_number + $vco_2.coarse_tune
-    if (pitch_2 < (NOTE_NUMBER_MIN + 64) || pitch_2 > (NOTE_NUMBER_MAX + 64))
-      return
-    end
-
-    pitch_3 = note_number + $vco_3.coarse_tune
-    if (pitch_3 < (NOTE_NUMBER_MIN + 64) || pitch_3 > (NOTE_NUMBER_MAX + 64))
+    pitch = note_number + $vco.coarse_tune
+    if (pitch < (NOTE_NUMBER_MIN + 64) || pitch > (NOTE_NUMBER_MAX + 64))
       return
     end
 
     @note_number = note_number
-    $vco_1.note_on(@note_number)
-    $vco_2.note_on(@note_number)
-    $vco_3.note_on(@note_number)
+    $vco.note_on(@note_number)
     $eg.note_on
   end
 
@@ -135,23 +121,11 @@ class Synth
   end
 
   def reset_phase
-    $vco_1.reset_phase
-    $vco_2.reset_phase
-    $vco_3.reset_phase
+    $vco.reset_phase
   end
 
   def control_change(controller_number, value)
     case (controller_number)
-    when VCO_1_COARSE_TUNE
-      set_vco_1_coarse_tune(value)
-    when VCO_2_COARSE_TUNE
-      set_vco_2_coarse_tune(value)
-    when VCO_2_FINE_TUNE
-      set_vco_2_fine_tune(value)
-    when VCO_3_COARSE_TUNE
-      set_vco_3_coarse_tune(value)
-    when VCO_3_FINE_TUNE
-      set_vco_3_fine_tune(value)
     when VCF_CUTOFF_FREQUENCY
       set_vcf_cutoff_frequency(value)
     when VCF_RESONANCE
@@ -167,36 +141,6 @@ class Synth
     when ALL_NOTES_OFF
       all_notes_off(value)
     end
-  end
-
-  def set_vco_1_coarse_tune(value)
-    sound_off
-    $vco_1.set_coarse_tune(value)
-    reset_phase
-  end
-
-  def set_vco_2_coarse_tune(value)
-    sound_off
-    $vco_2.set_coarse_tune(value)
-    reset_phase
-  end
-
-  def set_vco_2_fine_tune(value)
-    sound_off
-    $vco_2.set_fine_tune(value)
-    reset_phase
-  end
-
-  def set_vco_3_coarse_tune(value)
-    sound_off
-    $vco_3.set_coarse_tune(value)
-    reset_phase
-  end
-
-  def set_vco_3_fine_tune(value)
-    sound_off
-    $vco_3.set_fine_tune(value)
-    reset_phase
   end
 
   def set_vcf_cutoff_frequency(value)
