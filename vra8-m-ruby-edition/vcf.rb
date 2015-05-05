@@ -44,9 +44,9 @@ class VCF
 
     x0 = a << 8
     r = x0 + (@x1 << 1) + @x2
-    tmp = -high_word(a2_over_a0 * @y2)
-    tmp += high_word(b2_over_a0 * r)
-    tmp += high_word(a1_over_a0_i * @y1)
+    tmp = -muls_16(a2_over_a0, @y2)
+    tmp += muls_16(b2_over_a0, r)
+    tmp += muls_16(a1_over_a0_i, @y1)
     y0 = tmp << (0x8000 / LPF_TABLE_ONE)
     @x2 = @x1
     @y2 = @y1

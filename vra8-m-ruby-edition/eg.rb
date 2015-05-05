@@ -52,7 +52,7 @@ class EG
 
     case (@state)
     when STATE_ATTACK
-      @level_16 = LEVEL16_190_5 - (((LEVEL16_190_5 - @level_16) * @attack_rate) >> 16)
+      @level_16 = LEVEL16_190_5 - muls_16(LEVEL16_190_5 - @level_16, @attack_rate)
       if (@level_16 >= LEVEL16_127)
         @state = STATE_DECAY_SUSTAIN
         @level_16 = LEVEL16_127
@@ -62,11 +62,11 @@ class EG
         if (@level_16 <= (32 + @sustain_level_16))
           @level_16 = @sustain_level_16
         elsif
-          @level_16 = @sustain_level_16 + (((@level_16 - @sustain_level_16) * @decay_rate) >> 16)
+          @level_16 = @sustain_level_16 + muls_16(@level_16 - @sustain_level_16, @decay_rate)
         end
       end
     when STATE_RELEASE
-      @level_16 = ((@level_16 * @decay_rate) >> 16)
+      @level_16 = muls_16(@level_16, @decay_rate)
       if (@level_16 <= 32)
         @state = STATE_IDLE
         @level_16 = 0
