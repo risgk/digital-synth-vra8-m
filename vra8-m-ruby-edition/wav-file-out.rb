@@ -1,7 +1,7 @@
 require './common'
 
 class WAVFileOut
-  SEC = 30
+  SEC = 60
 
   def initialize(path)
     @file = File::open(path, "wb")

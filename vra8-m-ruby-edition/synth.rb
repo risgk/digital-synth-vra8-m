@@ -98,11 +98,6 @@ class Synth
   end
 
   def note_on(note_number)
-    pitch = note_number + $vco.coarse_tune
-    if (pitch < (NOTE_NUMBER_MIN + 64) || pitch > (NOTE_NUMBER_MAX + 64))
-      return
-    end
-
     @note_number = note_number
     $vco.note_on(@note_number)
     $eg.note_on

@@ -35,6 +35,6 @@ def generate_lpf_table(name, q)
 end
 
 generate_lpf_table("q_1_over_sqrt_2", 1.0 / Math::sqrt(2.0))
-generate_lpf_table("q_sqrt_2", Math::sqrt(2.0))
+generate_lpf_table("q_2_sqrt_2", 2.0 * Math::sqrt(2.0))
 
 $file.close

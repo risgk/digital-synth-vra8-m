@@ -12,7 +12,7 @@ $c4_to_b4 = []
 end
 
 def generate_freq_table(detune, name)
-  $file.printf("$freq_table_%s = [\n  ", name)
+  $file.printf("$freq_table%s = [\n  ", name)
   (0..127).each do |note_number|
     if note_number < NOTE_NUMBER_MIN || note_number > NOTE_NUMBER_MAX
       freq = 0
@@ -35,8 +35,6 @@ def generate_freq_table(detune, name)
   $file.printf("]\n\n")
 end
 
-generate_freq_table(-9.375, "detune_minus")
-generate_freq_table(0.0, "detune_none")
-generate_freq_table(9.375, "detune_plus")
+generate_freq_table(0.0, "")
 
 $file.close

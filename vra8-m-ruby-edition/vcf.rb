@@ -32,9 +32,9 @@ class VCF
 
     if ((@resonance & 0x40) != 0)
       i = cutoff_frequency * 3
-      b2_over_a0   = $lpf_table_q_sqrt_2[i + 0]
-      a1_over_a0_i = $lpf_table_q_sqrt_2[i + 1]
-      a2_over_a0   = $lpf_table_q_sqrt_2[i + 2]
+      b2_over_a0   = $lpf_table_q_2_sqrt_2[i + 0]
+      a1_over_a0_i = $lpf_table_q_2_sqrt_2[i + 1]
+      a2_over_a0   = $lpf_table_q_2_sqrt_2[i + 2]
     else
       i = cutoff_frequency * 3
       b2_over_a0   = $lpf_table_q_1_over_sqrt_2[i + 0]

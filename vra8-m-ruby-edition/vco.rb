@@ -5,8 +5,6 @@ require './wave-table'
 class VCO
   def initialize
     @wave_tables = $wave_tables_sawtooth
-    @coarse_tune = 64
-    @fine_tune = 64
     @note_number = 60
     @phase = 0
     @freq = 0
@@ -14,20 +12,6 @@ class VCO
 
   def reset_phase
     @phase = 0
-  end
-
-  def set_coarse_tune(coarse_tune)
-    @coarse_tune = coarse_tune
-    update_freq
-  end
-
-  def coarse_tune
-    @coarse_tune
-  end
-
-  def set_fine_tune(fine_tune)
-    @fine_tune = fine_tune
-    update_freq
   end
 
   def note_on(note_number)
@@ -58,18 +42,10 @@ class VCO
   end
 
   def update_freq
-    pitch = @note_number + @coarse_tune
-    if (pitch < (NOTE_NUMBER_MIN + 64) || pitch > (NOTE_NUMBER_MAX + 64))
+    if (@note_number < NOTE_NUMBER_MIN || @note_number > NOTE_NUMBER_MAX)
       @freq = 0
     else
-      note_number = pitch - 64
-      if (@fine_tune <= 63)
-        @freq = $freq_table_detune_minus[note_number]
-      elsif (@fine_tune == 64)
-        @freq = $freq_table_detune_none[note_number]
-      else
-        @freq = $freq_table_detune_plus[note_number]
-      end
+      @freq = $freq_table[@note_number]
     end
   end
 end
