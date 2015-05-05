@@ -11,7 +11,7 @@ def generate_wave_table(max, name, amp)
     (1..max).each do |k|
       level += amp * yield(n, k)
     end
-    level = (level * (2.0 ** BIT_DEPTH) * (48.0 / 256.0)).round.to_i
+    level = (level * WAVE_TABLE_ONE).round.to_i
     $file.printf("%+4d,", level)
 
     if n == SAMPLES_PER_CYCLE - 1

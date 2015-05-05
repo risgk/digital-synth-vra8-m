@@ -32,11 +32,13 @@ class VCO
 
     next_weight = low_byte(@phase)
     if (next_weight == 0)
-      level = curr_data
+      level = curr_data << 8
     else
       curr_weight = 0x100 - next_weight
-      level = high_byte((curr_data * curr_weight) + (next_data * next_weight))
+      level = (curr_data * curr_weight) + (next_data * next_weight)
     end
+
+    level = (level / 2) * 2
 
     return level
   end

@@ -9,7 +9,9 @@ $file = File::open("lpf-table.rb", "w")
 def generate_lpf_table(name, q)
   $file.printf("$lpf_table_%s = [\n  ", name)
   (0..127).each do |i|
-    f0_over_fs = (2.0 ** (i / (127.0 / 3.0))) / (2.0 ** 5.0)
+    f0_over_fs = (2.0 ** (i / (128.0 / 8.0))) / (2.0 ** 8.0)
+    f0_over_fs = (2.0 ** (96 / (128.0 / 8.0))) / (2.0 ** 8.0) if i > 96
+
     w0 = 2.0 * Math::PI * f0_over_fs
     alpha = Math::sin(w0) / (2.0 * q)
 
@@ -18,11 +20,11 @@ def generate_lpf_table(name, q)
     a1 = (-2.0) * Math::cos(w0)
     a2 = 1.0 - alpha
 
-    b2_over_a0   = ((b2 / a0) * 128.0).round.to_i
-    a1_over_a0_i = ((a1 / a0) * -128.0).round.to_i
-    a2_over_a0   = (b2_over_a0 * 4) + a1_over_a0_i - 128
+    b2_over_a0   = ((b2 / a0) * LPF_TABLE_ONE).round.to_i
+    a1_over_a0_i = ((a1 / a0) * -LPF_TABLE_ONE).round.to_i
+    a2_over_a0   = (b2_over_a0 * 4) + a1_over_a0_i - LPF_TABLE_ONE
 
-    $file.printf("%4d, %4d, %4d,", b2_over_a0, a1_over_a0_i, a2_over_a0)
+    $file.printf("%5d, %5d, %5d,", b2_over_a0, a1_over_a0_i, a2_over_a0)
     if i == 127
       $file.printf("\n")
     elsif i % 4 == 3

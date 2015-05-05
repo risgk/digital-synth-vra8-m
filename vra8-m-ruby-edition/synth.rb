@@ -75,8 +75,8 @@ class Synth
   end
 
   def clock
-    level = $vco.clock
     eg_output = $eg.clock
+    level = $vco.clock
     level = $vcf.clock(level, eg_output)
     level = $vca.clock(level, eg_output)
   end

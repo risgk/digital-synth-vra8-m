@@ -43,12 +43,12 @@ class VCF
     end
 
     x0 = a
-    tmp = -(a2_over_a0 * @y2);
-    tmp += b2_over_a0 * x0;
-    tmp += (b2_over_a0 << 1) * @x1;
-    tmp += b2_over_a0 * @x2;
-    tmp += a1_over_a0_i * @y1;
-    y0 = high_byte(tmp << 1)
+    tmp = -(a2_over_a0 * @y2)        >> 16;
+    tmp += (b2_over_a0 * x0)         >> 16;
+    tmp += ((b2_over_a0 << 1) * @x1) >> 16;
+    tmp += (b2_over_a0 * @x2)        >> 16;
+    tmp += (a1_over_a0_i * @y1)      >> 16;
+    y0 = tmp << (0x8000 / LPF_TABLE_ONE)
     @x2 = @x1
     @y2 = @y1
     @x1 = x0
