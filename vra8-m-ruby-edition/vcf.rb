@@ -53,6 +53,6 @@ class VCF
     @x1 = x0
     @y1 = y0
 
-    return high_byte(y0)
+    return high_sbyte(y0)
   end
 end

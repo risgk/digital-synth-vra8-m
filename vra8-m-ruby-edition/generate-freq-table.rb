@@ -5,7 +5,7 @@ $file = File::open("freq-table.rb", "w")
 def generate_freq_table
   $file.printf("$freq_table = [\n  ")
   (0..127).each do |note_number|
-    if note_number < NOTE_NUMBER_MIN || note_number > NOTE_NUMBER_MAX
+    if (note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)
       freq = 0
     else
       cent = (note_number * 100.0) - 6900.0

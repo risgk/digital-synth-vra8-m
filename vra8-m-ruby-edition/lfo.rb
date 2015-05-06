@@ -21,6 +21,6 @@ class LFO
     end
     k -= 0x4000
 
-    return k
+    return high_sbyte(k)
   end
 end

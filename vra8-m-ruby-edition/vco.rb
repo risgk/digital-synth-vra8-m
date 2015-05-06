@@ -10,10 +10,10 @@ class VCO
     @freq = 0
 
     @pulse_saw_mix = 0
-    @pulse_width = 128
-    @pw_lfo_amt = 0
-    @saw_shift = 0
-    @ss_lfo_amt = 0
+    @pulse_width = (0 + 128) << 8
+    @pw_lfo_amt = 0 << 1
+    @saw_shift = 0 << 8
+    @ss_lfo_amt = 0 << 1
   end
 
   def set_pulse_saw_mix(pulse_saw_mix)
@@ -21,19 +21,19 @@ class VCO
   end
 
   def set_pulse_width(pulse_width)
-    @pulse_width = 128 + pulse_width
+    @pulse_width = (pulse_width + 128) << 8
   end
 
   def set_pw_lfo_amt(pw_lfo_amt)
-    @pw_lfo_amt = pw_lfo_amt
+    @pw_lfo_amt = pw_lfo_amt << 1
   end
 
   def set_saw_shift(saw_shift)
-    @saw_shift = saw_shift
+    @saw_shift = saw_shift << 8
   end
 
   def set_ss_lfo_amt(ss_lfo_amt)
-    @ss_lfo_amt = ss_lfo_amt
+    @ss_lfo_amt = ss_lfo_amt << 1
   end
 
   def reset_phase
@@ -49,19 +49,21 @@ class VCO
     @phase += @freq
     @phase &= 0xFFFF
 
+    k = k_lfo << 1
+
     saw_down   = +level_from_wave_table(@phase)
-    saw_up     = -level_from_wave_table((@phase + (@pulse_width << 8) -
-                                         k_lfo) & 0xFFFF)  # todo
-    saw_down_2 = +level_from_wave_table((@phase + (@saw_shift << 8) +
-                                         k_lfo) & 0xFFFF)  # todo
+    saw_up     = -level_from_wave_table(
+                    (@phase + @pulse_width - (k * @pw_lfo_amt)) & 0xFFFF)
+    saw_down_2 = +level_from_wave_table(
+                    (@phase + @saw_shift + (k * @ss_lfo_amt)) & 0xFFFF)
     a = saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
-    return high_byte(a)
+    return high_sbyte(a)
   end
 
   def update_freq
-    if (@note_number < NOTE_NUMBER_MIN || @note_number > NOTE_NUMBER_MAX)
+    if ((@note_number < NOTE_NUMBER_MIN) || (@note_number > NOTE_NUMBER_MAX))
       @freq = 0
     else
       @freq = $freq_table[@note_number]
@@ -81,7 +83,7 @@ class VCO
       level = curr_data
     else
       curr_weight = 0x100 - next_weight
-      level = high_byte(curr_data * curr_weight + next_data * next_weight)
+      level = high_byte((curr_data * curr_weight) + (next_data * next_weight))
     end
 
     return level

@@ -150,19 +150,19 @@ function onChangeControlChange(number, value) {
 }
 
 function resetControllers() {
-  onChangeControlChange(14, 64 );
-  onChangeControlChange(15, 64 );
-  onChangeControlChange(16, 64 );
-  onChangeControlChange(17, 64 );
-  onChangeControlChange(18, 64 );
-  onChangeControlChange(19, 32 );
-  onChangeControlChange(20, 127);
-  onChangeControlChange(21, 64 );
-  onChangeControlChange(22, 64 );
-  onChangeControlChange(23, 32 );
-  onChangeControlChange(24, 96 );
-  onChangeControlChange(25, 96 );
-  onChangeControlChange(26, 0  );
+  onChangeControlChange(14, 64 );  // VCO Pulse/Saw Mix
+  onChangeControlChange(15, 0  );  // VCO Pulse Width
+  onChangeControlChange(16, 127);  // VCO PW LFO Amt
+  onChangeControlChange(17, 64 );  // VCO Saw Shift
+  onChangeControlChange(18, 64 );  // VCO SS LFO Amt
+  onChangeControlChange(19, 32 );  // VCF Cutoff
+  onChangeControlChange(20, 127);  // VCF Resonance
+  onChangeControlChange(21, 64 );  // VCF EG Amt
+  onChangeControlChange(22, 32 );  // LFO Rate
+  onChangeControlChange(23, 32 );  // EG Attack
+  onChangeControlChange(24, 96 );  // EG Decay
+  onChangeControlChange(25, 96 );  // EG Sustain
+  onChangeControlChange(26, 64 );  // Portamento
 }
 
 function noteOn(noteNumber) {

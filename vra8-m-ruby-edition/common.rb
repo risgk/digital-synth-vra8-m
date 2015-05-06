@@ -52,15 +52,28 @@ def low_byte(ui_16)
   ui_16 & 0xFF
 end
 
+def high_sbyte(si_16)
+  si_16 >> 8
+end
+
 def high_word(ui_32)
   ui_32 >> 16
 end
 
+# refs http://www.atmel.com/images/doc1631.pdf
+
 def muls_16(a, b)
-  # refs http://www.atmel.com/images/doc1631.pdf
   # result is approximated
 
   result = high_byte(low_byte(a) * high_byte(b))
   result += high_byte(high_byte(a) * low_byte(b))
   result += high_byte(a) * high_byte(b)
+end
+
+def mulsu_16(s, u)
+  # result is approximated
+
+  result = high_byte(low_byte(s) * high_byte(u))
+  result += high_sbyte(high_sbyte(s) * low_byte(u))
+  result += high_sbyte(s) * high_byte(u)
 end
