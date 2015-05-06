@@ -2,11 +2,13 @@ require './common'
 require './vco'
 require './vcf'
 require './vca'
+require './lfo'
 require './eg'
 
 $vco = VCO.new
 $vcf = VCF.new
 $vca = VCA.new
+$lfo = LFO.new
 $eg = EG.new
 
 class Synth
@@ -75,14 +77,15 @@ class Synth
   end
 
   def clock
+    lfo_output = $lfo.clock
     eg_output = $eg.clock
-    level = $vco.clock
+    level = $vco.clock(lfo_output)
     level = $vcf.clock(level, eg_output)
     level = $vca.clock(level, eg_output)
   end
 
-  def real_time_message?(b)
-    b >= REAL_TIME_MESSAGE_MIN
+  def real_message?(b)
+    b >= REAL_MESSAGE_MIN
   end
 
   def system_message?(b)
@@ -119,48 +122,34 @@ class Synth
 
   def control_change(controller_number, value)
     case (controller_number)
-    when VCF_CUTOFF_FREQUENCY
-      set_vcf_cutoff_frequency(value)
+    when VCO_MIX
+      $vco.set_mix(value)
+    when VCO_PW
+      $vco.set_pw(value)
+    when VCO_PW_LFO_AMT
+      $vco.set_pw_lfo_amt(value)
+    when VCO_SS
+      $vco.set_ss(value)
+    when VCO_SS_LFO_AMT
+      $vco.set_ss_lfo_amt(value)
+    when VCF_CUTOFF
+      $vcf.set_cutoff(value)
     when VCF_RESONANCE
-      set_vcf_resonance(value)
-    when VCF_ENVELOPE_AMOUNT
-      set_vcf_envelope_amount(value)
-    when EG_ATTACK_TIME
-      set_eg_attack_time(value)
-    when EG_DECAY_TIME
-      set_decay_time(value)
-    when EG_SUSTAIN_LEVEL
-      set_eg_sustain_level(value)
+      $vcf.set_resonance(value)
+    when VCF_EG_AMT
+      $vcf.set_eg_amt(value)
+    when LFO_RATE
+      $lfo.set_rate(value)
+    when EG_ATTACK
+      $eg.set_attack(value)
+    when EG_DECAY
+      $eg.set_decay(value)
+    when EG_SUSTAIN
+      $eg.set_sustain(value)
+    when PORTAMENTO
+      # todo
     when ALL_NOTES_OFF
-      all_notes_off(value)
+      $eg.note_off
     end
-  end
-
-  def set_vcf_cutoff_frequency(value)
-    $vcf.set_cutoff_frequency(value)
-  end
-
-  def set_vcf_resonance(value)
-    $vcf.set_resonance(value)
-  end
-
-  def set_vcf_envelope_amount(value)
-    $vcf.set_envelope_amount(value)
-  end
-
-  def set_eg_attack_time(value)
-    $eg.set_attack_time(value)
-  end
-
-  def set_decay_time(value)
-    $eg.set_decay_time(value)
-  end
-
-  def set_eg_sustain_level(value)
-    $eg.set_sustain_level(value)
-  end
-
-  def all_notes_off(value)
-    $eg.note_off
   end
 end

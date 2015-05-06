@@ -8,6 +8,32 @@ class VCO
     @note_number = 60
     @phase = 0
     @freq = 0
+
+    @mix = 64
+    @pw = 128
+    @pw_lfo_amt = 0
+    @ss = 0
+    @ss_lfo_amt = 0
+  end
+
+  def set_mix(mix)
+    @mix = mix
+  end
+
+  def set_pw(pw)
+    @pw = 128 - pw
+  end
+
+  def set_pw_lfo_amt(pw_lfo_amt)
+    @pw_lfo_amt = 0
+  end
+
+  def set_ss(ss)
+    @ss = 0
+  end
+
+  def set_ss_lfo_amt(ss_lfo_amt)
+    @ss_lfo_amt = 0
   end
 
   def reset_phase
@@ -19,24 +45,18 @@ class VCO
     update_freq
   end
 
-  def clock
+  def clock(k)
     @phase += @freq
     @phase &= 0xFFFF
 
-    wave_table = @wave_tables[high_byte(@freq)]
-    curr_index = high_byte(@phase)
-    next_index = curr_index + 0x01
-    next_index &= 0xFF
-    curr_data = wave_table[curr_index]
-    next_data = wave_table[next_index]
+    # saw down
+    level = level_from_wave_table(@phase)
 
-    next_weight = low_byte(@phase)
-    if (next_weight == 0)
-      level = curr_data
-    else
-      curr_weight = 0x100 - next_weight
-      level = high_byte(curr_data * curr_weight + next_data * next_weight)
-    end
+    # saw up
+    # todo
+
+    # saw down 2
+    # todo
 
     level = (level / 2) * 2  # todo
 
@@ -49,5 +69,24 @@ class VCO
     else
       @freq = $freq_table[@note_number]
     end
+  end
+
+  def level_from_wave_table(phase)
+    wave_table = @wave_tables[high_byte(@freq)]
+    curr_index = high_byte(phase)
+    next_index = curr_index + 0x01
+    next_index &= 0xFF
+    curr_data = wave_table[curr_index]
+    next_data = wave_table[next_index]
+
+    next_weight = low_byte(phase)
+    if (next_weight == 0)
+      level = curr_data
+    else
+      curr_weight = 0x100 - next_weight
+      level = high_byte(curr_data * curr_weight + next_data * next_weight)
+    end
+
+    return level
   end
 end
