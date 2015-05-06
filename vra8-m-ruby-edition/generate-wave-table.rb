@@ -1,6 +1,6 @@
 require './common'
 
-FREQ_MAX = 4389  # refs "freq_table.rb"
+FREQ_MAX = 8779  # refs "freq_table.rb"
 
 $file = File::open("wave-table.rb", "w")
 
@@ -34,7 +34,7 @@ end
 def max_from_i(i)
   max = (SAMPLES_PER_CYCLE / 2) / (i + 1)
   max = max - 1 if max % 2 == 0
-  max = (SAMPLES_PER_CYCLE / 4) - 1 if max > (SAMPLES_PER_CYCLE / 4) - 1
+  max = [max, SAMPLES_PER_CYCLE / 4 - 1].min
   return max
 end
 
