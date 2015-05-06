@@ -20,9 +20,9 @@ class WAVFileOut
     @closed = false
   end
 
-  def write(level)
+  def write(a_in)
     if (@data_size < @max_size)
-      @file.write([level + 0x80].pack("C"))
+      @file.write([a_in + 0x80].pack("C"))
       @data_size += 1
     else
       close

@@ -33,8 +33,8 @@ class AudioOut
       @array = []
     end
 
-    def write(level)
-      @array.push(level + 0x80)
+    def write(a_in)
+      @array.push(a_in + 0x80)
       if (@array.length == BUFFER_SIZE)
         while ((@wavehdr[@index][:dwFlags] & WHDR_DONE) == 0)
           # do nothing

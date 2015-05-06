@@ -1,7 +1,9 @@
 require './common'
 
 class VCA
-  def clock(a, k)
-    high_byte(a * (k << 1))
+  def clock(a_in, k_eg)
+    a = a_in * (k_eg << 1)
+
+    return high_byte(a)
   end
 end

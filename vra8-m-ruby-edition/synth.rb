@@ -77,11 +77,11 @@ class Synth
   end
 
   def clock
-    lfo_output = $lfo.clock
-    eg_output = $eg.clock
-    level = $vco.clock(lfo_output)
-    level = $vcf.clock(level, eg_output)
-    level = $vca.clock(level, eg_output)
+    k_lfo = $lfo.clock
+    k_eg = $eg.clock
+    a = $vco.clock(k_lfo)
+    a = $vcf.clock(a, k_eg)
+    a = $vca.clock(a, k_eg)
   end
 
   def real_message?(b)

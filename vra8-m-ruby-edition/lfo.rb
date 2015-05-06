@@ -2,14 +2,25 @@ require './common'
 
 class LFO
   def initialize
-    @rate = 0
+    @phase = 0x4000
+    @rate = 16
   end
 
   def set_rate(rate)
-    @rate = rate
+    @rate = rate << 2
   end
 
   def clock
-    # todo
+    @phase += @rate
+    @phase &= 0xFFFF
+
+    if ((@phase & 0x8000) != 0)
+      k = ~@phase + 0x10000
+    else
+      k = @phase
+    end
+    k -= 0x4000
+
+    return high_byte(k)
   end
 end

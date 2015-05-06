@@ -24,8 +24,8 @@ class VCF
     @eg_amt = eg_amt
   end
 
-  def clock(a, k)
-    cutoff = @cutoff + high_byte(@eg_amt * (k << 1))
+  def clock(a_in, k_eg)
+    cutoff = @cutoff + high_byte(@eg_amt * (k_eg << 1))
     if (cutoff > 127)
       cutoff = 127
     end
@@ -42,7 +42,7 @@ class VCF
       a2_over_a0   = $lpf_table_q_1_over_sqrt_2[i + 2]
     end
 
-    x0 = a << 8
+    x0 = a_in << 8
     r = x0 + (@x1 << 1) + @x2
     tmp = -muls_16(a2_over_a0, @y2)
     tmp += muls_16(b2_over_a0, r)

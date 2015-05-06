@@ -16,8 +16,8 @@ if ARGV.length == 1
       b = c.ord
       $synth.receive_midi_byte(b)
       4.times do
-        level = $synth.clock
-        wav_file_out.write(level)
+        a = $synth.clock
+        wav_file_out.write(a)
       end
     end
     wav_file_out.close
@@ -56,9 +56,9 @@ else
           end
         end
       end
-      level = $synth.clock
-      wav_file_out.write(level) if OPTION_RECORDING
-      AudioOut::write(level)
+      a = $synth.clock
+      wav_file_out.write(a) if OPTION_RECORDING
+      AudioOut::write(a)
     end
   end
   UniMIDI::Input.gets do |input|

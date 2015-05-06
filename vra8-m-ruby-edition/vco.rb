@@ -45,15 +45,17 @@ class VCO
     update_freq
   end
 
-  def clock(k)
+  def clock(k_lfo)
     @phase += @freq
     @phase &= 0xFFFF
 
     saw_down   = +level_from_wave_table(@phase)
     saw_up     = -level_from_wave_table((@phase + (@pulse_width << 8)) & 0xFFFF)
     saw_down_2 = +level_from_wave_table((@phase + (@saw_shift << 8)) & 0xFFFF)
-    level = high_byte(saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
-                                       saw_down_2 * @pulse_saw_mix)
+    a = saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
+                         saw_down_2 * @pulse_saw_mix
+
+    return high_byte(a)
   end
 
   def update_freq
