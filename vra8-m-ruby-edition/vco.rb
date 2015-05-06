@@ -9,7 +9,7 @@ class VCO
     @phase = 0
     @freq = 0
 
-    @mix = 64
+    @mix = 0
     @pw = 128
     @pw_lfo_amt = 0
     @ss = 0
@@ -21,19 +21,19 @@ class VCO
   end
 
   def set_pw(pw)
-    @pw = 128 - pw
+    @pw = 128 + pw
   end
 
   def set_pw_lfo_amt(pw_lfo_amt)
-    @pw_lfo_amt = 0
+    @pw_lfo_amt = pw_lfo_amt
   end
 
   def set_ss(ss)
-    @ss = 0
+    @ss = ss
   end
 
   def set_ss_lfo_amt(ss_lfo_amt)
-    @ss_lfo_amt = 0
+    @ss_lfo_amt = ss_lfo_amt
   end
 
   def reset_phase
@@ -49,18 +49,10 @@ class VCO
     @phase += @freq
     @phase &= 0xFFFF
 
-    # saw down
-    level = level_from_wave_table(@phase)
-
-    # saw up
-    # todo
-
-    # saw down 2
-    # todo
-
-    level = (level / 2) * 2  # todo
-
-    return level
+    saw_down   = +level_from_wave_table(@phase)
+    saw_up     = -level_from_wave_table((@phase + (@pw << 8)) & 0xFFFF)
+    saw_down_2 = +level_from_wave_table((@phase + (@ss << 8)) & 0xFFFF)
+    level = high_byte(saw_down * 128 + saw_up * (128 - @mix) + saw_down_2 * @mix)
   end
 
   def update_freq
