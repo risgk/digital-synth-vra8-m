@@ -7,7 +7,7 @@ class LFO
   end
 
   def set_rate(rate)
-    @rate = rate << 2
+    @rate = (rate >> 3) + 1
   end
 
   def clock
@@ -21,6 +21,6 @@ class LFO
     end
     k -= 0x4000
 
-    return high_byte(k)
+    return k
   end
 end

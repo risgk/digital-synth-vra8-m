@@ -50,8 +50,10 @@ class VCO
     @phase &= 0xFFFF
 
     saw_down   = +level_from_wave_table(@phase)
-    saw_up     = -level_from_wave_table((@phase + (@pulse_width << 8)) & 0xFFFF)
-    saw_down_2 = +level_from_wave_table((@phase + (@saw_shift << 8)) & 0xFFFF)
+    saw_up     = -level_from_wave_table((@phase + (@pulse_width << 8) -
+                                         k_lfo) & 0xFFFF)  # todo
+    saw_down_2 = +level_from_wave_table((@phase + (@saw_shift << 8) +
+                                         k_lfo) & 0xFFFF)  # todo
     a = saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
