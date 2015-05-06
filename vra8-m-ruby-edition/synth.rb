@@ -122,14 +122,14 @@ class Synth
 
   def control_change(controller_number, value)
     case (controller_number)
-    when VCO_MIX
-      $vco.set_mix(value)
-    when VCO_PW
-      $vco.set_pw(value)
+    when VCO_PULSE_SAW_MIX
+      $vco.set_pulse_saw_mix(value)
+    when VCO_PULSE_WIDTH
+      $vco.set_pulse_width(value)
     when VCO_PW_LFO_AMT
       $vco.set_pw_lfo_amt(value)
-    when VCO_SS
-      $vco.set_ss(value)
+    when VCO_SAW_SHIFT
+      $vco.set_saw_shift(value)
     when VCO_SS_LFO_AMT
       $vco.set_ss_lfo_amt(value)
     when VCF_CUTOFF

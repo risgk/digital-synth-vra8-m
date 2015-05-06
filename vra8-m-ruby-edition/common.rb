@@ -29,20 +29,20 @@ EOX                   = 0xF7
 REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
 
-VCO_MIX        = 14
-VCO_PW         = 15
-VCO_PW_LFO_AMT = 16
-VCO_SS         = 17
-VCO_SS_LFO_AMT = 18
-VCF_CUTOFF     = 19
-VCF_RESONANCE  = 20
-VCF_EG_AMT     = 21
-LFO_RATE       = 22
-EG_ATTACK      = 23
-EG_DECAY       = 24
-EG_SUSTAIN     = 25
-PORTAMENTO     = 26
-ALL_NOTES_OFF  = 123
+VCO_PULSE_SAW_MIX = 14
+VCO_PULSE_WIDTH   = 15
+VCO_PW_LFO_AMT    = 16
+VCO_SAW_SHIFT     = 17
+VCO_SS_LFO_AMT    = 18
+VCF_CUTOFF        = 19
+VCF_RESONANCE     = 20
+VCF_EG_AMT        = 21
+LFO_RATE          = 22
+EG_ATTACK         = 23
+EG_DECAY          = 24
+EG_SUSTAIN        = 25
+PORTAMENTO        = 26
+ALL_NOTES_OFF     = 123
 
 def high_byte(ui_16)
   ui_16 >> 8
