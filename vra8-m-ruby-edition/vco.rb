@@ -36,10 +36,6 @@ class VCO
     @ss_lfo_amt = ss_lfo_amt << 1
   end
 
-  def reset_phase
-    @phase = 0
-  end
-
   def note_on(note_number)
     @note_number = note_number
     update_freq
@@ -55,7 +51,7 @@ class VCO
     saw_up     = -level_from_wave_table(
                     (@phase + @pulse_width - (k * @pw_lfo_amt)) & 0xFFFF)
     saw_down_2 = +level_from_wave_table(
-                    (@phase + @saw_shift + (k * @ss_lfo_amt)) & 0xFFFF)
+                    (@phase - @saw_shift + (k * @ss_lfo_amt)) & 0xFFFF)
     a = saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 

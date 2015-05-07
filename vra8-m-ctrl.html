@@ -3,6 +3,9 @@
 <meta charset="utf-8">
 <title>VRA8-M CTRL</title>
 <style>
+* {
+  -webkit-user-select: none;
+}
 td {
   text-align: left;
 }
@@ -38,7 +41,7 @@ window.onload = function() {
   var result = loadParameters();
   if (!result) {
     onChangeTranspose(0);
-    resetControllers();
+    preset0();
   }
 };
 
@@ -135,7 +138,7 @@ function onChangeOutputPort() {
     var result = loadParameters();
     if (!result) {
       onChangeTranspose(0);
-      resetControllers();
+      preset0();
     }
   }
 }
@@ -149,16 +152,32 @@ function onChangeControlChange(number, value) {
   }
 }
 
-function resetControllers() {
-  onChangeControlChange(14, 64 );  // VCO Pulse/Saw Mix
+function preset0() {
+  onChangeControlChange(14, 0  );  // VCO Pulse/Saw Mix
   onChangeControlChange(15, 0  );  // VCO Pulse Width
-  onChangeControlChange(16, 127);  // VCO PW LFO Amt
-  onChangeControlChange(17, 64 );  // VCO Saw Shift
-  onChangeControlChange(18, 64 );  // VCO SS LFO Amt
-  onChangeControlChange(19, 32 );  // VCF Cutoff
+  onChangeControlChange(16, 0  );  // VCO PW LFO Amt
+  onChangeControlChange(17, 0  );  // VCO Saw Shift
+  onChangeControlChange(18, 0  );  // VCO SS LFO Amt
+  onChangeControlChange(19, 127);  // VCF Cutoff
+  onChangeControlChange(20, 0  );  // VCF Resonance
+  onChangeControlChange(21, 0  );  // VCF EG Amt
+  onChangeControlChange(22, 64 );  // LFO Rate
+  onChangeControlChange(23, 0  );  // EG Attack
+  onChangeControlChange(24, 0  );  // EG Decay
+  onChangeControlChange(25, 127);  // EG Sustain
+  onChangeControlChange(26, 0  );  // Portamento
+}
+
+function preset1() {
+  onChangeControlChange(14, 64 );  // VCO Pulse/Saw Mix
+  onChangeControlChange(15, 32 );  // VCO Pulse Width
+  onChangeControlChange(16, 32 );  // VCO PW LFO Amt
+  onChangeControlChange(17, 32 );  // VCO Saw Shift
+  onChangeControlChange(18, 32 );  // VCO SS LFO Amt
+  onChangeControlChange(19, 0  );  // VCF Cutoff
   onChangeControlChange(20, 127);  // VCF Resonance
-  onChangeControlChange(21, 64 );  // VCF EG Amt
-  onChangeControlChange(22, 32 );  // LFO Rate
+  onChangeControlChange(21, 96 );  // VCF EG Amt
+  onChangeControlChange(22, 64 );  // LFO Rate
   onChangeControlChange(23, 32 );  // EG Attack
   onChangeControlChange(24, 96 );  // EG Decay
   onChangeControlChange(25, 96 );  // EG Sustain
@@ -216,7 +235,7 @@ function noteOff(noteNumber) {
 <tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p><input id="inputReset" type="button" value="Reset Controllers" onclick ="resetControllers()"></p>
+<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"></p>
 
 <h2>Software Keyboard</h2>
 

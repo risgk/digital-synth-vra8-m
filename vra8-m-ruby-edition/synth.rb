@@ -116,10 +116,6 @@ class Synth
     $eg.sound_off
   end
 
-  def reset_phase
-    $vco.reset_phase
-  end
-
   def control_change(controller_number, value)
     case (controller_number)
     when VCO_PULSE_SAW_MIX
