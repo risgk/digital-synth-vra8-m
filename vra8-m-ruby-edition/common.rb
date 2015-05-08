@@ -44,36 +44,37 @@ EG_SUSTAIN        = 25
 PORTAMENTO        = 26
 ALL_NOTES_OFF     = 123
 
-def high_byte(ui_16)
-  ui_16 >> 8
+def low_byte(x)
+  x & 0xFF
 end
 
-def low_byte(ui_16)
-  ui_16 & 0xFF
+def high_byte(x)
+  x >> 8
 end
 
-def high_sbyte(si_16)
-  si_16 >> 8
-end
-
-def high_word(ui_32)
-  ui_32 >> 16
+def high_sbyte(x)
+  x >> 8
 end
 
 # refs http://www.atmel.com/images/doc1631.pdf
 
-def muls_16(a, b)
+def mul_16(x, y)
   # result is approximated
-
-  result = high_byte(low_byte(a) * high_byte(b))
-  result += high_byte(high_byte(a) * low_byte(b))
-  result += high_byte(a) * high_byte(b)
+  result  = high_byte(low_byte(x) * high_byte(y))
+  result += high_byte(high_byte(x) * low_byte(y))
+  result += high_byte(x) * high_byte(y)
 end
 
-def mulsu_16(s, u)
+def muls_16(x, y)
   # result is approximated
+  result  = high_sbyte(low_byte(x) * high_sbyte(y))
+  result += high_sbyte(high_sbyte(x) * low_byte(y))
+  result += high_sbyte(x) * high_sbyte(y)
+end
 
-  result = high_byte(low_byte(s) * high_byte(u))
-  result += high_sbyte(high_sbyte(s) * low_byte(u))
-  result += high_sbyte(s) * high_byte(u)
+def mulsu_16(x, y)
+  # result is approximated
+  result  = high_byte(low_byte(x) * high_byte(y))
+  result += high_sbyte(high_sbyte(x) * low_byte(y))
+  result += high_sbyte(x) * high_byte(y)
 end

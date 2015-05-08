@@ -1,7 +1,3 @@
-# refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
-# Cookbook formulae for audio EQ biquad filter coefficients
-# by Robert Bristow-Johnson
-
 require './common'
 
 $file = File::open("lpf-table.rb", "w")
@@ -20,11 +16,11 @@ def generate_lpf_table(name, q)
     a1 = (-2.0) * Math::cos(w0)
     a2 = 1.0 - alpha
 
-    b2_over_a0   = ((b2 / a0) * LPF_TABLE_ONE).round.to_i
-    a1_over_a0_i = ((a1 / a0) * -LPF_TABLE_ONE).round.to_i
-    a2_over_a0   = (b2_over_a0 * 4) + a1_over_a0_i - LPF_TABLE_ONE
+    b2_over_a0 = ((b2 / a0) * LPF_TABLE_ONE).round.to_i
+    a1_over_a0 = ((a1 / a0) * LPF_TABLE_ONE).round.to_i
+    a2_over_a0 = (b2_over_a0 * 4) - a1_over_a0 - LPF_TABLE_ONE
 
-    $file.printf("%5d, %5d, %5d,", b2_over_a0, a1_over_a0_i, a2_over_a0)
+    $file.printf("%+6d, %+6d, %+6d,", b2_over_a0, a1_over_a0, a2_over_a0)
     if i == 127
       $file.printf("\n")
     elsif i % 4 == 3

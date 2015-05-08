@@ -79,7 +79,7 @@ class VCO
       level = curr_data
     else
       curr_weight = 0x100 - next_weight
-      level = high_byte((curr_data * curr_weight) + (next_data * next_weight))
+      level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight))
     end
 
     return level
