@@ -58,21 +58,21 @@ end
 
 # refs http://www.atmel.com/images/doc1631.pdf
 
-def mul_16(x, y)
+def mul_h16(x, y)
   # result is approximated
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_byte(high_byte(x) * low_byte(y))
   result += high_byte(x) * high_byte(y)
 end
 
-def muls_16(x, y)
+def muls_h16(x, y)
   # result is approximated
   result  = high_sbyte(low_byte(x) * high_sbyte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_sbyte(y)
 end
 
-def mulsu_16(x, y)
+def mulsu_h16(x, y)
   # result is approximated
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))

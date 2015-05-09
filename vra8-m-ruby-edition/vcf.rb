@@ -48,9 +48,9 @@ class VCF
 
     x0 = a_in << 8
     r = x0 + (@x1 << 1) + @x2
-    tmp  = muls_16(b2_over_a0, r)
-    tmp -= muls_16(a1_over_a0, @y1)
-    tmp -= muls_16(a2_over_a0, @y2)
+    tmp  = muls_h16(b2_over_a0, r)
+    tmp -= muls_h16(a1_over_a0, @y1)
+    tmp -= muls_h16(a2_over_a0, @y2)
     y0 = tmp << (0x8000 / LPF_TABLE_ONE)
     @x2 = @x1
     @y2 = @y1
