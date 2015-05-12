@@ -1,15 +1,16 @@
 require './common'
+require './freq-table'
 
-FREQ_MAX = 8779  # refs "freq_table.rb"
+FREQ_MAX = $freq_table.max
 
 $file = File::open("wave-table.rb", "w")
 
-def generate_wave_table(max, name, amp)
-  $file.printf("$wave_table_%s_m%d = [\n  ", name, max)
+def generate_wave_table(max)
+  $file.printf("$wt_%d = [\n  ", max)
   (0..SAMPLES_PER_CYCLE - 1).each do |n|
     level = 0
     (1..max).each do |k|
-      level += amp * yield(n, k)
+      level += yield(n, k)
     end
     level = (level * WAVE_TABLE_ONE).round.to_i
     $file.printf("%+4d,", level)
@@ -26,33 +27,39 @@ def generate_wave_table(max, name, amp)
 end
 
 def generate_wave_table_sawtooth(max)
-  generate_wave_table(max, "sawtooth", 1.0) do |n, k|
+  generate_wave_table(max) do |n, k|
     (2.0 / Math::PI) * Math::sin((2.0 * Math::PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / k
   end
 end
 
-def max_from_i(i)
-  max = (SAMPLES_PER_CYCLE / 2) / (i + 1)
-  max = max - 1 if max % 2 == 0
-  max = [max, SAMPLES_PER_CYCLE / 4 - 1].min
-  return max
+# todo: improve
+$freq_table.map { |freq| (freq != 0) ? ((CYCLE_RESOLUTION / 2 - 1) / freq) : -1 }.uniq.each do |i|
+  generate_wave_table_sawtooth(i) if i != -1
 end
 
-def generate_wave_tables(name)
-  wave_table_sels = (0..(FREQ_MAX / SAMPLES_PER_CYCLE))
-  $file.printf("$wave_tables_%s = [\n", name)
-  wave_table_sels.each do |i|
-    $file.printf("  $wave_table_%s_m%d,\n", name, max_from_i(i))
+def generate_wave_tables
+  $file.printf("$wave_tables = [\n  ")
+
+  $freq_table.each_with_index do |item, idx|
+    next_freq = (item != 0) ? $freq_table[idx + 1] : 0
+    next_freq = FREQ_MAX if next_freq == 0
+    if item != 0
+      $file.printf("$wt_%-3d,", (CYCLE_RESOLUTION / 2 - 1) / next_freq)
+    else
+      $file.printf("nil    ,")
+    end
+    if idx == 127
+      $file.printf("\n")
+    elsif idx % 12 == 11
+      $file.printf("\n  ")
+    else
+      $file.printf(" ")
+    end
   end
+
   $file.printf("]\n\n")
 end
 
-overtones = (0..(FREQ_MAX / SAMPLES_PER_CYCLE)).map { |i| max_from_i(i) }.uniq
-
-overtones.each do |max|
-  generate_wave_table_sawtooth(max)
-end
-
-generate_wave_tables("sawtooth")
+generate_wave_tables
 
 $file.close

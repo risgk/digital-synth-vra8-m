@@ -4,7 +4,6 @@ require './wave-table'
 
 class VCO
   def initialize
-    @wave_tables = $wave_tables_sawtooth
     @note_number = 60
     @phase = 0
     @freq = 0
@@ -43,7 +42,7 @@ class VCO
 
   def clock(k_lfo)
     @phase += @freq
-    @phase &= 0xFFFF
+    @phase &= (CYCLE_RESOLUTION - 1)
 
     k = k_lfo << 1
 
@@ -55,7 +54,7 @@ class VCO
     a = saw_down * 128 + saw_up * (128 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
-    return high_sbyte(a)
+    return high_sbyte(a >> 1)
   end
 
   def update_freq
@@ -67,7 +66,7 @@ class VCO
   end
 
   def level_from_wave_table(phase)
-    wave_table = @wave_tables[high_byte(@freq)]
+    wave_table = $wave_tables[@note_number]
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01
     next_index &= 0xFF
