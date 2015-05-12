@@ -11,8 +11,7 @@ $file.printf("\n")
 
 $file.printf("$env_table_interval_from_time = [\n  ")
 (0..127).each do |time|
-  t = [time, 32].max
-  sec = 10.0 / (10.0 ** ((128.0 - t) / (128.0 / 4.0)))
+  sec = 10.0 / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
   interval = (sec * SAMPLING_RATE) / (Math.log(1.0 / 2.0) /
                                       Math.log(env_attack_factor / 65536.0))
 
