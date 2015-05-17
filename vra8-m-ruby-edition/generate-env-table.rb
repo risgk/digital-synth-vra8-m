@@ -2,19 +2,31 @@ require './common'
 
 $file = File::open("env-table.rb", "w")
 
-env_attack_factor = (((1.0 / 2.0) ** (1.0 / 160.0)) * 65536.0).round
-env_decay_factor = (((1.0 / 2.0) ** (1.0 / 32.0)) * 65536.0).round
+$file.printf("$env_table_attack_speed = [\n  ")
+(0..127).each do |time|
+  sec = (EG_MAX_LEVEL_16.to_f / SAMPLING_RATE) / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
+  interval = EG_MAX_LEVEL_16 / (sec * SAMPLING_RATE)
+  r = interval.round.to_i
+  $file.printf("%5d,", r)
+  if time == 127
+    $file.printf("\n")
+  elsif time % 16 == 15
+    $file.printf("\n  ")
+  else
+    $file.printf(" ")
+  end
+end
+$file.printf("]\n\n")
 
-$file.printf("ENV_ATTACK_FACTOR = %d\n", env_attack_factor)
+env_decay_factor = (((1.0 / 2.0) ** (1.0 / 16.0)) * 65536.0).round
 $file.printf("ENV_DECAY_FACTOR = %d\n", env_decay_factor)
 $file.printf("\n")
 
-$file.printf("$env_table_interval_from_time = [\n  ")
+$file.printf("$env_table_decay_interval = [\n  ")
 (0..127).each do |time|
-  sec = 10.0 / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
-  interval = (sec * SAMPLING_RATE) / (Math.log(1.0 / 2.0) /
-                                      Math.log(env_attack_factor / 65536.0))
-
+  sec = 12.8 / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
+  interval = (sec * SAMPLING_RATE) / (Math.log(1.0 / 1024.0) /
+                                      Math.log(env_decay_factor / 65536.0))
   r = interval.round.to_i
   $file.printf("%5d,", r)
   if time == 127

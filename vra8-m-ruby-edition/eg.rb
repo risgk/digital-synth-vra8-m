@@ -7,66 +7,58 @@ class EG
   STATE_RELEASE       = 2
   STATE_IDLE          = 3
 
-  LEVEL_127 = 127 << 8
-  LEVEL_254 = 254 << 8
-
   def initialize
-    @attack_interval = $env_table_interval_from_time[0]
-    @decay_interval  = $env_table_interval_from_time[0]
-    @sustain_level   = 127 << 8
-    @state           = STATE_IDLE
-    @level           = 0
-    @count           = 0
+    @attack_speed   = $env_table_attack_speed[0]
+    @decay_interval = $env_table_decay_interval[0]
+    @sustain_level  = (127 << 1) << 8
+    @state          = STATE_IDLE
+    @level          = 0
+    @decay_count    = 0
   end
 
   def set_attack(attack)
-    @attack_interval = $env_table_interval_from_time[attack]
+    @attack_speed    = $env_table_attack_speed[attack]
   end
 
   def set_decay(decay)
-    @decay_interval = $env_table_interval_from_time[decay]
+    @decay_interval = $env_table_decay_interval[decay]
   end
 
   def set_sustain(sustain)
-    @sustain_level = sustain << 8
+    @sustain_level = (sustain << 1) << 8
   end
 
   def note_on
     @state = STATE_ATTACK
-    @count = 0
+    @decay_count = 0
   end
 
   def note_off
     @state = STATE_RELEASE
-    @count = 0
+    @decay_count = 0
   end
 
   def sound_off
     @state = STATE_IDLE
-    @count = 0
+    @decay_count = 0
     @level = 0
   end
 
   def clock
     case (@state)
     when STATE_ATTACK
-      @count += 1
-      if (@count < @attack_interval)
-        return high_byte(@level)
-      end
-      @count = 0
-
-      @level = LEVEL_254 - mulsu_h16(LEVEL_254 - @level, ENV_ATTACK_FACTOR)
-      if (@level >= LEVEL_127)
+      if (@level >= EG_MAX_LEVEL_16 - @attack_speed)
         @state = STATE_DECAY_SUSTAIN
-        @level = LEVEL_127
+        @level = EG_MAX_LEVEL_16
+      else
+        @level += @attack_speed
       end
     when STATE_DECAY_SUSTAIN
-      @count += 1
-      if (@count < @decay_interval)
+      @decay_count += 1
+      if (@decay_count < @decay_interval)
         return high_byte(@level)
       end
-      @count = 0
+      @decay_count = 0
 
       if (@level > @sustain_level)
         if (@level <= (32 + @sustain_level))
@@ -77,11 +69,11 @@ class EG
         end
       end
     when STATE_RELEASE
-      @count += 1
-      if (@count < @decay_interval)
+      @decay_count += 1
+      if (@decay_count < @decay_interval)
         return high_byte(@level)
       end
-      @count = 0
+      @decay_count = 0
 
       @level = mulsu_h16(@level, ENV_DECAY_FACTOR)
       if (@level <= 32)
