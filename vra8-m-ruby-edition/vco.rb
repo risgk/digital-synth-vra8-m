@@ -44,13 +44,11 @@ class VCO
     @phase += @freq
     @phase &= (CYCLE_RESOLUTION - 1)
 
-    k = k_lfo << 1
-
     saw_down   = +level_from_wave_table(@phase)
     saw_up     = -level_from_wave_table(
-                    (@phase + @pulse_width - (k * @pw_lfo_amt)) & 0xFFFF)
+                    (@phase + @pulse_width - (k_lfo * @pw_lfo_amt)) & 0xFFFF)
     saw_down_2 = +level_from_wave_table(
-                    (@phase - @saw_shift + (k * @ss_lfo_amt)) & 0xFFFF)
+                    (@phase - @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF)
     a = saw_down * 128 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
