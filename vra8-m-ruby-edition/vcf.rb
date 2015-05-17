@@ -36,22 +36,22 @@ class VCF
 
     if ((@resonance & 0x40) != 0)
       i = cutoff * 3
-      b2_over_a0 = $lpf_table_q_2_sqrt_2[i + 0]
-      a1_over_a0 = $lpf_table_q_2_sqrt_2[i + 1]
-      a2_over_a0 = $lpf_table_q_2_sqrt_2[i + 2]
+      b2_over_a0   = $lpf_table_q_2_sqrt_2[i + 0]
+      a1_over_a0_i = $lpf_table_q_2_sqrt_2[i + 1]
+      a2_over_a0   = $lpf_table_q_2_sqrt_2[i + 2]
     else
       i = cutoff * 3
-      b2_over_a0 = $lpf_table_q_1_over_sqrt_2[i + 0]
-      a1_over_a0 = $lpf_table_q_1_over_sqrt_2[i + 1]
-      a2_over_a0 = $lpf_table_q_1_over_sqrt_2[i + 2]
+      b2_over_a0   = $lpf_table_q_1_over_sqrt_2[i + 0]
+      a1_over_a0_i = $lpf_table_q_1_over_sqrt_2[i + 1]
+      a2_over_a0   = $lpf_table_q_1_over_sqrt_2[i + 2]
     end
 
     x0 = a_in << 8
     r = x0 + (@x1 << 1) + @x2
-    tmp  = muls_h16(b2_over_a0, r)
-    tmp -= muls_h16(a1_over_a0, @y1)
-    tmp -= muls_h16(a2_over_a0, @y2)
-    y0 = tmp << (0x8000 / LPF_TABLE_ONE)
+    tmp  = muls_h16(b2_over_a0,   r)
+    tmp += muls_h16(a1_over_a0_i, @y1)
+    tmp -= muls_h16(a2_over_a0,   @y2)
+    y0 = tmp << (16 - LPF_TABLE_BITS)
     @x2 = @x1
     @y2 = @y1
     @x1 = x0
