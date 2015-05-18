@@ -184,6 +184,26 @@ function preset1() {
   onChangeControlChange(26, 0  );  // Portamento
 }
 
+function rand() {
+  return Math.floor(Math.random() * 128);
+}
+
+function setRandom() {
+  onChangeControlChange(14, rand());  // VCO Pulse/Saw Mix
+  onChangeControlChange(15, rand());  // VCO Pulse Width
+  onChangeControlChange(16, rand());  // VCO PW LFO Amt
+  onChangeControlChange(17, rand());  // VCO Saw Shift
+  onChangeControlChange(18, rand());  // VCO SS LFO Amt
+  onChangeControlChange(19, rand());  // VCF Cutoff
+  onChangeControlChange(20, rand());  // VCF Resonance
+  onChangeControlChange(21, rand());  // VCF EG Amt
+  onChangeControlChange(22, rand());  // LFO Rate
+  onChangeControlChange(23, rand());  // EG Attack
+  onChangeControlChange(24, rand());  // EG Decay
+  onChangeControlChange(25, rand());  // EG Sustain
+  onChangeControlChange(26, rand());  // Portamento
+}
+
 function noteOn(noteNumber) {
   if (midiOutput) {
     midiOutput.send([(NOTE_ON | MIDI_CH), noteNumber + transpose, 64]);
@@ -235,7 +255,7 @@ function noteOff(noteNumber) {
 <tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"></p>
+<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>
 
 <h2>Software Keyboard</h2>
 
