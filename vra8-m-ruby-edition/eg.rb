@@ -56,7 +56,7 @@ class EG
     when STATE_DECAY_SUSTAIN
       @decay_count += 1
       if (@decay_count < @decay_interval)
-        return high_byte(@level) - 128
+        return high_byte(@level) - 0x80
       end
       @decay_count = 0
 
@@ -71,12 +71,12 @@ class EG
     when STATE_RELEASE
       @decay_count += 1
       if (@decay_count < @decay_interval)
-        return high_byte(@level) - 128
+        return high_byte(@level) - 0x80
       end
       @decay_count = 0
 
       @level = mulsu_h16(@level, ENV_DECAY_FACTOR)
-      if (@level <= 32)
+      if (@level <= (EG_MAX_LEVEL_16 >> 10))
         @state = STATE_IDLE
         @level = 0
       end
@@ -84,6 +84,6 @@ class EG
       @level = 0
     end
 
-    return high_byte(@level) - 128
+    return high_byte(@level) - 0x80
   end
 end

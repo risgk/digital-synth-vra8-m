@@ -29,7 +29,7 @@ class VCF
   end
 
   def clock(a_in, k_eg)
-    cutoff = @cutoff + high_byte(@eg_amt * (k_eg + 128))
+    cutoff = @cutoff + high_byte(@eg_amt * (k_eg + 0x80))
     if (cutoff > 127)
       cutoff = 127
     end

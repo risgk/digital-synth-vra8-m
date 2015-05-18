@@ -52,7 +52,7 @@ class VCO
     a = saw_down * 127 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
-    return high_sbyte(a >> 1)
+    return high_sbyte(a) >> 1
   end
 
   def update_freq
