@@ -19,7 +19,8 @@ class LFO
     else
       k = @phase
     end
+    k -= 0x4000
 
-    return high_sbyte(k << 1)
+    return high_sbyte(k) << 1
   end
 end

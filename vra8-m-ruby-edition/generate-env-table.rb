@@ -4,7 +4,7 @@ $file = File::open("env-table.rb", "w")
 
 $file.printf("$env_table_attack_speed = [\n  ")
 (0..127).each do |time|
-  sec = (EG_MAX_LEVEL_16.to_f / SAMPLING_RATE) / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
+  sec = (EG_MAX_LEVEL_16.to_f / 15625) / (10.0 ** ((127.0 - time) / (127.0 / 3.0))) / 2.0
   interval = EG_MAX_LEVEL_16 / (sec * SAMPLING_RATE)
   r = interval.round.to_i
   $file.printf("%5d,", r)

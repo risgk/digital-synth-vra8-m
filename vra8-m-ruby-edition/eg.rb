@@ -56,7 +56,7 @@ class EG
     when STATE_DECAY_SUSTAIN
       @decay_count += 1
       if (@decay_count < @decay_interval)
-        return high_byte(@level)
+        return high_byte(@level) - 128
       end
       @decay_count = 0
 
@@ -71,7 +71,7 @@ class EG
     when STATE_RELEASE
       @decay_count += 1
       if (@decay_count < @decay_interval)
-        return high_byte(@level)
+        return high_byte(@level) - 128
       end
       @decay_count = 0
 
@@ -84,6 +84,6 @@ class EG
       @level = 0
     end
 
-    return high_byte(@level)
+    return high_byte(@level) - 128
   end
 end

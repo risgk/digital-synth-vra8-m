@@ -48,8 +48,8 @@ class VCO
     saw_up     = -level_from_wave_table(
                     (@phase + @pulse_width - (k_lfo * @pw_lfo_amt)) & 0xFFFF)
     saw_down_2 = +level_from_wave_table(
-                    (@phase - @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF)
-    a = saw_down * 128 + saw_up * (127 - @pulse_saw_mix) +
+                    (@phase + @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF)
+    a = saw_down * 127 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
     return high_sbyte(a >> 1)
