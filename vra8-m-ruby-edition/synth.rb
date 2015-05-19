@@ -143,7 +143,7 @@ class Synth
     when EG_SUSTAIN
       $eg.set_sustain(value)
     when PORTAMENTO
-      # todo
+      $vco.set_portamento(value)
     when ALL_NOTES_OFF
       $eg.note_off
     end

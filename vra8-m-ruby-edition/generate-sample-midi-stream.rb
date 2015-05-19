@@ -43,7 +43,7 @@ control_change(LFO_RATE,          16 )
 control_change(EG_ATTACK,         64 )
 control_change(EG_DECAY,          96 )
 control_change(EG_SUSTAIN,        127)
-control_change(PORTAMENTO,        0  )
+control_change(PORTAMENTO,        64 )
 
 play_cdefgabc(2)
 play_cdefgabc(3)

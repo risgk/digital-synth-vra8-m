@@ -33,7 +33,7 @@ def generate_wave_table_sawtooth(max)
 end
 
 # todo: improve
-$freq_table.map { |freq| (freq != 0) ? ((CYCLE_RESOLUTION / 2 - 1) / freq) : -1 }.uniq.each do |i|
+$freq_table.map { |freq| (freq != 0) ? ((CYCLE_RESOLUTION / 2 - 1) / (freq / 2)) : -1 }.uniq.each do |i|
   generate_wave_table_sawtooth(i) if i != -1
 end
 
@@ -44,7 +44,7 @@ def generate_wave_tables
     next_freq = (item != 0) ? $freq_table[idx + 1] : 0
     next_freq = FREQ_MAX if next_freq == 0
     if item != 0
-      $file.printf("$wt_%-3d,", (CYCLE_RESOLUTION / 2 - 1) / next_freq)
+      $file.printf("$wt_%-3d,", (CYCLE_RESOLUTION / 2 - 1) / (next_freq / 2))
     else
       $file.printf("nil    ,")
     end

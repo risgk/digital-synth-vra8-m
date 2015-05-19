@@ -4,7 +4,8 @@ require './wave-table'
 
 class VCO
   def initialize
-    @note_number = 60
+    @target_pitch = NOTE_NUMBER_MIN << 8
+    @pitch = NOTE_NUMBER_MIN << 8
     @phase = 0
     @freq = 0
 
@@ -13,6 +14,8 @@ class VCO
     @pw_lfo_amt = 0 << 1
     @saw_shift = 0 << 8
     @ss_lfo_amt = 0 << 1
+
+    @portamento_speed = 0
   end
 
   def set_pulse_saw_mix(pulse_saw_mix)
@@ -35,36 +38,47 @@ class VCO
     @ss_lfo_amt = ss_lfo_amt << 1
   end
 
+  def set_portamento(portamento)
+    @portamento_speed = 128 >> (portamento >> 4)
+  end
+
   def note_on(note_number)
-    @note_number = note_number
-    update_freq
+    if (note_number < NOTE_NUMBER_MIN)
+      @target_pitch = NOTE_NUMBER_MIN << 8
+    elsif (note_number > NOTE_NUMBER_MAX)
+      @target_pitch = NOTE_NUMBER_MAX << 8
+    else
+      @target_pitch = note_number << 8
+    end
   end
 
   def clock(k_lfo)
+    if (@pitch > @target_pitch + @portamento_speed)
+      @pitch -= @portamento_speed
+    elsif (@pitch < @target_pitch - @portamento_speed)
+      @pitch += @portamento_speed
+    else
+      @pitch = @target_pitch
+    end
+    @freq = mul_h16($freq_table[high_byte(@pitch)], $tune_table[(low_byte(@pitch) >> 4)])
+
     @phase += @freq
     @phase &= (CYCLE_RESOLUTION - 1)
 
-    saw_down   = +level_from_wave_table(@phase)
+    pitch_high = high_byte(@pitch)
+    saw_down   = +level_from_wave_table(@phase, pitch_high)
     saw_up     = -level_from_wave_table(
-                    (@phase + @pulse_width - (k_lfo * @pw_lfo_amt)) & 0xFFFF)
+                    (@phase + @pulse_width - (k_lfo * @pw_lfo_amt)) & 0xFFFF, pitch_high)
     saw_down_2 = +level_from_wave_table(
-                    (@phase + @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF)
+                    (@phase + @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF, pitch_high)
     a = saw_down * 127 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
     return high_sbyte(a) >> 1
   end
 
-  def update_freq
-    if ((@note_number < NOTE_NUMBER_MIN) || (@note_number > NOTE_NUMBER_MAX))
-      @freq = 0
-    else
-      @freq = $freq_table[@note_number]
-    end
-  end
-
-  def level_from_wave_table(phase)
-    wave_table = $wave_tables[@note_number]
+  def level_from_wave_table(phase, pitch_high)
+    wave_table = $wave_tables[pitch_high]
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01
     next_index &= 0xFF
