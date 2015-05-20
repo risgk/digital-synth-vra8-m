@@ -40,7 +40,7 @@
 ## Controllers
 
     +-------------------+---------------+---------------+---------------+
-    | Controller        | 0             | 64            | 127           |
+    | Controller        | Value 0       | Value 64      | Value 127     |
     +-------------------+---------------+---------------+---------------+
     | VCO Pulse/Saw Mix | Pulse 100%    | Pulse 50.4%   | Pulse 0%      |
     |                   | Saw 0%        | Saw 49.6%     | Saw 100%      |
@@ -95,10 +95,10 @@
     |                            19 | x             | o             | VCF Cutoff            |
     |                            20 | x             | o             | VCF Resonance         |
     |                            21 | x             | o             | VCF EG Amt            |
-    |                            22 | x             | o             | LFO Rate              |
-    |                            23 | x             | o             | EG Attack             |
-    |                            24 | x             | o             | EG Decay              |
-    |                            25 | x             | o             | EG Sustain            |
+    |                            22 | x             | o             | EG Attack             |
+    |                            23 | x             | o             | EG Decay              |
+    |                            24 | x             | o             | EG Sustain            |
+    |                            25 | x             | o             | LFO Rate              |
     |                            26 | x             | o             | Portamento            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |

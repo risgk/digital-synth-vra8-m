@@ -39,10 +39,10 @@ VCO_SS_LFO_AMT    = 18
 VCF_CUTOFF        = 19
 VCF_RESONANCE     = 20
 VCF_EG_AMT        = 21
-LFO_RATE          = 22
-EG_ATTACK         = 23
-EG_DECAY          = 24
-EG_SUSTAIN        = 25
+EG_ATTACK         = 22
+EG_DECAY          = 23
+EG_SUSTAIN        = 24
+LFO_RATE          = 25
 PORTAMENTO        = 26
 ALL_NOTES_OFF     = 123
 
@@ -60,22 +60,19 @@ end
 
 # refs http://www.atmel.com/images/doc1631.pdf
 
-def mul_h16(x, y)
-  # result is approximated
+def mul_16_high(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_byte(high_byte(x) * low_byte(y))
   result += high_byte(x) * high_byte(y)
 end
 
-def muls_h16(x, y)
-  # result is approximated
+def muls_16_high(x, y)
   result  = high_sbyte(low_byte(x) * high_sbyte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_sbyte(y)
 end
 
-def mulsu_h16(x, y)
-  # result is approximated
+def mulsu_16_high(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_byte(y)

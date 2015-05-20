@@ -12,31 +12,31 @@ class VCO
     @ss_lfo_amt = 0 << 1
   end
 
-  def set_pulse_saw_mix(control_value)
-    @pulse_saw_mix = control_value
+  def set_pulse_saw_mix(controller_value)
+    @pulse_saw_mix = controller_value
   end
 
-  def set_pulse_width(control_value)
-    @pulse_width = (control_value + 128) << 8
+  def set_pulse_width(controller_value)
+    @pulse_width = (controller_value + 128) << 8
   end
 
-  def set_pw_lfo_amt(control_value)
-    @pw_lfo_amt = control_value << 1
+  def set_pw_lfo_amt(controller_value)
+    @pw_lfo_amt = controller_value << 1
   end
 
-  def set_saw_shift(control_value)
-    @saw_shift = control_value << 8
+  def set_saw_shift(controller_value)
+    @saw_shift = controller_value << 8
   end
 
-  def set_ss_lfo_amt(control_value)
-    @ss_lfo_amt = control_value << 1
+  def set_ss_lfo_amt(controller_value)
+    @ss_lfo_amt = controller_value << 1
   end
 
   def clock(pitch, k_lfo)
     pitch_high = high_byte(pitch)
     pitch_low = low_byte(pitch)
 
-    freq = mul_h16($freq_table[pitch_high], $tune_table[pitch_low >> 4])
+    freq = mul_16_high($freq_table[pitch_high], $tune_table[pitch_low >> 4])
     @phase += freq
     @phase &= (CYCLE_RESOLUTION - 1)
 

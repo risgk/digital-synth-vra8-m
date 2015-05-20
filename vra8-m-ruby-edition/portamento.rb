@@ -7,8 +7,8 @@ class Portamento
     @portamento_speed = 0
   end
 
-  def set_portamento(control_value)
-    @portamento_speed = 128 >> (control_value >> 4)
+  def set_portamento(controller_value)
+    @portamento_speed = 128 >> (controller_value >> 4)
   end
 
   def clock(note_number)

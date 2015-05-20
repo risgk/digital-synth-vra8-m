@@ -16,16 +16,16 @@ class EG
     @decay_count    = 0
   end
 
-  def set_attack(control_value)
-    @attack_speed    = $env_table_attack_speed[control_value]
+  def set_attack(controller_value)
+    @attack_speed    = $env_table_attack_speed[controller_value]
   end
 
-  def set_decay(control_value)
-    @decay_interval = $env_table_decay_interval[control_value]
+  def set_decay(controller_value)
+    @decay_interval = $env_table_decay_interval[controller_value]
   end
 
-  def set_sustain(control_value)
-    @sustain_level = (control_value << 1) << 8
+  def set_sustain(controller_value)
+    @sustain_level = (controller_value << 1) << 8
   end
 
   def note_on
@@ -65,7 +65,7 @@ class EG
           @level = @sustain_level
         elsif
           @level = @sustain_level +
-                   mulsu_h16(@level - @sustain_level, ENV_DECAY_FACTOR)
+                   mulsu_16_high(@level - @sustain_level, ENV_DECAY_FACTOR)
         end
       end
     when STATE_RELEASE
@@ -75,7 +75,7 @@ class EG
       end
       @decay_count = 0
 
-      @level = mulsu_h16(@level, ENV_DECAY_FACTOR)
+      @level = mulsu_16_high(@level, ENV_DECAY_FACTOR)
       if (@level <= (EG_MAX_LEVEL_16 >> 10))
         @state = STATE_IDLE
         @level = 0

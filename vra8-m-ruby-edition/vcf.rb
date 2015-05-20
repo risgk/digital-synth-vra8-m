@@ -16,16 +16,16 @@ class VCF
     @y2 = 0
   end
 
-  def set_cutoff(control_value)
-    @cutoff = control_value
+  def set_cutoff(controller_value)
+    @cutoff = controller_value
   end
 
-  def set_resonance(control_value)
-    @resonance = control_value
+  def set_resonance(controller_value)
+    @resonance = controller_value
   end
 
-  def set_eg_amt(control_value)
-    @eg_amt = control_value
+  def set_eg_amt(controller_value)
+    @eg_amt = controller_value
   end
 
   def clock(a_in, k_eg)
@@ -48,9 +48,9 @@ class VCF
 
     x0 = a_in << 8
     r = x0 + (@x1 << 1) + @x2
-    tmp  = muls_h16(b2_over_a0, r)
-    tmp -= muls_h16(a1_over_a0, @y1)
-    tmp -= muls_h16(a2_over_a0, @y2)
+    tmp  = muls_16_high(b2_over_a0, r)
+    tmp -= muls_16_high(a1_over_a0, @y1)
+    tmp -= muls_16_high(a2_over_a0, @y2)
     y0 = tmp << (16 - LPF_TABLE_BITS)
     @x2 = @x1
     @y2 = @y1
