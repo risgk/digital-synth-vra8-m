@@ -1,9 +1,9 @@
 # VRA8-M Ruby Edition
 
-require './common'
-require './synth'
-require './audio-out'
-require './wav-file-out'
+require_relative 'common'
+require_relative 'synth'
+require_relative 'audio-out'
+require_relative 'wav-file-out'
 
 OPTION_RECORDING = false
 

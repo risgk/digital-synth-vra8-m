@@ -1,4 +1,4 @@
-require './common'
+require_relative 'common'
 
 class LFO
   def initialize

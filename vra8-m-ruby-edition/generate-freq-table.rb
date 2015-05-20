@@ -1,4 +1,4 @@
-require './common'
+require_relative 'common'
 
 $file = File::open("freq-table.rb", "w")
 

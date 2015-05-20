@@ -1,4 +1,4 @@
-require './common'
+require_relative 'common'
 
 class VCA
   def clock(a_in, k_eg)

@@ -1,5 +1,5 @@
-require './common'
-require './lpf-table'
+require_relative 'common'
+require_relative 'lpf-table'
 
 # refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
 # Cookbook formulae for audio EQ biquad filter coefficients

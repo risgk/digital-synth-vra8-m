@@ -1,5 +1,5 @@
-require './common'
-require './env-table'
+require_relative 'common'
+require_relative 'env-table'
 
 class EG
   STATE_ATTACK        = 0

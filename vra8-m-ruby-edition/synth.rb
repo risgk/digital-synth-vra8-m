@@ -1,9 +1,9 @@
-require './common'
-require './vco'
-require './vcf'
-require './vca'
-require './lfo'
-require './eg'
+require_relative 'common'
+require_relative 'vco'
+require_relative 'vcf'
+require_relative 'vca'
+require_relative 'lfo'
+require_relative 'eg'
 
 $vco = VCO.new
 $vcf = VCF.new

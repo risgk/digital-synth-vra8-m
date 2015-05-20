@@ -1,5 +1,5 @@
-require './common'
-require './freq-table'
+require_relative 'common'
+require_relative 'freq-table'
 
 FREQ_MAX = $freq_table.max
 

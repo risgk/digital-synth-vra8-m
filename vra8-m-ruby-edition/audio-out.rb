@@ -1,4 +1,4 @@
-require './common'
+require_relative 'common'
 require 'win32/sound'
 
 class AudioOut

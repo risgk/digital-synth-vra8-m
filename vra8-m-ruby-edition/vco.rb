@@ -1,6 +1,6 @@
-require './common'
-require './freq-table'
-require './wave-table'
+require_relative 'common'
+require_relative 'freq-table'
+require_relative 'wave-table'
 
 class VCO
   def initialize
