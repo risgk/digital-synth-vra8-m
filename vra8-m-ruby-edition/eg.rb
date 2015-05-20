@@ -8,17 +8,17 @@ class EG
   STATE_IDLE          = 3
 
   def initialize
-    @attack_speed   = $env_table_attack_speed[0]
+    @attack_rate = $env_table_attack_rate[0]
     @decay_interval = $env_table_decay_interval[0]
-    @sustain_level  = (127 << 1) << 8
+    @sustain_level = (127 << 1) << 8
 
-    @state          = STATE_IDLE
-    @decay_count    = 0
-    @level          = 0
+    @state = STATE_IDLE
+    @decay_count = 0
+    @level = 0
   end
 
   def set_attack(controller_value)
-    @attack_speed    = $env_table_attack_speed[controller_value]
+    @attack_rate = $env_table_attack_rate[controller_value]
   end
 
   def set_decay(controller_value)
@@ -48,11 +48,11 @@ class EG
   def clock
     case (@state)
     when STATE_ATTACK
-      if (@level >= EG_LEVEL_MAX - @attack_speed)
+      if (@level >= EG_LEVEL_MAX - @attack_rate)
         @state = STATE_DECAY_SUSTAIN
         @level = EG_LEVEL_MAX
       else
-        @level += @attack_speed
+        @level += @attack_rate
       end
     when STATE_DECAY_SUSTAIN
       @decay_count += 1

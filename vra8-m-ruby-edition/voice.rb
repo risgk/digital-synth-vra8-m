@@ -4,7 +4,7 @@ require_relative 'vcf'
 require_relative 'vca'
 require_relative 'eg'
 require_relative 'lfo'
-require_relative 'glide'
+require_relative 'slew-limiter'
 
 class Voice
   def initialize
@@ -13,7 +13,7 @@ class Voice
     @vca = VCA.new
     @eg = EG.new
     @lfo = LFO.new
-    @glide = Glide.new
+    @slew_limiter = SlewLimiter.new
 
     @note_number = NOTE_NUMBER_MIN
   end
@@ -21,7 +21,7 @@ class Voice
   def clock
     k_eg = @eg.clock
     k_lfo = @lfo.clock
-    k_pitch = @glide.clock(@note_number << 8)
+    k_pitch = @slew_limiter.clock(@note_number << 8)
 
     a = @vco.clock(k_pitch, k_lfo)
     a = @vcf.clock(a, k_eg)
@@ -68,7 +68,7 @@ class Voice
     when EG_SUSTAIN
       @eg.set_sustain(controller_value)
     when PORTAMENTO
-      @glide.set_portamento(controller_value)
+      @slew_limiter.set_slew_time(controller_value)
     when ALL_NOTES_OFF
       @eg.note_off
     end
