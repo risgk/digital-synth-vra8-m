@@ -16,16 +16,16 @@ class EG
     @decay_count    = 0
   end
 
-  def set_attack(attack)
-    @attack_speed    = $env_table_attack_speed[attack]
+  def set_attack(control_value)
+    @attack_speed    = $env_table_attack_speed[control_value]
   end
 
-  def set_decay(decay)
-    @decay_interval = $env_table_decay_interval[decay]
+  def set_decay(control_value)
+    @decay_interval = $env_table_decay_interval[control_value]
   end
 
-  def set_sustain(sustain)
-    @sustain_level = (sustain << 1) << 8
+  def set_sustain(control_value)
+    @sustain_level = (control_value << 1) << 8
   end
 
   def note_on

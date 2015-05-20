@@ -115,34 +115,34 @@ class Synth
     end
   end
 
-  def control_change(controller_number, value)
+  def control_change(controller_number, control_value)
     case (controller_number)
     when VCO_PULSE_SAW_MIX
-      $vco.set_pulse_saw_mix(value)
+      $vco.set_pulse_saw_mix(control_value)
     when VCO_PULSE_WIDTH
-      $vco.set_pulse_width(value)
+      $vco.set_pulse_width(control_value)
     when VCO_PW_LFO_AMT
-      $vco.set_pw_lfo_amt(value)
+      $vco.set_pw_lfo_amt(control_value)
     when VCO_SAW_SHIFT
-      $vco.set_saw_shift(value)
+      $vco.set_saw_shift(control_value)
     when VCO_SS_LFO_AMT
-      $vco.set_ss_lfo_amt(value)
+      $vco.set_ss_lfo_amt(control_value)
     when VCF_CUTOFF
-      $vcf.set_cutoff(value)
+      $vcf.set_cutoff(control_value)
     when VCF_RESONANCE
-      $vcf.set_resonance(value)
+      $vcf.set_resonance(control_value)
     when VCF_EG_AMT
-      $vcf.set_eg_amt(value)
+      $vcf.set_eg_amt(control_value)
     when LFO_RATE
-      $lfo.set_rate(value)
+      $lfo.set_rate(control_value)
     when EG_ATTACK
-      $eg.set_attack(value)
+      $eg.set_attack(control_value)
     when EG_DECAY
-      $eg.set_decay(value)
+      $eg.set_decay(control_value)
     when EG_SUSTAIN
-      $eg.set_sustain(value)
+      $eg.set_sustain(control_value)
     when PORTAMENTO
-      $portamento.set_portamento(value)
+      $portamento.set_portamento(control_value)
     when ALL_NOTES_OFF
       $eg.note_off
     end

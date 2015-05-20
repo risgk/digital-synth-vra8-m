@@ -6,8 +6,8 @@ class LFO
     @rate = 16
   end
 
-  def set_rate(rate)
-    @rate = (rate >> 2) + 1
+  def set_rate(control_value)
+    @rate = (control_value >> 2) + 1
   end
 
   def clock

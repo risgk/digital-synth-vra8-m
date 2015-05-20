@@ -12,24 +12,24 @@ class VCO
     @ss_lfo_amt = 0 << 1
   end
 
-  def set_pulse_saw_mix(pulse_saw_mix)
-    @pulse_saw_mix = pulse_saw_mix
+  def set_pulse_saw_mix(control_value)
+    @pulse_saw_mix = control_value
   end
 
-  def set_pulse_width(pulse_width)
-    @pulse_width = (pulse_width + 128) << 8
+  def set_pulse_width(control_value)
+    @pulse_width = (control_value + 128) << 8
   end
 
-  def set_pw_lfo_amt(pw_lfo_amt)
-    @pw_lfo_amt = pw_lfo_amt << 1
+  def set_pw_lfo_amt(control_value)
+    @pw_lfo_amt = control_value << 1
   end
 
-  def set_saw_shift(saw_shift)
-    @saw_shift = saw_shift << 8
+  def set_saw_shift(control_value)
+    @saw_shift = control_value << 8
   end
 
-  def set_ss_lfo_amt(ss_lfo_amt)
-    @ss_lfo_amt = ss_lfo_amt << 1
+  def set_ss_lfo_amt(control_value)
+    @ss_lfo_amt = control_value << 1
   end
 
   def clock(pitch, k_lfo)

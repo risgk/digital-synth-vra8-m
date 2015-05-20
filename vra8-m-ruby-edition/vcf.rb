@@ -16,16 +16,16 @@ class VCF
     @y2 = 0
   end
 
-  def set_cutoff(cutoff)
-    @cutoff = cutoff
+  def set_cutoff(control_value)
+    @cutoff = control_value
   end
 
-  def set_resonance(resonance)
-    @resonance = resonance
+  def set_resonance(control_value)
+    @resonance = control_value
   end
 
-  def set_eg_amt(eg_amt)
-    @eg_amt = eg_amt
+  def set_eg_amt(control_value)
+    @eg_amt = control_value
   end
 
   def clock(a_in, k_eg)
