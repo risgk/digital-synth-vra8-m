@@ -1,6 +1,6 @@
 require_relative 'common'
 
-$file = File::open("freq-table.rb", "w")
+$file = File.open("freq-table.rb", "w")
 
 def generate_freq_table
   $file.printf("$freq_table = [\n  ")

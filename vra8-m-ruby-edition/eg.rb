@@ -11,9 +11,10 @@ class EG
     @attack_speed   = $env_table_attack_speed[0]
     @decay_interval = $env_table_decay_interval[0]
     @sustain_level  = (127 << 1) << 8
+
     @state          = STATE_IDLE
-    @level          = 0
     @decay_count    = 0
+    @level          = 0
   end
 
   def set_attack(controller_value)
@@ -47,9 +48,9 @@ class EG
   def clock
     case (@state)
     when STATE_ATTACK
-      if (@level >= EG_MAX_LEVEL_16 - @attack_speed)
+      if (@level >= EG_LEVEL_MAX - @attack_speed)
         @state = STATE_DECAY_SUSTAIN
-        @level = EG_MAX_LEVEL_16
+        @level = EG_LEVEL_MAX
       else
         @level += @attack_speed
       end
@@ -76,7 +77,7 @@ class EG
       @decay_count = 0
 
       @level = mulsu_16_high(@level, ENV_DECAY_FACTOR)
-      if (@level <= (EG_MAX_LEVEL_16 >> 10))
+      if (@level <= (EG_LEVEL_MAX >> 10))
         @state = STATE_IDLE
         @level = 0
       end

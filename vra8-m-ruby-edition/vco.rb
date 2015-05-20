@@ -38,7 +38,7 @@ class VCO
 
     freq = mul_16_high($freq_table[pitch_high], $tune_table[pitch_low >> 4])
     @phase += freq
-    @phase &= (CYCLE_RESOLUTION - 1)
+    @phase &= (VCO_PHASE_RESOLUTION - 1)
 
     saw_down   = +get_level_from_wave_table(@phase, pitch_high)
     saw_up     = -get_level_from_wave_table(

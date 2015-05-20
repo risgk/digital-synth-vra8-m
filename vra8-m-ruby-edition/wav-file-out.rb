@@ -1,10 +1,8 @@
 require_relative 'common'
 
 class WAVFileOut
-  SEC = 60
-
-  def initialize(path)
-    @file = File::open(path, "wb")
+  def initialize(path, sec)
+    @file = File.open(path, "wb")
     @file.write("RIFF")
     @file.write([0].pack("V"))
     @file.write("WAVE")
@@ -15,7 +13,7 @@ class WAVFileOut
     @file.write([1, 8].pack("v*"))
     @file.write("data")
     @file.write([0].pack("V"))
-    @max_size = SAMPLING_RATE * SEC
+    @max_size = SAMPLING_RATE * sec
     @data_size = 0
     @closed = false
   end

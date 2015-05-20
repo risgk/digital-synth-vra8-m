@@ -2,8 +2,7 @@ require_relative 'common'
 
 class Portamento
   def initialize
-    @target_pitch = NOTE_NUMBER_MIN << 8
-    @current_pitch = NOTE_NUMBER_MIN << 8
+    @pitch = NOTE_NUMBER_MIN << 8
     @portamento_speed = 0
   end
 
@@ -14,14 +13,14 @@ class Portamento
   def clock(note_number)
     target_pitch = note_number << 8
 
-    if (@current_pitch > target_pitch + @portamento_speed)
-      @current_pitch -= @portamento_speed
-    elsif (@current_pitch < target_pitch - @portamento_speed)
-      @current_pitch += @portamento_speed
+    if (@pitch > target_pitch + @portamento_speed)
+      @pitch -= @portamento_speed
+    elsif (@pitch < target_pitch - @portamento_speed)
+      @pitch += @portamento_speed
     else
-      @current_pitch = target_pitch
+      @pitch = target_pitch
     end
 
-    return @current_pitch
+    return @pitch
   end
 end

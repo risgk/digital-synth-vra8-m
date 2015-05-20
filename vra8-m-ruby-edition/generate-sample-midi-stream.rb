@@ -1,6 +1,6 @@
 require_relative 'common'
 
-$file = File::open("sample-midi-stream.bin", "wb")
+$file = File.open("sample-midi-stream.bin", "wb")
 
 def control_change(control_number, value)
     $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))

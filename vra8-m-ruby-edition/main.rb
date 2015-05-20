@@ -1,28 +1,36 @@
 # VRA8-M Ruby Edition
 
 require_relative 'common'
-require_relative 'voice'
+require_relative 'synth'
 require_relative 'audio-out'
 require_relative 'wav-file-out'
 
-OPTION_RECORDING = false
+RECORDING_FILE = "a.wav"
+RECORDING_SEC = 60
+RECORDING_REAL_TIME = false
 
-$voice = Voice.new
+AUDIO_OUT_BUFFER_SIZE = 500
+AUDIO_OUT_NUM_OF_BUFFER = 4
+
+$synth = Synth.new
 
 if ARGV.length == 1
-  File::open(ARGV[0], "rb") do |bin_file|
-    wav_file_out = WAVFileOut.new("./a.wav")
+  # make WAV file
+  File.open(ARGV[0], "rb") do |bin_file|
+    wav_file_out = WAVFileOut.new(RECORDING_FILE, RECORDING_SEC)
     while(c = bin_file.read(1)) do
       b = c.ord
-      $voice.receive_midi_byte(b)
+      $synth.receive_midi_byte(b)
       4.times do
-        a = $voice.clock
+        a = $synth.clock
         wav_file_out.write(a)
       end
     end
     wav_file_out.close
   end
 else
+  # real time play
+
   require 'unimidi'
   # workaround: midi-jruby (0.0.12) cannot receive a data byte 2 with a value of 0
   module MIDIJRuby
@@ -42,23 +50,24 @@ else
       end
     end
   end
+
   require 'thread'
   q = Queue.new
   t = Thread.new do
-    wav_file_out = WAVFileOut.new("./a.wav") if OPTION_RECORDING
-    AudioOut::open
+    wav_file_out = WAVFileOut.new(RECORDING_FILE, RECORDING_SEC) if RECORDING_REAL_TIME
+    AudioOut.open(AUDIO_OUT_BUFFER_SIZE, AUDIO_OUT_NUM_OF_BUFFER)
     loop do
       if (!q.empty?)
         n = q.pop
         n.each do |e|
           e[:data].each do |b|
-            $voice.receive_midi_byte(b)
+            $synth.receive_midi_byte(b)
           end
         end
       end
-      a = $voice.clock
-      wav_file_out.write(a) if OPTION_RECORDING
-      AudioOut::write(a)
+      a = $synth.clock
+      wav_file_out.write(a) if RECORDING_REAL_TIME
+      AudioOut.write(a)
     end
   end
   UniMIDI::Input.gets do |input|
