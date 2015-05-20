@@ -11,8 +11,8 @@ class Voice
     @vco = VCO.new
     @vcf = VCF.new
     @vca = VCA.new
-    @lfo = LFO.new
     @eg = EG.new
+    @lfo = LFO.new
     @glide = Glide.new
 
     @note_number = NOTE_NUMBER_MIN
@@ -21,10 +21,12 @@ class Voice
   def clock
     k_eg = @eg.clock
     k_lfo = @lfo.clock
-    pitch = @glide.clock(@note_number)
-    a = @vco.clock(pitch, k_lfo)
+    k_pitch = @glide.clock(@note_number << 8)
+
+    a = @vco.clock(k_pitch, k_lfo)
     a = @vcf.clock(a, k_eg)
     a = @vca.clock(a, k_eg)
+
     return a
   end
 

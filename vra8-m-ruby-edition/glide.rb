@@ -10,15 +10,13 @@ class Glide
     @portamento_speed = 128 >> (controller_value >> 4)
   end
 
-  def clock(note_number)
-    target_pitch = note_number << 8
-
-    if (@pitch > target_pitch + @portamento_speed)
+  def clock(k_pitch_in)
+    if (@pitch > k_pitch_in + @portamento_speed)
       @pitch -= @portamento_speed
-    elsif (@pitch < target_pitch - @portamento_speed)
+    elsif (@pitch < k_pitch_in - @portamento_speed)
       @pitch += @portamento_speed
     else
-      @pitch = target_pitch
+      @pitch = k_pitch_in
     end
 
     return @pitch

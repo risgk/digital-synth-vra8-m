@@ -32,9 +32,9 @@ class VCO
     @ss_lfo_amt = controller_value << 1
   end
 
-  def clock(pitch, k_lfo)
-    pitch_high = high_byte(pitch)
-    pitch_low = low_byte(pitch)
+  def clock(k_pitch_in, k_lfo_in)
+    pitch_high = high_byte(k_pitch_in)
+    pitch_low = low_byte(k_pitch_in)
 
     freq = mul_16_high($freq_table[pitch_high], $tune_table[pitch_low >> 4])
     @phase += freq
@@ -42,9 +42,9 @@ class VCO
 
     saw_down   = +get_level_from_wave_table(@phase, pitch_high)
     saw_up     = -get_level_from_wave_table(
-                    (@phase + @pulse_width - (k_lfo * @pw_lfo_amt)) & 0xFFFF, pitch_high)
+                    (@phase + @pulse_width - (k_lfo_in * @pw_lfo_amt)) & 0xFFFF, pitch_high)
     saw_down_2 = +get_level_from_wave_table(
-                    (@phase + @saw_shift + (k_lfo * @ss_lfo_amt)) & 0xFFFF, pitch_high)
+                    (@phase + @saw_shift + (k_lfo_in * @ss_lfo_amt)) & 0xFFFF, pitch_high)
     a = saw_down * 127 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
