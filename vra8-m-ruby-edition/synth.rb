@@ -2,14 +2,16 @@ require_relative 'common'
 require_relative 'vco'
 require_relative 'vcf'
 require_relative 'vca'
-require_relative 'lfo'
 require_relative 'eg'
+require_relative 'lfo'
+require_relative 'portamento'
 
 $vco = VCO.new
 $vcf = VCF.new
 $vca = VCA.new
 $lfo = LFO.new
 $eg = EG.new
+$portamento = Portamento.new
 
 class Synth
   def initialize
@@ -17,7 +19,7 @@ class Synth
     @system_data_remaining = 0
     @running_status = STATUS_BYTE_INVALID
     @first_data = DATA_BYTE_INVALID
-    @note_number = 60
+    @note_number = NOTE_NUMBER_MIN
   end
 
   def receive_midi_byte(b)
@@ -77,32 +79,33 @@ class Synth
   end
 
   def clock
-    k_lfo = $lfo.clock
     k_eg = $eg.clock
-    a = $vco.clock(k_lfo)
+    k_lfo = $lfo.clock
+    pitch = $portamento.clock(@note_number)
+    a = $vco.clock(pitch, k_lfo)
     a = $vcf.clock(a, k_eg)
     a = $vca.clock(a, k_eg)
+    return a
   end
 
   def real_message?(b)
-    b >= REAL_MESSAGE_MIN
+    return b >= REAL_MESSAGE_MIN
   end
 
   def system_message?(b)
-    b >= SYSTEM_MESSAGE_MIN
+    return b >= SYSTEM_MESSAGE_MIN
   end
 
   def status_byte?(b)
-    b >= STATUS_BYTE_MIN
+    return b >= STATUS_BYTE_MIN
   end
 
   def data_byte?(b)
-    b <= DATA_BYTE_MAX
+    return b <= DATA_BYTE_MAX
   end
 
   def note_on(note_number)
     @note_number = note_number
-    $vco.note_on(@note_number)
     $eg.note_on
   end
 
@@ -110,10 +113,6 @@ class Synth
     if (note_number == @note_number)
       $eg.note_off
     end
-  end
-
-  def sound_off
-    $eg.sound_off
   end
 
   def control_change(controller_number, value)
@@ -143,7 +142,7 @@ class Synth
     when EG_SUSTAIN
       $eg.set_sustain(value)
     when PORTAMENTO
-      $vco.set_portamento(value)
+      $portamento.set_portamento(value)
     when ALL_NOTES_OFF
       $eg.note_off
     end
