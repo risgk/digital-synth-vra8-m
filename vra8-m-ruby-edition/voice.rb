@@ -13,7 +13,7 @@ $lfo = LFO.new
 $eg = EG.new
 $portamento = Portamento.new
 
-class Synth
+class Voice
   def initialize
     @system_exclusive = false
     @system_data_remaining = 0

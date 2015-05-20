@@ -1,22 +1,22 @@
 # VRA8-M Ruby Edition
 
 require_relative 'common'
-require_relative 'synth'
+require_relative 'voice'
 require_relative 'audio-out'
 require_relative 'wav-file-out'
 
 OPTION_RECORDING = false
 
-$synth = Synth.new
+$voice = Voice.new
 
 if ARGV.length == 1
   File::open(ARGV[0], "rb") do |bin_file|
     wav_file_out = WAVFileOut.new("./a.wav")
     while(c = bin_file.read(1)) do
       b = c.ord
-      $synth.receive_midi_byte(b)
+      $voice.receive_midi_byte(b)
       4.times do
-        a = $synth.clock
+        a = $voice.clock
         wav_file_out.write(a)
       end
     end
@@ -52,11 +52,11 @@ else
         n = q.pop
         n.each do |e|
           e[:data].each do |b|
-            $synth.receive_midi_byte(b)
+            $voice.receive_midi_byte(b)
           end
         end
       end
-      a = $synth.clock
+      a = $voice.clock
       wav_file_out.write(a) if OPTION_RECORDING
       AudioOut::write(a)
     end
