@@ -1,10 +1,10 @@
 require_relative 'common'
 require_relative 'voice'
 
-$voice = Voice.new
-
 class Synth
   def initialize
+    @voice = Voice.new
+
     @system_exclusive = false
     @system_data_remaining = 0
     @running_status = STATUS_BYTE_INVALID
@@ -68,7 +68,7 @@ class Synth
   end
 
   def clock
-    return $voice.clock
+    return @voice.clock
   end
 
   def real_message?(b)
@@ -88,14 +88,14 @@ class Synth
   end
 
   def note_on(note_number)
-    $voice.note_on(note_number)
+    @voice.note_on(note_number)
   end
 
   def note_off(note_number)
-    $voice.note_off(note_number)
+    @voice.note_off(note_number)
   end
 
   def control_change(controller_number, controller_value)
-    $voice.control_change(controller_number, controller_value)
+    @voice.control_change(controller_number, controller_value)
   end
 end

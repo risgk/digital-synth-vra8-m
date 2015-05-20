@@ -15,7 +15,9 @@ AUDIO_OUT_NUM_OF_BUFFER = 4
 $synth = Synth.new
 
 if ARGV.length == 1
+
   # make WAV file
+
   File.open(ARGV[0], "rb") do |bin_file|
     wav_file_out = WAVFileOut.new(RECORDING_FILE, RECORDING_SEC)
     while(c = bin_file.read(1)) do
@@ -28,7 +30,9 @@ if ARGV.length == 1
     end
     wav_file_out.close
   end
+
 else
+
   # real time play
 
   require 'unimidi'
@@ -76,4 +80,5 @@ else
       q.push(m)
     end
   end
+
 end

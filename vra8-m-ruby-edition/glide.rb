@@ -1,6 +1,6 @@
 require_relative 'common'
 
-class Portamento
+class Glide
   def initialize
     @pitch = NOTE_NUMBER_MIN << 8
     @portamento_speed = 0
