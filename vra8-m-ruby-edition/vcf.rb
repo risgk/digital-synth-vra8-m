@@ -1,5 +1,5 @@
 require_relative 'common'
-require_relative 'lpf-table'
+require_relative 'vcf-table'
 
 # refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
 # Cookbook formulae for audio EQ biquad filter coefficients
@@ -9,7 +9,7 @@ class VCF
   def initialize
     @cutoff = 127
     @resonance = 0
-    @eg_amt = 0
+    @control_signal_amt = 0
 
     @x_1 = 0
     @x_2 = 0
@@ -25,12 +25,12 @@ class VCF
     @resonance = controller_value
   end
 
-  def set_eg_amt(controller_value)
-    @eg_amt = controller_value
+  def set_control_signal_amt(controller_value)
+    @control_signal_amt = controller_value
   end
 
-  def clock(a_in, k_eg_in)
-    cutoff = @cutoff + high_byte(@eg_amt * k_eg_in)
+  def clock(audio_input, cutoff_control)
+    cutoff = @cutoff + high_byte(@control_signal_amt * cutoff_control)
     if (cutoff > 127)
       cutoff = 127
     end
@@ -47,7 +47,7 @@ class VCF
       a_2_over_a_0 = $lpf_table_q_1_over_sqrt_2[i + 2]
     end
 
-    x_0 = a_in << 8
+    x_0 = audio_input << 8
     tmp  = muls_16_high(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)
     tmp -= muls_16_high(a_1_over_a_0, @y_1)
     tmp -= muls_16_high(a_2_over_a_0, @y_2)

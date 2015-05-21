@@ -19,15 +19,15 @@ class Voice
   end
 
   def clock
-    k_eg = @eg.clock
-    k_lfo = @lfo.clock
-    k_pitch = @slew_limiter.clock(@note_number << 8)
+    eg_output = @eg.clock
+    lfo_output = @lfo.clock
+    slew_limiter_output = @slew_limiter.clock(@note_number << 8)
 
-    a = @vco.clock(k_pitch, k_lfo)
-    a = @vcf.clock(a, k_eg)
-    a = @vca.clock(a, k_eg)
+    vco_output = @vco.clock(slew_limiter_output, lfo_output)
+    vcf_output = @vcf.clock(vco_output, eg_output)
+    vca_output = @vca.clock(vcf_output, eg_output)
 
-    return a
+    return vca_output
   end
 
   def note_on(note_number)
@@ -58,7 +58,7 @@ class Voice
     when VCF_RESONANCE
       @vcf.set_resonance(controller_value)
     when VCF_EG_AMT
-      @vcf.set_eg_amt(controller_value)
+      @vcf.set_control_signal_amt(controller_value)
     when LFO_RATE
       @lfo.set_rate(controller_value)
     when EG_ATTACK

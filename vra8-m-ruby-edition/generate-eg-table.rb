@@ -1,6 +1,6 @@
 require_relative 'common'
 
-$file = File.open("env-table.rb", "w")
+$file = File.open("eg-table.rb", "w")
 
 $file.printf("$env_table_attack_rate = [\n  ")
 (0..127).each do |time|

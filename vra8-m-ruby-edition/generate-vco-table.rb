@@ -1,9 +1,55 @@
 require_relative 'common'
-require_relative 'freq-table'
+
+$file = File.open("vco-table.rb", "w")
+
+$freq_table = []
+
+def generate_freq_table
+  $file.printf("$freq_table = [\n  ")
+  (0..127).each do |note_number|
+    if (note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)
+      freq = 0
+    else
+      cent = (note_number * 100.0) - 6900.0
+      hz = 440.0 * (2.0 ** (cent / 1200.0))
+      freq = (hz * 256.0 * 256.0 / SAMPLING_RATE * 2.0).round
+    end
+
+    $freq_table << freq
+    $file.printf("%5d,", freq)
+    if note_number == 127
+      $file.printf("\n")
+    elsif note_number % 12 == 11
+      $file.printf("\n  ")
+    else
+      $file.printf(" ")
+    end
+  end
+  $file.printf("]\n\n")
+end
+
+generate_freq_table
+
+def generate_tune_table
+  $file.printf("$tune_table = [\n  ")
+  (0..15).each do |i|
+    tune = ((2.0 ** (i / (12.0 * 16.0))) / 2.0 * 65536.0).round
+
+    $file.printf("%5d,", tune)
+    if i == 15
+      $file.printf("\n")
+    elsif i % 8 == 7
+      $file.printf("\n  ")
+    else
+      $file.printf(" ")
+    end
+  end
+  $file.printf("]\n\n")
+end
+
+generate_tune_table
 
 FREQ_MAX = $freq_table.max
-
-$file = File.open("wave-table.rb", "w")
 
 def generate_wave_table(max)
   $file.printf("$wt_%d = [\n  ", max)

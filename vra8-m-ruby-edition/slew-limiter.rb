@@ -10,13 +10,13 @@ class SlewLimiter
     @slew_rate = 128 >> (controller_value >> 4)
   end
 
-  def clock(k_in)
-    if (@level > k_in + @slew_rate)
+  def clock(pitch_control)
+    if (@level > pitch_control + @slew_rate)
       @level -= @slew_rate
-    elsif (@level < k_in - @slew_rate)
+    elsif (@level < pitch_control - @slew_rate)
       @level += @slew_rate
     else
-      @level = k_in
+      @level = pitch_control
     end
 
     return @level
