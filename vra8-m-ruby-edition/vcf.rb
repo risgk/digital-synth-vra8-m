@@ -37,21 +37,21 @@ class VCF
 
     if ((@resonance & 0x40) != 0)
       i = cutoff * 3
-      b_2_over_a_0 = $lpf_table_q_2_sqrt_2[i + 0]
-      a_1_over_a_0 = $lpf_table_q_2_sqrt_2[i + 1]
-      a_2_over_a_0 = $lpf_table_q_2_sqrt_2[i + 2]
+      b_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 0]
+      a_1_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 1]
+      a_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 2]
     else
       i = cutoff * 3
-      b_2_over_a_0 = $lpf_table_q_1_over_sqrt_2[i + 0]
-      a_1_over_a_0 = $lpf_table_q_1_over_sqrt_2[i + 1]
-      a_2_over_a_0 = $lpf_table_q_1_over_sqrt_2[i + 2]
+      b_2_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 0]
+      a_1_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 1]
+      a_2_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 2]
     end
 
     x_0 = audio_input << 8
     tmp  = muls_16_high(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)
     tmp -= muls_16_high(a_1_over_a_0, @y_1)
     tmp -= muls_16_high(a_2_over_a_0, @y_2)
-    y_0 = tmp << (16 - LPF_TABLE_FRACTION_BITS)
+    y_0 = tmp << (16 - VCF_TABLE_FRACTION_BITS)
     @x_2 = @x_1
     @y_2 = @y_1
     @x_1 = x_0

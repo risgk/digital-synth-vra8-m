@@ -2,8 +2,8 @@ require_relative 'common'
 
 $file = File.open("vcf-table.rb", "w")
 
-def generate_lpf_table(name, q)
-  $file.printf("$lpf_table_%s = [\n  ", name)
+def generate_vcf_lpf_table(name, q)
+  $file.printf("$vcf_lpf_table_%s = [\n  ", name)
   (0..127).each do |i|
     f_0_over_fs = (2.0 ** (i / (128.0 / 6.0))) / (2.0 ** 7.0)
 
@@ -15,10 +15,10 @@ def generate_lpf_table(name, q)
     a_1 = (-2.0) * Math.cos(w_0)
     a_2 = 1.0 - alpha
 
-    lpf_table_one = 2 ** LPF_TABLE_FRACTION_BITS
-    b_2_over_a_0 = ((b_2 / a_0) * lpf_table_one).round.to_i
-    a_1_over_a_0 = ((a_1 / a_0) * lpf_table_one).round.to_i
-    a_2_over_a_0 = (b_2_over_a_0 * 4) - a_1_over_a_0 - lpf_table_one
+    vcf_table_one = 2 ** VCF_TABLE_FRACTION_BITS
+    b_2_over_a_0 = ((b_2 / a_0) * vcf_table_one).round.to_i
+    a_1_over_a_0 = ((a_1 / a_0) * vcf_table_one).round.to_i
+    a_2_over_a_0 = (b_2_over_a_0 * 4) - a_1_over_a_0 - vcf_table_one
 
     $file.printf("%+6d, %+6d, %+6d,", b_2_over_a_0, a_1_over_a_0, a_2_over_a_0)
     if i == 127
@@ -32,7 +32,7 @@ def generate_lpf_table(name, q)
   $file.printf("]\n\n")
 end
 
-generate_lpf_table("q_1_over_sqrt_2", 1.0 / Math.sqrt(2.0))
-generate_lpf_table("q_2_sqrt_2", 2.0 * Math.sqrt(2.0))
+generate_vcf_lpf_table("q_1_over_sqrt_2", 1.0 / Math.sqrt(2.0))
+generate_vcf_lpf_table("q_2_sqrt_2", 2.0 * Math.sqrt(2.0))
 
 $file.close

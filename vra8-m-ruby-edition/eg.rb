@@ -8,8 +8,8 @@ class EG
   STATE_IDLE          = 3
 
   def initialize
-    @attack_rate = $env_table_attack_rate[0]
-    @decay_interval = $env_table_decay_interval[0]
+    @attack_rate = $eg_attack_rate_table[0]
+    @decay_interval = $eg_decay_interval_table[0]
     @sustain_level = (127 << 1) << 8
 
     @state = STATE_IDLE
@@ -18,11 +18,11 @@ class EG
   end
 
   def set_attack(controller_value)
-    @attack_rate = $env_table_attack_rate[controller_value]
+    @attack_rate = $eg_attack_rate_table[controller_value]
   end
 
   def set_decay(controller_value)
-    @decay_interval = $env_table_decay_interval[controller_value]
+    @decay_interval = $eg_decay_interval_table[controller_value]
   end
 
   def set_sustain(controller_value)

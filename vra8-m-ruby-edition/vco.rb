@@ -32,26 +32,26 @@ class VCO
   end
 
   def clock(pitch_control, phase_control)
-    pitch_high = high_byte(pitch_control)
-    pitch_low = low_byte(pitch_control)
+    pitch_coarse = high_byte(pitch_control)
+    pitch_fine = low_byte(pitch_control)
 
-    freq = mul_16_high($freq_table[pitch_high], $tune_table[pitch_low >> 4])
+    freq = mul_16_high($vco_freq_table[pitch_coarse], $vco_tune_table[pitch_fine >> 4])
     @phase += freq
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
-    saw_down   = +get_level_from_wave_table(@phase, pitch_high)
+    saw_down   = +get_level_from_wave_table(@phase, pitch_coarse)
     saw_up     = -get_level_from_wave_table(
-                    (@phase + @pulse_width - (phase_control * @pw_lfo_amt)) & 0xFFFF, pitch_high)
+                    (@phase + @pulse_width - (phase_control * @pw_lfo_amt)) & 0xFFFF, pitch_coarse)
     saw_down_2 = +get_level_from_wave_table(
-                    (@phase + @saw_shift + (phase_control * @ss_lfo_amt)) & 0xFFFF, pitch_high)
+                    (@phase + @saw_shift + (phase_control * @ss_lfo_amt)) & 0xFFFF, pitch_coarse)
     a = saw_down * 127 + saw_up * (127 - @pulse_saw_mix) +
                          saw_down_2 * @pulse_saw_mix
 
     return high_sbyte(a) >> 1
   end
 
-  def get_level_from_wave_table(phase, pitch_high)
-    wave_table = $wave_tables[pitch_high]
+  def get_level_from_wave_table(phase, pitch_coarse)
+    wave_table = $vco_wave_tables[pitch_coarse]
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01
     next_index &= 0xFF
