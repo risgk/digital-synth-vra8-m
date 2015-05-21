@@ -52,8 +52,9 @@ class EG
       @decay_count += 1
       if (@decay_count >= @decay_interval)
         @decay_count = 0
+
         if (@level > @sustain_level)
-          if (@level <= (32 + @sustain_level))
+          if (@level <= @sustain_level + EG_LEVEL_MAX >> 10)
             @level = @sustain_level
           elsif
             @level = @sustain_level +
@@ -65,8 +66,9 @@ class EG
       @decay_count += 1
       if (@decay_count >= @decay_interval)
         @decay_count = 0
+
         @level = mulsu_16_high(@level, ENV_DECAY_FACTOR)
-        if (@level <= (EG_LEVEL_MAX >> 10))
+        if (@level <= EG_LEVEL_MAX >> 10)
           @state = STATE_IDLE
           @level = 0
         end
@@ -74,6 +76,7 @@ class EG
     when STATE_IDLE
       @level = 0
     end
+
     return high_byte(@level)
   end
 end
