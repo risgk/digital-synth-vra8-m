@@ -11,7 +11,6 @@ class EG
     @state = STATE_IDLE
     @decay_count = 0
     @level = 0
-
     set_attack(0)
     set_decay(0)
     set_sustain(0)
@@ -54,7 +53,7 @@ class EG
         @decay_count = 0
 
         if (@level > @sustain_level)
-          if (@level <= @sustain_level + EG_LEVEL_MAX >> 10)
+          if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
             @level = @sustain_level
           elsif
             @level = @sustain_level +

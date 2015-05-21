@@ -4,7 +4,6 @@ require_relative 'vco-table'
 class VCO
   def initialize
     @phase = 0
-
     set_pulse_saw_mix(0)
     set_pulse_width(0)
     set_pw_lfo_amt(0)

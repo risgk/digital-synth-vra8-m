@@ -4,7 +4,6 @@ require_relative 'voice'
 class Synth
   def initialize
     @voice = Voice.new
-
     @system_exclusive = false
     @system_data_remaining = 0
     @running_status = STATUS_BYTE_INVALID

@@ -3,7 +3,6 @@ require_relative 'common'
 class SlewLimiter
   def initialize
     @level = NOTE_NUMBER_MIN << 8
-
     set_slew_time(NOTE_NUMBER_MIN)
   end
 

@@ -11,7 +11,6 @@ class VCF
     @x_2 = 0
     @y_1 = 0
     @y_2 = 0
-
     set_cutoff(127)
     set_resonance(0)
     set_cv_amt(0)

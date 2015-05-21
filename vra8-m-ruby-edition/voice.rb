@@ -14,7 +14,6 @@ class Voice
     @eg = EG.new
     @lfo = LFO.new
     @slew_limiter = SlewLimiter.new
-
     @note_number = NOTE_NUMBER_MIN
   end
 
