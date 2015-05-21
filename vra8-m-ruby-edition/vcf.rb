@@ -7,14 +7,14 @@ require_relative 'vcf-table'
 
 class VCF
   def initialize
-    @cutoff = 127
-    @resonance = 0
-    @control_signal_amt = 0
-
     @x_1 = 0
     @x_2 = 0
     @y_1 = 0
     @y_2 = 0
+
+    set_cutoff(127)
+    set_resonance(0)
+    set_cv_amt(0)
   end
 
   def set_cutoff(controller_value)
@@ -25,12 +25,12 @@ class VCF
     @resonance = controller_value
   end
 
-  def set_control_signal_amt(controller_value)
-    @control_signal_amt = controller_value
+  def set_cv_amt(controller_value)
+    @cv_amt = controller_value
   end
 
   def clock(audio_input, cutoff_control)
-    cutoff = @cutoff + high_byte(@control_signal_amt * cutoff_control)
+    cutoff = @cutoff + high_byte(@cv_amt * cutoff_control)
     if (cutoff > 127)
       cutoff = 127
     end

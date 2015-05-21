@@ -58,7 +58,7 @@ class Voice
     when VCF_RESONANCE
       @vcf.set_resonance(controller_value)
     when VCF_EG_AMT
-      @vcf.set_control_signal_amt(controller_value)
+      @vcf.set_cv_amt(controller_value)
     when LFO_RATE
       @lfo.set_rate(controller_value)
     when EG_ATTACK

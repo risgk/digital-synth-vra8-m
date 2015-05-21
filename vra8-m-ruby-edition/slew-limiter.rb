@@ -3,7 +3,8 @@ require_relative 'common'
 class SlewLimiter
   def initialize
     @level = NOTE_NUMBER_MIN << 8
-    @slew_rate = 0
+
+    set_slew_time(NOTE_NUMBER_MIN)
   end
 
   def set_slew_time(controller_value)
@@ -18,7 +19,6 @@ class SlewLimiter
     else
       @level = pitch_control
     end
-
     return @level
   end
 end
