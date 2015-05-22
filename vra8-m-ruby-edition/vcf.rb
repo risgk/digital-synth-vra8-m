@@ -47,9 +47,9 @@ class VCF
     end
 
     x_0 = audio_input << 8
-    tmp  = muls_16_high(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)
-    tmp -= muls_16_high(a_1_over_a_0, @y_1)
-    tmp -= muls_16_high(a_2_over_a_0, @y_2)
+    tmp  = mul_q15_q15(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)
+    tmp -= mul_q15_q15(a_1_over_a_0, @y_1)
+    tmp -= mul_q15_q15(a_2_over_a_0, @y_2)
     y_0 = tmp << ((15 - VCF_TABLE_FRACTION_BITS) << 1)
     @x_2 = @x_1
     @y_2 = @y_1

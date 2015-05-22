@@ -62,7 +62,7 @@ class EG
             @level = @sustain_level
           elsif
             @level = @sustain_level +
-                     mulsu_16_high(@level - @sustain_level, ENV_DECAY_FACTOR)
+                     mul_q15_q16(@level - @sustain_level, ENV_DECAY_FACTOR)
           end
         end
       end
@@ -71,7 +71,7 @@ class EG
       if (@decay_count >= @release_interval)
         @decay_count = 0
 
-        @level = mulsu_16_high(@level, ENV_DECAY_FACTOR)
+        @level = mul_q15_q16(@level, ENV_DECAY_FACTOR)
         if (@level <= EG_LEVEL_MAX >> 10)
           @state = STATE_IDLE
           @level = 0

@@ -58,19 +58,19 @@ end
 
 # refs http://www.atmel.com/images/doc1631.pdf
 
-def mul_16_high(x, y)
+def mul_q16_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_byte(high_byte(x) * low_byte(y))
   result += high_byte(x) * high_byte(y)
 end
 
-def muls_16_high(x, y)
+def mul_q15_q15(x, y)
   result  = high_sbyte(low_byte(x) * high_sbyte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_sbyte(y)
 end
 
-def mulsu_16_high(x, y)
+def mul_q15_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_byte(y)
