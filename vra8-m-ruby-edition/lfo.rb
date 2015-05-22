@@ -13,11 +13,11 @@ class LFO
   def clock
     @phase += @rate
     @phase &= 0xFFFF
-    k = @phase
-    if ((k & 0x8000) != 0)
-      k = ~k + 0x10000
+    level = @phase
+    if ((level & 0x8000) != 0)
+      level = ~level + 0x10000
     end
-    k -= 0x4000
-    return high_sbyte(k) << 1
+    level -= 0x4000
+    return high_sbyte(level) << 1
   end
 end

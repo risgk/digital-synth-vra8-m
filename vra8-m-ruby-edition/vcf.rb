@@ -50,7 +50,7 @@ class VCF
     tmp  = muls_16_high(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)
     tmp -= muls_16_high(a_1_over_a_0, @y_1)
     tmp -= muls_16_high(a_2_over_a_0, @y_2)
-    y_0 = tmp << (16 - VCF_TABLE_FRACTION_BITS)
+    y_0 = tmp << ((15 - VCF_TABLE_FRACTION_BITS) << 1)
     @x_2 = @x_1
     @y_2 = @y_1
     @x_1 = x_0
