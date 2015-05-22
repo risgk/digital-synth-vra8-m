@@ -42,6 +42,7 @@ control_change(VCF_EG_AMT,        127)
 control_change(EG_ATTACK,         64 )
 control_change(EG_DECAY,          96 )
 control_change(EG_SUSTAIN,        127)
+control_change(EG_RELEASE,        96 )
 control_change(LFO_RATE,          16 )
 control_change(PORTAMENTO,        96 )
 

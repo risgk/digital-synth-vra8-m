@@ -39,8 +39,9 @@ VCF_EG_AMT        = 21
 EG_ATTACK         = 22
 EG_DECAY          = 23
 EG_SUSTAIN        = 24
-LFO_RATE          = 25
-PORTAMENTO        = 26
+EG_RELEASE        = 25
+LFO_RATE          = 26
+PORTAMENTO        = 27
 ALL_NOTES_OFF     = 123
 
 def low_byte(x)

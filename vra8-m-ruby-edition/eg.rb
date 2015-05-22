@@ -13,7 +13,8 @@ class EG
     @level = 0
     set_attack(0)
     set_decay(0)
-    set_sustain(0)
+    set_sustain(127)
+    set_release(0)
   end
 
   def set_attack(controller_value)
@@ -26,6 +27,10 @@ class EG
 
   def set_sustain(controller_value)
     @sustain_level = (controller_value << 1) << 8
+  end
+
+  def set_release(controller_value)
+    @release_interval = $eg_decay_interval_table[controller_value]
   end
 
   def note_on
@@ -63,7 +68,7 @@ class EG
       end
     when STATE_RELEASE
       @decay_count += 1
-      if (@decay_count >= @decay_interval)
+      if (@decay_count >= @release_interval)
         @decay_count = 0
 
         @level = mulsu_16_high(@level, ENV_DECAY_FACTOR)

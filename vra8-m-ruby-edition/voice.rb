@@ -66,6 +66,8 @@ class Voice
       @eg.set_decay(controller_value)
     when EG_SUSTAIN
       @eg.set_sustain(controller_value)
+    when EG_RELEASE
+      @eg.set_release(controller_value)
     when PORTAMENTO
       @slew_limiter.set_slew_time(controller_value)
     when ALL_NOTES_OFF
