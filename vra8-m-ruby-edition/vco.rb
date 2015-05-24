@@ -6,9 +6,8 @@ class VCO
     @phase = 0
     set_pulse_saw_mix(0)
     set_pulse_width(0)
-    set_pw_lfo_amt(0)
     set_saw_shift(0)
-    set_ss_lfo_amt(0)
+    set_color_lfo_amt(0)
   end
 
   def set_pulse_saw_mix(controller_value)
@@ -19,16 +18,12 @@ class VCO
     @pulse_width = (controller_value + 128) << 8
   end
 
-  def set_pw_lfo_amt(controller_value)
-    @pw_lfo_amt = controller_value << 1
-  end
-
   def set_saw_shift(controller_value)
     @saw_shift = controller_value << 8
   end
 
-  def set_ss_lfo_amt(controller_value)
-    @ss_lfo_amt = controller_value << 1
+  def set_color_lfo_amt(controller_value)
+    @color_lfo_amt = controller_value << 1
   end
 
   def clock(pitch_control, phase_control)
@@ -41,9 +36,9 @@ class VCO
 
     saw_down      = +get_level_from_wave_table(coarse_pitch, @phase)
     saw_up        = -get_level_from_wave_table(coarse_pitch,
-                       (@phase + @pulse_width - (phase_control * @pw_lfo_amt)) & 0xFFFF)
+                       (@phase + @pulse_width - (phase_control * @color_lfo_amt)) & 0xFFFF)
     saw_down_copy = +get_level_from_wave_table(coarse_pitch,
-                       (@phase + @saw_shift + (phase_control * @ss_lfo_amt)) & 0xFFFF)
+                       (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
     a = saw_down      * 127 +
         saw_up        * (127 - @pulse_saw_mix) +
         saw_down_copy * @pulse_saw_mix

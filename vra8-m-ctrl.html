@@ -149,33 +149,31 @@ function preset0() {
   onChangeControlChange(15, 0  );
   onChangeControlChange(16, 0  );
   onChangeControlChange(17, 0  );
-  onChangeControlChange(18, 0  );
-  onChangeControlChange(19, 127);
+  onChangeControlChange(18, 127);
+  onChangeControlChange(19, 0  );
   onChangeControlChange(20, 0  );
   onChangeControlChange(21, 0  );
   onChangeControlChange(22, 0  );
-  onChangeControlChange(23, 0  );
-  onChangeControlChange(24, 127);
+  onChangeControlChange(23, 127);
+  onChangeControlChange(24, 0  );
   onChangeControlChange(25, 0  );
   onChangeControlChange(26, 0  );
-  onChangeControlChange(27, 0  );
 }
 
 function preset1() {
   onChangeControlChange(14, 96 );
   onChangeControlChange(15, 0  );
   onChangeControlChange(16, 64 );
-  onChangeControlChange(17, 64 );
-  onChangeControlChange(18, 32 );
-  onChangeControlChange(19, 0  );
-  onChangeControlChange(20, 127);
-  onChangeControlChange(21, 127);
-  onChangeControlChange(22, 64 );
-  onChangeControlChange(23, 96 );
-  onChangeControlChange(24, 127);
-  onChangeControlChange(25, 96 );
-  onChangeControlChange(26, 16 );
-  onChangeControlChange(27, 96 );
+  onChangeControlChange(17, 32 );
+  onChangeControlChange(18, 64 );
+  onChangeControlChange(19, 127);
+  onChangeControlChange(20, 64 );
+  onChangeControlChange(21, 32 );
+  onChangeControlChange(22, 127);
+  onChangeControlChange(23, 64 );
+  onChangeControlChange(24, 96 );
+  onChangeControlChange(25, 32 );
+  onChangeControlChange(26, 96 );
 }
 
 function rand() {
@@ -188,7 +186,7 @@ function setRandom() {
   onChangeControlChange(16, rand());
   onChangeControlChange(17, rand());
   onChangeControlChange(18, rand());
-  onChangeControlChange(19, rand());
+  onChangeControlChange(19, rand() >= 64 ? 127 : 0);
   onChangeControlChange(20, rand());
   onChangeControlChange(21, rand());
   onChangeControlChange(22, rand());
@@ -196,7 +194,6 @@ function setRandom() {
   onChangeControlChange(24, rand());
   onChangeControlChange(25, rand());
   onChangeControlChange(26, rand());
-  onChangeControlChange(27, rand());
 }
 
 function noteOn(noteNumber) {
@@ -237,18 +234,17 @@ function noteOff(noteNumber) {
 <table>
 <tr><td>VCO Pulse/Saw Mix</td><td><input id="inputCC14"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td></tr>
 <tr><td>VCO Pulse Width  </td><td><input id="inputCC15"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
-<tr><td>VCO PW LFO Amt   </td><td><input id="inputCC16"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
-<tr><td>VCO Saw Shift    </td><td><input id="inputCC17"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
-<tr><td>VCO SS LFO Amt   </td><td><input id="inputCC18"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
-<tr><td>VCF Cutoff       </td><td><input id="inputCC19"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
-<tr><td>VCF Resonance    </td><td><input id="inputCC20"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
-<tr><td>VCF EG Amt       </td><td><input id="inputCC21"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
-<tr><td>EG Attack        </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
-<tr><td>EG Decay         </td><td><input id="inputCC23"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
-<tr><td>EG Sustain       </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
-<tr><td>EG Release       </td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
-<tr><td>LFO Rate         </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
-<tr><td>Portamento       </td><td><input id="inputCC27"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td><td><span id="spanCC27">-1</span></td></tr>
+<tr><td>VCO Saw Shift    </td><td><input id="inputCC16"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
+<tr><td>VCO Color LFO Amt</td><td><input id="inputCC17"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
+<tr><td>VCF Cutoff       </td><td><input id="inputCC18"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
+<tr><td>VCF Resonance    </td><td><input id="inputCC19"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
+<tr><td>VCF EG Amt       </td><td><input id="inputCC20"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
+<tr><td>EG Attack        </td><td><input id="inputCC21"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
+<tr><td>EG Decay         </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
+<tr><td>EG Sustain       </td><td><input id="inputCC23"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
+<tr><td>EG Release       </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
+<tr><td>LFO Rate         </td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
+<tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
 <p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>

@@ -44,9 +44,8 @@
     | VCO Pulse/Saw Mix | Pulse 100%    | Pulse 50.4%   | Pulse 0%      |
     |                   | Saw 0%        | Saw 49.6%     | Saw 100%      |
     | VCO Pulse Width   | 50%           | 25%           | 0.4%          |
-    | VCO PW LFO Amt    | 0%            | 50%           | 99.2%         |
     | VCO Saw Shift     | 0%            | 25%           | 49.6%         |
-    | VCO SS LFO Amt    | 0%            | 50%           | 99.2%         |
+    | VCO Color LFO Amt | 0%            | 50%           | 99.2%         |
     +-------------------+---------------+---------------+---------------+
     | VCF Cutoff        | 122.1 Hz      | 976.6 Hz      | 7562.7 Hz     |
     | VCF Resonance     | OFF (Q = 0.7) | ON (Q = 2.8)  | ON (Q = 2.8)  |
@@ -89,18 +88,17 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Control                    14 | x             | o             | VCO Pulse/Saw Mix     |
     | Change                     15 | x             | o             | VCO Pulse Width       |
-    |                            16 | x             | o             | VCO PW LFO Amt        |
-    |                            17 | x             | o             | VCO Saw Shift         |
-    |                            18 | x             | o             | VCO SS LFO Amt        |
-    |                            19 | x             | o             | VCF Cutoff            |
-    |                            20 | x             | o             | VCF Resonance         |
-    |                            21 | x             | o             | VCF EG Amt            |
-    |                            22 | x             | o             | EG Attack             |
-    |                            23 | x             | o             | EG Decay              |
-    |                            24 | x             | o             | EG Sustain            |
-    |                            25 | x             | o             | EG Release            |
-    |                            26 | x             | o             | LFO Rate              |
-    |                            27 | x             | o             | Portamento            |
+    |                            16 | x             | o             | VCO Saw Shift         |
+    |                            17 | x             | o             | VCO Color LFO Amt     |
+    |                            18 | x             | o             | VCF Cutoff            |
+    |                            19 | x             | o             | VCF Resonance         |
+    |                            20 | x             | o             | VCF EG Amt            |
+    |                            21 | x             | o             | EG Attack             |
+    |                            22 | x             | o             | EG Decay              |
+    |                            23 | x             | o             | EG Sustain            |
+    |                            24 | x             | o             | EG Release            |
+    |                            25 | x             | o             | LFO Rate              |
+    |                            26 | x             | o             | Portamento            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

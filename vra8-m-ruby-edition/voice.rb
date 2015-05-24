@@ -46,12 +46,10 @@ class Voice
       @vco.set_pulse_saw_mix(controller_value)
     when VCO_PULSE_WIDTH
       @vco.set_pulse_width(controller_value)
-    when VCO_PW_LFO_AMT
-      @vco.set_pw_lfo_amt(controller_value)
     when VCO_SAW_SHIFT
       @vco.set_saw_shift(controller_value)
-    when VCO_SS_LFO_AMT
-      @vco.set_ss_lfo_amt(controller_value)
+    when VCO_COLOR_LFO_AMT
+      @vco.set_color_lfo_amt(controller_value)
     when VCF_CUTOFF
       @vcf.set_cutoff(controller_value)
     when VCF_RESONANCE

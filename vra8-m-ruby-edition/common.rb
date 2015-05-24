@@ -30,18 +30,17 @@ ACTIVE_SENSING        = 0xFE
 
 VCO_PULSE_SAW_MIX = 14
 VCO_PULSE_WIDTH   = 15
-VCO_PW_LFO_AMT    = 16
-VCO_SAW_SHIFT     = 17
-VCO_SS_LFO_AMT    = 18
-VCF_CUTOFF        = 19
-VCF_RESONANCE     = 20
-VCF_EG_AMT        = 21
-EG_ATTACK         = 22
-EG_DECAY          = 23
-EG_SUSTAIN        = 24
-EG_RELEASE        = 25
-LFO_RATE          = 26
-PORTAMENTO        = 27
+VCO_SAW_SHIFT     = 16
+VCO_COLOR_LFO_AMT = 17
+VCF_CUTOFF        = 18
+VCF_RESONANCE     = 19
+VCF_EG_AMT        = 20
+EG_ATTACK         = 21
+EG_DECAY          = 22
+EG_SUSTAIN        = 23
+EG_RELEASE        = 24
+LFO_RATE          = 25
+PORTAMENTO        = 26
 ALL_NOTES_OFF     = 123
 
 def low_byte(x)
