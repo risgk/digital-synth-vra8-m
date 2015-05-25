@@ -28,19 +28,19 @@ EOX                   = 0xF7
 REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
 
-VCO_PULSE_SAW_MIX = 14
-VCO_PULSE_WIDTH   = 15
-VCO_SAW_SHIFT     = 16
-VCF_CUTOFF        = 17
-VCF_RESONANCE     = 18
-VCF_EG_AMT        = 19
-EG_ATTACK         = 20
-EG_DECAY_RELEASE  = 21
-EG_SUSTAIN        = 22
-LFO_RATE          = 23
-LFO_VCO_COLOR_AMT = 24
-PORTAMENTO        = 25
-ALL_NOTES_OFF     = 123
+VCO_PULSE_SAW_MIX  = 14
+VCO_PULSE_WIDTH    = 15
+VCO_SAW_SHIFT      = 16
+VCF_CUTOFF         = 17
+VCF_RESONANCE      = 18
+VCF_EG_AMT         = 19
+EG_ATTACK          = 20
+EG_DECAY_RELEASE   = 21
+EG_SUSTAIN         = 22
+LFO_RATE           = 23
+LFO_TONE_COLOR_AMT = 24
+PORTAMENTO         = 25
+ALL_NOTES_OFF      = 123
 
 def low_byte(x)
   x & 0xFF
