@@ -48,22 +48,22 @@ class Voice
       @vco.set_pulse_width(controller_value)
     when VCO_SAW_SHIFT
       @vco.set_saw_shift(controller_value)
-    when VCO_COLOR_LFO_AMT
-      @vco.set_color_lfo_amt(controller_value)
     when VCF_CUTOFF
       @vcf.set_cutoff(controller_value)
     when VCF_RESONANCE
       @vcf.set_resonance(controller_value)
     when VCF_EG_AMT
       @vcf.set_cv_amt(controller_value)
-    when LFO_RATE
-      @lfo.set_rate(controller_value)
     when EG_ATTACK
       @eg.set_attack(controller_value)
     when EG_DECAY_RELEASE
       @eg.set_decay_release(controller_value)
     when EG_SUSTAIN
       @eg.set_sustain(controller_value)
+    when LFO_RATE
+      @lfo.set_rate(controller_value)
+    when LFO_VCO_COLOR_AMT
+      @vco.set_color_lfo_amt(controller_value)
     when PORTAMENTO
       @slew_limiter.set_slew_time(controller_value)
     when ALL_NOTES_OFF
