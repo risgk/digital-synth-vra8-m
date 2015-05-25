@@ -1,6 +1,6 @@
 require_relative 'common'
 
-class SlewLimiter
+class SlewRateLimiter
   def initialize
     @count = 0
     @level = NOTE_NUMBER_MIN << 8

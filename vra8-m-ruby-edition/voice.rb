@@ -4,7 +4,7 @@ require_relative 'vcf'
 require_relative 'vca'
 require_relative 'eg'
 require_relative 'lfo'
-require_relative 'slew-limiter'
+require_relative 'slew-rate-limiter'
 
 class Voice
   def initialize
@@ -13,16 +13,16 @@ class Voice
     @vca = VCA.new
     @eg = EG.new
     @lfo = LFO.new
-    @slew_limiter = SlewLimiter.new
+    @srl = SlewRateLimiter.new
     @note_number = NOTE_NUMBER_MIN
   end
 
   def clock
     eg_output = @eg.clock
     lfo_output = @lfo.clock
-    slew_limiter_output = @slew_limiter.clock(@note_number << 8)
+    srl_output = @srl.clock(@note_number << 8)
 
-    vco_output = @vco.clock(slew_limiter_output, lfo_output)
+    vco_output = @vco.clock(srl_output, lfo_output)
     vcf_output = @vcf.clock(vco_output, eg_output)
     vca_output = @vca.clock(vcf_output, eg_output)
 
@@ -65,7 +65,7 @@ class Voice
     when LFO_VCO_COLOR_AMT
       @vco.set_color_lfo_amt(controller_value)
     when PORTAMENTO
-      @slew_limiter.set_slew_time(controller_value)
+      @srl.set_slew_time(controller_value)
     when ALL_NOTES_OFF
       @eg.note_off
     end
