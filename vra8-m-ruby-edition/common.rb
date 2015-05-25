@@ -36,11 +36,10 @@ VCF_CUTOFF        = 18
 VCF_RESONANCE     = 19
 VCF_EG_AMT        = 20
 EG_ATTACK         = 21
-EG_DECAY          = 22
+EG_DECAY_RELEASE  = 22
 EG_SUSTAIN        = 23
-EG_RELEASE        = 24
-LFO_RATE          = 25
-PORTAMENTO        = 26
+LFO_RATE          = 24
+PORTAMENTO        = 25
 ALL_NOTES_OFF     = 123
 
 def low_byte(x)

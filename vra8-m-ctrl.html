@@ -47,7 +47,7 @@ window.onload = function() {
 
 function loadParameters() {
   var value;
-  for (var i = 14; i <= 26; i++) {
+  for (var i = 14; i <= 25; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -157,7 +157,6 @@ function preset0() {
   onChangeControlChange(23, 127);
   onChangeControlChange(24, 0  );
   onChangeControlChange(25, 0  );
-  onChangeControlChange(26, 0  );
 }
 
 function preset1() {
@@ -169,11 +168,10 @@ function preset1() {
   onChangeControlChange(19, 127);
   onChangeControlChange(20, 64 );
   onChangeControlChange(21, 32 );
-  onChangeControlChange(22, 127);
-  onChangeControlChange(23, 64 );
-  onChangeControlChange(24, 96 );
-  onChangeControlChange(25, 32 );
-  onChangeControlChange(26, 96 );
+  onChangeControlChange(22, 96 );
+  onChangeControlChange(23, 96 );
+  onChangeControlChange(24, 32 );
+  onChangeControlChange(25, 96 );
 }
 
 function rand() {
@@ -193,7 +191,6 @@ function setRandom() {
   onChangeControlChange(23, rand());
   onChangeControlChange(24, rand());
   onChangeControlChange(25, rand());
-  onChangeControlChange(26, rand());
 }
 
 function noteOn(noteNumber) {
@@ -240,11 +237,10 @@ function noteOff(noteNumber) {
 <tr><td>VCF Resonance    </td><td><input id="inputCC19"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
 <tr><td>VCF EG Amt       </td><td><input id="inputCC20"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
 <tr><td>EG Attack        </td><td><input id="inputCC21"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
-<tr><td>EG Decay         </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
+<tr><td>EG Decay/Release </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
 <tr><td>EG Sustain       </td><td><input id="inputCC23"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
-<tr><td>EG Release       </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
-<tr><td>LFO Rate         </td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
-<tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
+<tr><td>LFO Rate         </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
+<tr><td>Portamento       </td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
 </table>
 
 <p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>

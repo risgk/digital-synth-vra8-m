@@ -9,38 +9,33 @@ class EG
 
   def initialize
     @state = STATE_IDLE
-    @decay_count = 0
+    @decay_release_count = 0
     @level = 0
     set_attack(0)
-    set_decay(0)
+    set_decay_release(0)
     set_sustain(127)
-    set_release(0)
   end
 
   def set_attack(controller_value)
     @attack_rate = $eg_attack_rate_table[controller_value]
   end
 
-  def set_decay(controller_value)
-    @decay_interval = $eg_decay_interval_table[controller_value]
+  def set_decay_release(controller_value)
+    @decay_release_interval = $eg_decay_release_interval_table[controller_value]
   end
 
   def set_sustain(controller_value)
     @sustain_level = (controller_value << 1) << 8
   end
 
-  def set_release(controller_value)
-    @release_interval = $eg_decay_interval_table[controller_value]
-  end
-
   def note_on
     @state = STATE_ATTACK
-    @decay_count = 0
+    @decay_release_count = 0
   end
 
   def note_off
     @state = STATE_RELEASE
-    @decay_count = 0
+    @decay_release_count = 0
   end
 
   def clock
@@ -53,9 +48,9 @@ class EG
         @level += @attack_rate
       end
     when STATE_DECAY_SUSTAIN
-      @decay_count += 1
-      if (@decay_count >= @decay_interval)
-        @decay_count = 0
+      @decay_release_count += 1
+      if (@decay_release_count >= @decay_release_interval)
+        @decay_release_count = 0
 
         if (@level > @sustain_level)
           if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
@@ -67,9 +62,9 @@ class EG
         end
       end
     when STATE_RELEASE
-      @decay_count += 1
-      if (@decay_count >= @release_interval)
-        @decay_count = 0
+      @decay_release_count += 1
+      if (@decay_release_count >= @decay_release_interval)
+        @decay_release_count = 0
 
         @level = mul_q15_q16(@level, ENV_DECAY_FACTOR)
         if (@level <= EG_LEVEL_MAX >> 10)
