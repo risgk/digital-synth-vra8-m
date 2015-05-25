@@ -62,8 +62,8 @@ class Voice
       @eg.set_sustain(controller_value)
     when LFO_RATE
       @lfo.set_rate(controller_value)
-    when LFO_TONE_COLOR_AMT
-      @vco.set_tone_color_lfo_amt(controller_value)
+    when LFO_VCO_COLOR_AMT
+      @vco.set_color_lfo_amt(controller_value)
     when PORTAMENTO
       @srl.set_slew_time(controller_value)
     when ALL_NOTES_OFF
