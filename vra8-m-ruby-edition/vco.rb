@@ -43,7 +43,7 @@ class VCO
         saw_up        * (127 - @pulse_saw_mix) +
         ((saw_down_copy * @pulse_saw_mix) >> 1)
 
-    return high_sbyte(a) >> 1
+    return high_sbyte(a)
   end
 
   def get_level_from_wave_table(coarse_pitch, phase)
