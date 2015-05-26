@@ -57,7 +57,7 @@
     | LFO Rate          | 0.24 Hz       | 4.1 Hz        | 7.9 Hz        |
     | LFO VCO Color Amt | 0%            | 50%           | 99.2%         |
     +-------------------+---------------+---------------+---------------+
-    | Portamento        | 3.1 ms/Oct    | 49.2 ms/Oct   | 393.2 ms/Oct  |
+    | Portamento        | 0.03 ms/Oct   | 7.7 ms/Oct    | 1.0 s/Oct     |
     +-------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart

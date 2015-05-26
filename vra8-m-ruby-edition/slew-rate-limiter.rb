@@ -8,12 +8,12 @@ class SlewRateLimiter
   end
 
   def set_slew_time(controller_value)
-    @slew_rate = 128 >> (controller_value >> 4)
+    @slew_rate = 32768 >> (controller_value >> 3)
   end
 
   def clock(input)
     @count += 1
-    if (@count >= 1)
+    if (@count >= 5)
       @count = 0
 
       if (@level > input + @slew_rate)
