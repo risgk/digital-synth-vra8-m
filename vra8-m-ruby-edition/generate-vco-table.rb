@@ -12,6 +12,7 @@ $file.printf("$vco_freq_table = [\n  ")
     cent = (note_number * 100.0) - 6900.0
     hz = 440.0 * (2.0 ** (cent / 1200.0))
     freq = (hz * 256.0 * 256.0 / SAMPLING_RATE * 2.0).round
+    freq = freq + 1 if freq.even?
   end
 
   $vco_freq_table << freq
@@ -71,7 +72,8 @@ def generate_vco_wave_table_sawtooth(max)
 end
 
 # todo: improve
-$vco_freq_table.map { |freq| (freq != 0) ? ((VCO_PHASE_RESOLUTION / 2 - 1) / (freq / 2)) : -1 }.uniq.each do |i|
+$vco_freq_table.map { |freq| (freq != 0) ? ((VCO_PHASE_RESOLUTION / 2 - 1) / (freq / 2)) : -1 }
+               .uniq.each do |i|
   generate_vco_wave_table_sawtooth(i) if i != -1
 end
 
