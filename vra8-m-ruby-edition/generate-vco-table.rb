@@ -77,6 +77,8 @@ $vco_freq_table.map { |freq| (freq != 0) ? ((VCO_PHASE_RESOLUTION / 2 - 1) / (fr
   generate_vco_wave_table_sawtooth(i) if i != -1
 end
 
+generate_vco_wave_table_sawtooth(0)
+
 $file.printf("$vco_wave_tables = [\n  ")
 $vco_freq_table.each_with_index do |item, idx|
   next_freq = (item != 0) ? $vco_freq_table[idx + 1] : 0
@@ -84,7 +86,7 @@ $vco_freq_table.each_with_index do |item, idx|
   if item != 0
     $file.printf("$vco_wave_table_%-3d,", (VCO_PHASE_RESOLUTION / 2 - 1) / (next_freq / 2))
   else
-    $file.printf("nil                ,")
+    $file.printf("$vco_wave_table_0  ,")
   end
   if idx == 127
     $file.printf("\n")

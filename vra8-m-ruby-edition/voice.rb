@@ -34,10 +34,8 @@ class Voice
     @eg.note_on
   end
 
-  def note_off(note_number)
-    if (note_number == @note_number)
-      @eg.note_off
-    end
+  def note_off
+    @eg.note_off
   end
 
   def control_change(controller_number, controller_value)

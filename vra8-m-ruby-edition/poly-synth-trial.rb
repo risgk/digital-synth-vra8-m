@@ -3,8 +3,8 @@ require_relative 'voice'
 
 class Synth
   def initialize
-    @voice = Voice.new
-    @note_number = NOTE_NUMBER_MIN
+    @voices = [Voice.new, Voice.new, Voice.new, Voice.new]
+    @note_numbers = [0xFF, 0xFF, 0xFF, 0xFF]
     @system_exclusive = false
     @system_data_remaining = 0
     @running_status = STATUS_BYTE_INVALID
@@ -68,7 +68,7 @@ class Synth
   end
 
   def clock
-    return @voice.clock
+    return (@voices[0].clock + @voices[1].clock + @voices[2].clock + @voices[3].clock) >> 2
   end
 
   def real_message?(b)
@@ -88,24 +88,63 @@ class Synth
   end
 
   def note_on(note_number)
-    @note_number = note_number
-    @voice.note_on(@note_number)
+    if (@note_numbers[0] == 0xFF)
+      @note_numbers[0] = note_number
+      @voices[0].note_on(@note_numbers[0])
+      return
+    end
+    if (@note_numbers[1] == 0xFF)
+      @note_numbers[1] = note_number
+      @voices[1].note_on(@note_numbers[1])
+      return
+    end
+    if (@note_numbers[2] == 0xFF)
+      @note_numbers[2] = note_number
+      @voices[2].note_on(@note_numbers[2])
+      return
+    end
+    if (@note_numbers[3] == 0xFF)
+      @note_numbers[3] = note_number
+      @voices[3].note_on(@note_numbers[3])
+      return
+    end
   end
 
   def note_off(note_number)
-    if (@note_number == note_number)
-      @note_number = 0xFF
-      @voice.note_off
+    if (@note_numbers[0] == note_number)
+      @note_numbers[0] = 0xFF
+      @voices[0].note_off
+    end
+    if (@note_numbers[1] == note_number)
+      @note_numbers[1] = 0xFF
+      @voices[1].note_off
+    end
+    if (@note_numbers[2] == note_number)
+      @note_numbers[2] = 0xFF
+      @voices[2].note_off
+    end
+    if (@note_numbers[3] == note_number)
+      @note_numbers[3] = 0xFF
+      @voices[3].note_off
     end
   end
 
   def control_change(controller_number, controller_value)
     case (controller_number)
     when ALL_NOTES_OFF
-      @note_number = 0xFF
-      @voice.note_off
+      @note_numbers[0] = 0xFF
+      @note_numbers[1] = 0xFF
+      @note_numbers[2] = 0xFF
+      @note_numbers[3] = 0xFF
+      @voices[0].note_off
+      @voices[1].note_off
+      @voices[2].note_off
+      @voices[3].note_off
     else
-      @voice.control_change(controller_number, controller_value)
+      @voices[0].control_change(controller_number, controller_value)
+      @voices[1].control_change(controller_number, controller_value)
+      @voices[2].control_change(controller_number, controller_value)
+      @voices[3].control_change(controller_number, controller_value)
     end
   end
 end
