@@ -33,7 +33,7 @@ control_change(ALL_NOTES_OFF,     0  )
 
 control_change(VCO_PULSE_SAW_MIX, 96 )
 control_change(VCO_PULSE_WIDTH,   0  )
-control_change(VCO_SAW_SHIFT,     64 )
+control_change(VCO_SAW_SHIFT,     0  )
 control_change(VCF_CUTOFF,        64 )
 control_change(VCF_RESONANCE,     127)
 control_change(VCF_EG_AMT,        64 )
