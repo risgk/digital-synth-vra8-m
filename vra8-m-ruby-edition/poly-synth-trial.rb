@@ -44,7 +44,7 @@ class SimpleVoice < Voice
   end
 end
 
-class PolySynth < Synth
+class PolySynthTrial < Synth
   def initialize
     @voices = [SimpleVoice.new, SimpleVoice.new, SimpleVoice.new, SimpleVoice.new]
     @note_numbers = [0xFF, 0xFF, 0xFF, 0xFF]
