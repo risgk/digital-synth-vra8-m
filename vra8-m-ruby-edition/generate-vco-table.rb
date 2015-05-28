@@ -11,7 +11,7 @@ $file.printf("$vco_freq_table = [\n  ")
   else
     cent = (note_number * 100.0) - 6900.0
     hz = 440.0 * (2.0 ** (cent / 1200.0))
-    freq = (hz * 256.0 * 256.0 / SAMPLING_RATE * 2.0).round
+    freq = (hz * 256.0 * 256.0 / SAMPLING_RATE * 2.0).floor
     freq = freq + 1 if freq.even?
   end
 
