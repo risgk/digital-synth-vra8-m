@@ -1,9 +1,52 @@
 require_relative 'common'
+require_relative 'vco'
+require_relative 'vca'
+require_relative 'eg'
+require_relative 'slew-rate-limiter'
 require_relative 'voice'
+require_relative 'synth'
 
-class Synth
+class SimpleVCO < VCO
+  def clock(pitch_control, phase_control)
+    coarse_pitch = high_byte(pitch_control)
+    fine_pitch = low_byte(pitch_control)
+
+    freq = mul_q16_q16($vco_freq_table[coarse_pitch], $vco_tune_table[fine_pitch >> 4])
+    @phase += freq
+    @phase &= (VCO_PHASE_RESOLUTION - 1)
+
+    saw_down      = +get_level_from_wave_table(coarse_pitch, @phase)
+    a = saw_down      * (127 + high_byte(127 * 192))
+
+    return high_sbyte(a)
+  end
+end
+
+class SimpleVoice < Voice
   def initialize
-    @voices = [Voice.new, Voice.new, Voice.new, Voice.new]
+    @vco = SimpleVCO.new
+    @vcf = VCF.new
+    @vca = VCA.new
+    @eg = EG.new
+    @lfo = LFO.new
+    @srl = SlewRateLimiter.new
+    @note_number = NOTE_NUMBER_MIN
+  end
+
+  def clock
+    eg_output = @eg.clock
+    srl_output = @srl.clock(@note_number << 8)
+
+    vco_output = @vco.clock(srl_output, 0)
+    vca_output = @vca.clock(vco_output, eg_output)
+
+    return vca_output
+  end
+end
+
+class PolySynth < Synth
+  def initialize
+    @voices = [SimpleVoice.new, SimpleVoice.new, SimpleVoice.new, SimpleVoice.new]
     @note_numbers = [0xFF, 0xFF, 0xFF, 0xFF]
     @system_exclusive = false
     @system_data_remaining = 0
@@ -11,80 +54,8 @@ class Synth
     @first_data = DATA_BYTE_INVALID
   end
 
-  def receive_midi_byte(b)
-    if data_byte?(b)
-      if (@system_exclusive)
-        # do nothing
-      elsif (@system_data_remaining != 0)
-        @system_data_remaining -= 1
-      elsif (@running_status == (NOTE_ON | MIDI_CH))
-        if (!data_byte?(@first_data))
-          @first_data = b
-        elsif (b == 0x00)
-          note_off(@first_data)
-          @first_data = DATA_BYTE_INVALID
-        else
-          note_on(@first_data)
-          @first_data = DATA_BYTE_INVALID
-        end
-      elsif (@running_status == (NOTE_OFF | MIDI_CH))
-        if (!data_byte?(@first_data))
-          @first_data = b
-        else
-          note_off(@first_data)
-          @first_data = DATA_BYTE_INVALID
-        end
-      elsif (@running_status == (CONTROL_CHANGE | MIDI_CH))
-        if (!data_byte?(@first_data))
-          @first_data = b
-        else
-          control_change(@first_data, b)
-          @first_data = DATA_BYTE_INVALID
-        end
-      end
-    elsif (system_message?(b))
-      case (b)
-      when SYSTEM_EXCLUSIVE
-        @system_exclusive = true
-        @running_status = STATUS_BYTE_INVALID
-      when EOX, TUNE_REQUEST, 0xF4, 0xF5
-        @system_exclusive = false
-        @system_data_remaining = 0
-        @running_status = STATUS_BYTE_INVALID
-      when TIME_CODE, SONG_SELECT
-        @system_exclusive = false
-        @system_data_remaining = 1
-        @running_status = STATUS_BYTE_INVALID
-      when SONG_POSITION
-        @system_exclusive = false
-        @system_data_remaining = 2
-        @running_status = STATUS_BYTE_INVALID
-      end
-    elsif (status_byte?(b))
-      @system_exclusive = false
-      @running_status = b
-      @first_data = DATA_BYTE_INVALID
-    end
-  end
-
   def clock
-    return (@voices[0].clock + @voices[1].clock + @voices[2].clock + @voices[3].clock) >> 2
-  end
-
-  def real_message?(b)
-    return b >= REAL_MESSAGE_MIN
-  end
-
-  def system_message?(b)
-    return b >= SYSTEM_MESSAGE_MIN
-  end
-
-  def status_byte?(b)
-    return b >= STATUS_BYTE_MIN
-  end
-
-  def data_byte?(b)
-    return b <= DATA_BYTE_MAX
+    return (@voices[0].clock + @voices[1].clock + @voices[2].clock + @voices[3].clock) >> 1
   end
 
   def note_on(note_number)
@@ -133,12 +104,12 @@ class Synth
     case (controller_number)
     when ALL_NOTES_OFF
       @note_numbers[0] = 0xFF
-      @note_numbers[1] = 0xFF
-      @note_numbers[2] = 0xFF
-      @note_numbers[3] = 0xFF
       @voices[0].note_off
+      @note_numbers[1] = 0xFF
       @voices[1].note_off
+      @note_numbers[2] = 0xFF
       @voices[2].note_off
+      @note_numbers[3] = 0xFF
       @voices[3].note_off
     else
       @voices[0].control_change(controller_number, controller_value)
