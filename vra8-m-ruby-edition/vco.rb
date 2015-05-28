@@ -41,7 +41,7 @@ class VCO
                        (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
     a = saw_down      * 127 +
         saw_up        * (127 - @pulse_saw_mix) +
-        ((saw_down_copy * @pulse_saw_mix) >> 1)
+        saw_down_copy * high_byte(@pulse_saw_mix * 192)
 
     return high_sbyte(a)
   end
