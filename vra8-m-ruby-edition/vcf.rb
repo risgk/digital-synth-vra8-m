@@ -34,11 +34,16 @@ class VCF
       cutoff = 127
     end
 
-    if ((@resonance & 0x40) != 0)
+    if (@resonance > 96)
       i = cutoff * 3
       b_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 0]
       a_1_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 1]
       a_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 2]
+    elsif (@resonance > 64)
+      i = cutoff * 3
+      b_2_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 0]
+      a_1_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 1]
+      a_2_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 2]
     else
       i = cutoff * 3
       b_2_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 0]
