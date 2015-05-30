@@ -30,7 +30,7 @@ class VCO
     coarse_pitch = high_byte(pitch_control)
     fine_pitch = low_byte(pitch_control)
 
-    freq = mul_q16_q16($vco_freq_table[coarse_pitch], $vco_tune_table[fine_pitch >> 4])
+    freq = mul_q16_q16($vco_freq_table[coarse_pitch], $vco_tune_table[fine_pitch])
     @phase += freq
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
@@ -39,11 +39,11 @@ class VCO
                        (@phase + @pulse_width - (phase_control * @color_lfo_amt)) & 0xFFFF)
     saw_down_copy = +get_level_from_wave_table(coarse_pitch,
                        (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
-    a = saw_down      * 127 +
-        saw_up        * (127 - @pulse_saw_mix) +
-        saw_down_copy * high_byte(@pulse_saw_mix * 192)
+    output = saw_down      * 127 +
+             saw_up        * (127 - @pulse_saw_mix) +
+             saw_down_copy * high_byte(@pulse_saw_mix * 192)
 
-    return high_sbyte(a)
+    return high_sbyte(output)
   end
 
   private
@@ -65,6 +65,7 @@ class VCO
     else
       level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight))
     end
+
     return level
   end
 end

@@ -51,7 +51,6 @@ class EG
       @decay_release_count += 1
       if (@decay_release_count >= @decay_release_interval)
         @decay_release_count = 0
-
         if (@level > @sustain_level)
           if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
             @level = @sustain_level
@@ -65,7 +64,6 @@ class EG
       @decay_release_count += 1
       if (@decay_release_count >= @decay_release_interval)
         @decay_release_count = 0
-
         @level = mul_q15_q16(@level, ENV_DECAY_FACTOR)
         if (@level <= EG_LEVEL_MAX >> 10)
           @state = STATE_IDLE
@@ -75,7 +73,6 @@ class EG
     when STATE_IDLE
       @level = 0
     end
-
     return high_byte(@level)
   end
 end

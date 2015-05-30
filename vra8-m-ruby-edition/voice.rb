@@ -61,11 +61,9 @@ class Voice
     eg_output = @eg.clock
     lfo_output = @lfo.clock
     srl_output = @srl.clock(@note_number << 8)
-
     vco_output = @vco.clock(srl_output, lfo_output)
     vcf_output = @vcf.clock(vco_output, eg_output)
     vca_output = @vca.clock(vcf_output, eg_output)
-
     return vca_output
   end
 end

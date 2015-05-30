@@ -15,7 +15,6 @@ class SlewRateLimiter
     @count += 1
     if (@count >= 5)
       @count = 0
-
       if (@level > input + @slew_rate)
         @level -= @slew_rate
       elsif (@level < input - @slew_rate)
@@ -24,7 +23,6 @@ class SlewRateLimiter
         @level = input
       end
     end
-
     return @level
   end
 end

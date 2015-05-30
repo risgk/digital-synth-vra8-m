@@ -16,9 +16,9 @@ class SimpleVCO < VCO
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
     saw_down      = +get_level_from_wave_table(coarse_pitch, @phase)
-    a = saw_down      * (127 + high_byte(127 * 192))
+    output = saw_down      * (127 + high_byte(127 * 192))
 
-    return high_sbyte(a)
+    return high_sbyte(output)
   end
 end
 
@@ -36,10 +36,8 @@ class SimpleVoice < Voice
   def clock
     eg_output = @eg.clock
     srl_output = @srl.clock(@note_number << 8)
-
     vco_output = @vco.clock(srl_output, 0)
     vca_output = @vca.clock(vco_output, eg_output)
-
     return vca_output
   end
 end

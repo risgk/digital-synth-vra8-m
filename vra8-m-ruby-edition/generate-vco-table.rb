@@ -28,11 +28,11 @@ end
 $file.printf("]\n\n")
 
 $file.printf("$vco_tune_table = [\n  ")
-(0..15).each do |i|
-  tune = ((2.0 ** (i / (12.0 * 16.0))) / 2.0 * 65536.0).round
+(0..255).each do |i|
+  tune = ((2.0 ** (i / (12.0 * 256.0))) / 2.0 * 65536.0).round
 
   $file.printf("%5d,", tune)
-  if i == 15
+  if i == 255
     $file.printf("\n")
   elsif i % 8 == 7
     $file.printf("\n  ")
