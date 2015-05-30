@@ -71,6 +71,8 @@ class Synth
     return @voice.clock
   end
 
+  private
+
   def real_message?(b)
     return b >= REAL_MESSAGE_MIN
   end

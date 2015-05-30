@@ -46,6 +46,8 @@ class VCO
     return high_sbyte(a)
   end
 
+  private
+
   def get_level_from_wave_table(coarse_pitch, phase)
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01

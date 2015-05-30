@@ -58,6 +58,8 @@ class PolySynthTrial < Synth
     return (@voices[0].clock + @voices[1].clock + @voices[2].clock + @voices[3].clock) >> 1
   end
 
+  private
+
   def note_on(note_number)
     if (@note_numbers[0] == 0xFF)
       @note_numbers[0] = note_number
