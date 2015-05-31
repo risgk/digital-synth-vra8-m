@@ -3,7 +3,7 @@ require_relative 'common'
 $file = File.open("sample-midi-stream.bin", "wb")
 
 def control_change(control_number, value)
-    $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
+  $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
 end
 
 def play(note_number, length)
@@ -51,3 +51,5 @@ play_cegbdfac(3)
 play_cegbdfac(4)
 # play_cegbdfac(5)
 # play_cegbdfac(6)
+
+$file.close

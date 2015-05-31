@@ -2,10 +2,13 @@ require_relative 'common'
 
 $file = File.open("vcf-table.rb", "w")
 
+OCTAVES = 6
+
 def generate_vcf_lpf_table(name, q)
   $file.printf("$vcf_lpf_table_%s = [\n  ", name)
-  (0..127).each do |i|
-    f_0_over_fs = (2.0 ** (i / (128.0 / 6.0))) / (2.0 ** 7.0)
+  (0..DATA_BYTE_MAX).each do |i|
+    f_0_over_fs = (2.0 ** (i / ((DATA_BYTE_MAX + 1).to_f / OCTAVES))) /
+                  (2.0 ** (OCTAVES.to_f + 1.0))
 
     w_0 = 2.0 * Math::PI * f_0_over_fs
     alpha = Math.sin(w_0) / (2.0 * q)
@@ -21,7 +24,7 @@ def generate_vcf_lpf_table(name, q)
     a_2_over_a_0 = (b_2_over_a_0 * 4) - a_1_over_a_0 - vcf_table_one
 
     $file.printf("%+6d, %+6d, %+6d,", b_2_over_a_0, a_1_over_a_0, a_2_over_a_0)
-    if i == 127
+    if i == DATA_BYTE_MAX
       $file.printf("\n")
     elsif i % 4 == 3
       $file.printf("\n  ")

@@ -3,12 +3,13 @@ require_relative 'common'
 $file = File.open("eg-table.rb", "w")
 
 $file.printf("$eg_attack_rate_table = [\n  ")
-(0..127).each do |time|
-  sec = (EG_LEVEL_MAX.to_f / 15625) / (10.0 ** ((127.0 - time) / (127.0 / 3.0))) / 2.0
-  interval = EG_LEVEL_MAX / (sec * SAMPLING_RATE)
-  r = interval.round.to_i
-  $file.printf("%5d,", r)
-  if time == 127
+(0..DATA_BYTE_MAX).each do |time|
+  sec = (EG_LEVEL_MAX.to_f / SAMPLING_RATE) /
+        (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0))) / 2.0
+  rate = (EG_LEVEL_MAX / (sec * SAMPLING_RATE)).round.to_i
+
+  $file.printf("%5d,", rate)
+  if time == DATA_BYTE_MAX
     $file.printf("\n")
   elsif time % 16 == 15
     $file.printf("\n  ")
@@ -18,18 +19,22 @@ $file.printf("$eg_attack_rate_table = [\n  ")
 end
 $file.printf("]\n\n")
 
-env_decay_factor = (((1.0 / 2.0) ** (1.0 / 16.0)) * 65536.0).round
-$file.printf("ENV_DECAY_FACTOR = %d\n", env_decay_factor)
+HALF_LIFE = 16
+eg_decay_release_rate = (((1.0 / 2.0) ** (1.0 / HALF_LIFE)) *
+                         (EG_DECAY_RELEASE_RATE_DENOMINATOR)).round
+$file.printf("EG_DECAY_RELEASE_RATE = %d\n", eg_decay_release_rate)
 $file.printf("\n")
 
-$file.printf("$eg_decay_release_interval_table = [\n  ")
-(0..127).each do |time|
-  sec = 12.8 / (10.0 ** ((127.0 - time) / (127.0 / 3.0)))
-  interval = (sec * SAMPLING_RATE) / (Math.log(1.0 / 1024.0) /
-                                      Math.log(env_decay_factor / 65536.0))
-  r = interval.round.to_i
-  $file.printf("%5d,", r)
-  if time == 127
+$file.printf("$eg_decay_release_update_interval_table = [\n  ")
+(0..DATA_BYTE_MAX).each do |time|
+  sec = 12.8 / (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0)))
+  update_interval = ((sec * SAMPLING_RATE) /
+                     (Math.log(1.0 / 1024.0) /
+                      Math.log(eg_decay_release_rate.to_f / EG_DECAY_RELEASE_RATE_DENOMINATOR))
+                    ).round.to_i
+
+  $file.printf("%5d,", update_interval)
+  if time == DATA_BYTE_MAX
     $file.printf("\n")
   elsif time % 16 == 15
     $file.printf("\n  ")
@@ -38,3 +43,5 @@ $file.printf("$eg_decay_release_interval_table = [\n  ")
   end
 end
 $file.printf("]\n\n")
+
+$file.close

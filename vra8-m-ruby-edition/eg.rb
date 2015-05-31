@@ -21,7 +21,7 @@ class EG
   end
 
   def set_decay_release(controller_value)
-    @decay_release_interval = $eg_decay_release_interval_table[controller_value]
+    @decay_release_update_interval = $eg_decay_release_update_interval_table[controller_value]
   end
 
   def set_sustain(controller_value)
@@ -49,22 +49,22 @@ class EG
       end
     when STATE_DECAY_SUSTAIN
       @decay_release_count += 1
-      if (@decay_release_count >= @decay_release_interval)
+      if (@decay_release_count >= @decay_release_update_interval)
         @decay_release_count = 0
         if (@level > @sustain_level)
           if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
             @level = @sustain_level
           elsif
             @level = @sustain_level +
-                     mul_q15_q16(@level - @sustain_level, ENV_DECAY_FACTOR)
+                     mul_q15_q16(@level - @sustain_level, EG_DECAY_RELEASE_RATE)
           end
         end
       end
     when STATE_RELEASE
       @decay_release_count += 1
-      if (@decay_release_count >= @decay_release_interval)
+      if (@decay_release_count >= @decay_release_update_interval)
         @decay_release_count = 0
-        @level = mul_q15_q16(@level, ENV_DECAY_FACTOR)
+        @level = mul_q15_q16(@level, EG_DECAY_RELEASE_RATE)
         if (@level <= EG_LEVEL_MAX >> 10)
           @state = STATE_IDLE
           @level = 0

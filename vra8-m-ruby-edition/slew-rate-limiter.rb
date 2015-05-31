@@ -1,6 +1,8 @@
 require_relative 'common'
 
 class SlewRateLimiter
+  UPDATE_INTERVAL = 5
+
   def initialize
     @count = 0
     @level = NOTE_NUMBER_MIN << 8
@@ -13,7 +15,7 @@ class SlewRateLimiter
 
   def clock(input)
     @count += 1
-    if (@count >= 5)
+    if (@count >= UPDATE_INTERVAL)
       @count = 0
       if (@level > input + @slew_rate)
         @level -= @slew_rate
