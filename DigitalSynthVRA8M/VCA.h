@@ -7,12 +7,12 @@ class VCA
   static uint8_t m_gain;
 
 public:
-  void initialize()
+  static void initialize()
   {
     set_gain(64);
   }
 
-  void set_gain(uint8_t controller_value)
+  static void set_gain(uint8_t controller_value)
   {
     m_gain = controller_value << 1;
   }
@@ -23,3 +23,5 @@ public:
     return high_sbyte(audio_input * g);
   }
 };
+
+uint8_t VCA::m_gain;

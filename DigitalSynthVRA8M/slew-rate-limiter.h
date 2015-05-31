@@ -6,7 +6,7 @@ class SlewRateLimiter
 {
   static const uint8_t UPDATE_INTERVAL = 5;
 
-  static uint8_t m_count;
+  static uint8_t  m_count;
   static uint16_t m_level;
   static uint16_t m_slew_rate;
 
@@ -39,3 +39,7 @@ public:
     return m_level;
   }
 };
+
+uint8_t  SlewRateLimiter::m_count;
+uint16_t SlewRateLimiter::m_level;
+uint16_t SlewRateLimiter::m_slew_rate;

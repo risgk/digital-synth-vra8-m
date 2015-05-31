@@ -60,3 +60,8 @@ public:
     }
   }
 };
+
+FILE*    WAVFileOut::m_file;
+uint32_t WAVFileOut::m_max_size;
+uint32_t WAVFileOut::m_data_size;
+boolean  WAVFileOut::m_closed;

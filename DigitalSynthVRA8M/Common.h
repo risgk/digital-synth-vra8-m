@@ -67,27 +67,24 @@ inline int8_t high_sbyte(int16_t x)
 
 inline uint16_t mul_q16_q16(uint16_t x, uint16_t y)
 {
-  uint16_t result;
-  result  = high_byte(low_byte(x) * high_byte(y));
-  result += high_byte(high_byte(x) * low_byte(y));
-  result += high_byte(x) * high_byte(y);
+  uint16_t result  = high_byte(low_byte(x) * high_byte(y));
+  result          += high_byte(high_byte(x) * low_byte(y));
+  result          += high_byte(x) * high_byte(y);
   return result;
 }
 
 inline int16_t mul_q15_q15(int16_t x, int16_t y)
 {
-  int16_t result;
-  result  = high_sbyte(low_byte(x) * high_sbyte(y));
-  result += high_sbyte(high_sbyte(x) * low_byte(y));
-  result += high_sbyte(x) * high_sbyte(y);
+  int16_t result  = high_sbyte(low_byte(x) * high_sbyte(y));
+  result         += high_sbyte(high_sbyte(x) * low_byte(y));
+  result         += high_sbyte(x) * high_sbyte(y);
   return result;
 }
 
 inline int16_t mul_q15_q16(int16_t x, uint16_t y)
 {
-  uint16_t result;
-  result  = high_byte(low_byte(x) * high_byte(y));
-  result += high_sbyte(high_sbyte(x) * low_byte(y));
-  result += high_sbyte(x) * high_byte(y);
+  uint16_t result  = high_byte(low_byte(x) * high_byte(y));
+  result          += high_sbyte(high_sbyte(x) * low_byte(y));
+  result          += high_sbyte(x) * high_byte(y);
   return result;
 }

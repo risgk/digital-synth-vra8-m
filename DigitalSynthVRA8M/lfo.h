@@ -30,3 +30,6 @@ public:
     return high_sbyte(level) << 1;
   }
 };
+
+uint16_t LFO::m_phase;
+uint8_t  LFO::m_rate;

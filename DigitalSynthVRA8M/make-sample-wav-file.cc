@@ -22,22 +22,21 @@ inline uint16_t pgm_read_word(const uint16_t* p)
 #include "synth.h"
 #include "wav-file-out.h"
 
-MIDI_STREAM_FILE = "sample-midi-stream.bin"
-RECORDING_FILE = "a.wav"
-RECORDING_SEC = 60
+const char*    MIDI_STREAM_FILE = "sample-midi-stream.bin";
+const char*    RECORDING_FILE = "a.wav";
+const uint16_t RECORDING_SEC = 60;
 
 int main()
 {
   // setup
   Synth::initialize();
-  FILE* binFile = ::fopen(MIDI_STREAM_FILE, "rb");
+  FILE* bin_file = ::fopen(MIDI_STREAM_FILE, "rb");
   WAVFileOut::initialize(RECORDING_FILE, RECORDING_SEC);
 
   // loop
   int c;
-  while ((c = ::fgetc(binFile)) != EOF) {
-    uint8_t b = static_cast<uint8_t>(c);
-    Synth::receiveMIDIByte(b);
+  while ((c = ::fgetc(bin_file)) != EOF) {
+    Synth::receive_midi_byte(c);
     uint16_t r = SAMPLING_RATE / (SERIAL_SPEED / 10);
     for (uint16_t i = 0; i < r; i++) {
       uint8_t level = Synth::clock();
@@ -47,7 +46,7 @@ int main()
 
   // teardown
   WAVFileOut::close();
-  ::fclose(binFile);
+  ::fclose(bin_file);
 
   return 0;
 }

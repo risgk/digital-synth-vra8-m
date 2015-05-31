@@ -1,87 +1,93 @@
-// todo
-
 #pragma once
 
 #include "common.h"
 #include "vco-table.h"
 
-template <uint8_t T>
 class VCO
 {
-  static const uint8_t** m_waveTables;
-  static uint8_t         m_courseTune;
-  static uint8_t         m_fineTune;
-  static uint8_t         m_noteNumber;
-  static uint16_t        m_phase;
-  static uint16_t        m_freq;
+   static uint16_t m_phase;
+   static uint8_t  m_pulse_saw_mix;
+   static uint16_t m_pulse_width;
+   static uint16_t m_saw_shift;
+   static uint8_t  m_color_lfo_amt;
 
 public:
-  static void resetPhase()
+  static void initialize()
   {
     m_phase = 0;
+    set_pulse_saw_mix(0);
+    set_pulse_width(0);
+    set_saw_shift(0);
+    set_color_lfo_amt(0);
   }
 
-  static void setCoarseTune(uint8_t coarseTune)
+  static void set_pulse_saw_mix(uint8_t controller_value)
   {
-    m_courseTune = coarseTune;
-    updateFreq();
+    m_pulse_saw_mix = controller_value;
   }
 
-  static uint8_t coarseTune()
+  static void set_pulse_width(uint8_t controller_value)
   {
-    return m_courseTune;
+    m_pulse_width = (controller_value + 128) << 8;
   }
 
-  static void setFineTune(uint8_t fineTune)
+  static void set_saw_shift(uint8_t controller_value)
   {
-    m_fineTune = fineTune;
-    updateFreq();
+    m_saw_shift = controller_value << 8;
   }
 
-  static void noteOn(uint8_t noteNumber)
+  static void set_color_lfo_amt(uint8_t controller_value)
   {
-    m_noteNumber = noteNumber;
-    updateFreq();
+    m_color_lfo_amt = controller_value << 1;
   }
 
-  static uint8_t clock()
+  static int8_t clock(uint16_t pitch_control, int8_t phase_control)
   {
-    m_phase += m_freq;
+    uint8_t coarse_pitch = high_byte(pitch_control);
+    uint8_t fine_pitch = low_byte(pitch_control);
 
-    const uint8_t* waveTable = m_waveTables[highByte(m_freq)];
-    uint8_t currIndex = highByte(m_phase);
-    uint8_t nextIndex = currIndex + 1;
-    int8_t currData = pgm_read_byte(waveTable + currIndex);
-    int8_t nextData = pgm_read_byte(waveTable + nextIndex);
+    uint16_t freq = mul_q16_q16(g_vco_freq_table[coarse_pitch], g_vco_tune_rate_table[fine_pitch]);
+    m_phase += freq;
+
+    int8_t saw_down      = +get_level_from_wave_table(coarse_pitch, m_phase);
+    int8_t saw_up        = -get_level_from_wave_table(coarse_pitch,
+                              (m_phase + m_pulse_width - (phase_control * m_color_lfo_amt)));
+    int8_t saw_down_copy = +get_level_from_wave_table(coarse_pitch,
+                              (m_phase + m_saw_shift + (phase_control * m_color_lfo_amt)));
+
+    int16_t output = saw_down      * 127 +
+                     saw_up        * (127 - m_pulse_saw_mix) +
+                     saw_down_copy * high_byte(m_pulse_saw_mix * 192);
+
+    return high_sbyte(output);
+  }
+
+private:
+  static int8_t get_level_from_wave_table(uint8_t coarse_pitch, uint16_t phase)
+  {
+    uint8_t curr_index = high_byte(phase);
+    uint8_t next_index = curr_index + 0x01;
+
+    const uint8_t* wave_table = g_vco_wave_tables[coarse_pitch];
+    int8_t curr_data = pgm_read_byte(wave_table + curr_index);
+    int8_t next_data = pgm_read_byte(wave_table + next_index);
+
+    uint8_t curr_weight = -low_byte(phase);
+    uint8_t next_weight = -curr_weight;
 
     int8_t level;
-    uint8_t nextWeight = lowByte(m_phase);
-    if (nextWeight == 0) {
-      level = currData;
+    if (next_weight == 0) {
+      level = curr_data;
     } else {
-      uint8_t currWeight = (uint8_t) 0 - nextWeight;
-      level = highByte((currData * currWeight) + (nextData * nextWeight));
+      level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight));
     }
 
     return level;
   }
-
-  static void updateFreq()
-  {
-    uint8_t noteNumber = m_noteNumber + m_courseTune - (uint8_t) 64;
-    if (m_fineTune <= (uint8_t) 63) {
-      m_freq = pgm_read_word(g_freqTableDetuneMinus + noteNumber);
-    } else if (m_fineTune == (uint8_t) 64) {
-      m_freq = pgm_read_word(g_freqTableDetuneNone  + noteNumber);
-    } else {
-      m_freq = pgm_read_word(g_freqTableDetunePlus  + noteNumber);
-    }
-  }
 };
 
-template <uint8_t T> const uint8_t** VCO<T>::m_waveTables = g_waveTablesSawtooth;
-template <uint8_t T> uint8_t         VCO<T>::m_courseTune = 64;
-template <uint8_t T> uint8_t         VCO<T>::m_fineTune   = 64;
-template <uint8_t T> uint8_t         VCO<T>::m_noteNumber = 60;
-template <uint8_t T> uint16_t        VCO<T>::m_phase      = 0;
-template <uint8_t T> uint16_t        VCO<T>::m_freq       = 0;
+uint16_t VCO::m_phase;
+uint8_t  VCO::m_pulse_saw_mix;
+uint16_t VCO::m_pulse_width;
+uint16_t VCO::m_saw_shift;
+uint8_t  VCO::m_color_lfo_amt;

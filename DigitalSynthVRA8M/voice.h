@@ -1,88 +1,111 @@
-// todo
-
-require_relative 'common'
-require_relative 'vco'
-require_relative 'vcf'
-require_relative 'vca'
-require_relative 'eg'
-require_relative 'lfo'
-require_relative 'slew-rate-limiter'
+#include "common.h"
+#include "vco.h"
+#include "vcf.h"
+#include "vca.h"
+#include "eg.h"
+#include "lfo.h"
+#include "slew-rate-limiter.h"
 
 class Voice
-  def initialize
-    @vco = VCO.new
-    @vcf = VCF.new
-    @vca = VCA.new
-    @eg = EG.new
-    @lfo = LFO.new
-    @srl = SlewRateLimiter.new
-    @note_number = NOTE_NUMBER_MIN
+{
+  static uint8_t m_note_number;
 
-    # Preset #1
-    control_change(VCO_PULSE_SAW_MIX, 64 )
-    control_change(VCO_PULSE_WIDTH,   0  )
-    control_change(VCO_SAW_SHIFT,     64 )
-    control_change(VCF_CUTOFF,        0  )
-    control_change(VCF_RESONANCE,     127)
-    control_change(VCF_EG_AMT,        127)
-    control_change(VCA_GAIN,          64 )
-    control_change(EG_ATTACK,         32 )
-    control_change(EG_DECAY_RELEASE,  96 )
-    control_change(EG_SUSTAIN,        127)
-    control_change(LFO_RATE,          32 )
-    control_change(LFO_VCO_COLOR_AMT, 32 )
-    control_change(PORTAMENTO,        96 )
-  end
+public:
+  static void initialize()
+  {
+    VCO::initialize();
+    VCF::initialize();
+    VCA::initialize();
+    EG::initialize();
+    LFO::initialize();
+    SlewRateLimiter::initialize();
+    m_note_number = NOTE_NUMBER_MIN;
 
-  def note_on(note_number)
-    @note_number = note_number
-    @eg.note_on
-  end
+    // Preset #1
+    control_change(VCO_PULSE_SAW_MIX, 64 );
+    control_change(VCO_PULSE_WIDTH,   0  );
+    control_change(VCO_SAW_SHIFT,     64 );
+    control_change(VCF_CUTOFF,        0  );
+    control_change(VCF_RESONANCE,     127);
+    control_change(VCF_EG_AMT,        127);
+    control_change(VCA_GAIN,          64 );
+    control_change(EG_ATTACK,         32 );
+    control_change(EG_DECAY_RELEASE,  96 );
+    control_change(EG_SUSTAIN,        127);
+    control_change(LFO_RATE,          32 );
+    control_change(LFO_VCO_COLOR_AMT, 32 );
+    control_change(PORTAMENTO,        96 );
+  }
 
-  def note_off
-    @eg.note_off
-  end
+  static void note_on(uint8_t note_number)
+  {
+    m_note_number = note_number;
+    EG::note_on();
+  }
 
-  def control_change(controller_number, controller_value)
-    case (controller_number)
-    when VCO_PULSE_SAW_MIX
-      @vco.set_pulse_saw_mix(controller_value)
-    when VCO_PULSE_WIDTH
-      @vco.set_pulse_width(controller_value)
-    when VCO_SAW_SHIFT
-      @vco.set_saw_shift(controller_value)
-    when VCF_CUTOFF
-      @vcf.set_cutoff(controller_value)
-    when VCF_RESONANCE
-      @vcf.set_resonance(controller_value)
-    when VCF_EG_AMT
-      @vcf.set_cv_amt(controller_value)
-    when VCA_GAIN
-      @vca.set_gain(controller_value)
-    when EG_ATTACK
-      @eg.set_attack(controller_value)
-    when EG_DECAY_RELEASE
-      @eg.set_decay_release(controller_value)
-    when EG_SUSTAIN
-      @eg.set_sustain(controller_value)
-    when LFO_RATE
-      @lfo.set_rate(controller_value)
-    when LFO_VCO_COLOR_AMT
-      @vco.set_color_lfo_amt(controller_value)
-    when PORTAMENTO
-      @srl.set_slew_time(controller_value)
-    when ALL_NOTES_OFF
-      @eg.note_off
-    end
-  end
+  static void note_off()
+  {
+    EG::note_off();
+  }
 
-  def clock
-    eg_output = @eg.clock
-    lfo_output = @lfo.clock
-    srl_output = @srl.clock(@note_number << 8)
-    vco_output = @vco.clock(srl_output, lfo_output)
-    vcf_output = @vcf.clock(vco_output, eg_output)
-    vca_output = @vca.clock(vcf_output, eg_output)
-    return vca_output
-  end
-end
+  static void control_change(uint8_t controller_number, uint8_t controller_value)
+  {
+    switch (controller_number) {
+    case VCO_PULSE_SAW_MIX:
+      VCO::set_pulse_saw_mix(controller_value);
+      break;
+    case VCO_PULSE_WIDTH:
+      VCO::set_pulse_width(controller_value);
+      break;
+    case VCO_SAW_SHIFT:
+      VCO::set_saw_shift(controller_value);
+      break;
+    case VCF_CUTOFF:
+      VCF::set_cutoff(controller_value);
+      break;
+    case VCF_RESONANCE:
+      VCF::set_resonance(controller_value);
+      break;
+    case VCF_EG_AMT:
+      VCF::set_cv_amt(controller_value);
+      break;
+    case VCA_GAIN:
+      VCA::set_gain(controller_value);
+      break;
+    case EG_ATTACK:
+      EG::set_attack(controller_value);
+      break;
+    case EG_DECAY_RELEASE:
+      EG::set_decay_release(controller_value);
+      break;
+    case EG_SUSTAIN:
+      EG::set_sustain(controller_value);
+      break;
+    case LFO_RATE:
+      LFO::set_rate(controller_value);
+      break;
+    case LFO_VCO_COLOR_AMT:
+      VCO::set_color_lfo_amt(controller_value);
+      break;
+    case PORTAMENTO:
+      SlewRateLimiter::set_slew_time(controller_value);
+      break;
+    case ALL_NOTES_OFF:
+      EG::note_off();
+      break;
+    }
+  }
+
+  static int8_t clock()
+  {
+    uint8_t  eg_output = EG::clock();
+    uint8_t  lfo_output = LFO::clock();
+    uint16_t srl_output = SlewRateLimiter::clock(m_note_number << 8);
+    int8_t   vco_output = VCO::clock(srl_output, lfo_output);
+    int8_t   vcf_output = VCF::clock(vco_output, eg_output);
+    int8_t   vca_output = VCA::clock(vcf_output, eg_output);
+    return vca_output;
+  }
+};
+
+uint8_t Voice::m_note_number;

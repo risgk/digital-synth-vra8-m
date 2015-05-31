@@ -1,3 +1,3 @@
 jruby generate-sample-midi-stream.rb
-gcc MakeSampleWavFile.cc -o a.exe
+gcc make-sample-wav-file.cc -o a.exe
 a.exe

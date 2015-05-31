@@ -19,12 +19,12 @@ $file.printf("const uint16_t g_eg_attack_rate_table[] = {\n  ")
     $file.printf(" ")
   end
 end
-$file.printf("}\n\n")
+$file.printf("};\n\n")
 
 HALF_LIFE = 16
 eg_decay_release_rate = (((1.0 / 2.0) ** (1.0 / HALF_LIFE)) *
                          (EG_DECAY_RELEASE_RATE_DENOMINATOR)).round
-$file.printf("EG_DECAY_RELEASE_RATE = %d\n", eg_decay_release_rate)
+$file.printf("const uint16_t EG_DECAY_RELEASE_RATE = %d;\n", eg_decay_release_rate)
 $file.printf("\n")
 
 $file.printf("const uint16_t g_eg_decay_release_update_interval_table[] = {\n  ")

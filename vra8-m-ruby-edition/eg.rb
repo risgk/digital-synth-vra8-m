@@ -54,7 +54,7 @@ class EG
         if (@level > @sustain_level)
           if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
             @level = @sustain_level
-          elsif
+          else
             @level = @sustain_level +
                      mul_q15_q16(@level - @sustain_level, EG_DECAY_RELEASE_RATE)
           end

@@ -11,7 +11,7 @@ class Voice
     @vco = VCO.new
     @vcf = VCF.new
     @vca = VCA.new
-    @eg = EG.new
+    @eg  = EG.new
     @lfo = LFO.new
     @srl = SlewRateLimiter.new
     @note_number = NOTE_NUMBER_MIN

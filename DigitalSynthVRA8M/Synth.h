@@ -1,281 +1,148 @@
-// todo
-
 #pragma once
 
 #include "common.h"
-#include "vco.h"
-#include "vcf.h"
-#include "vca.h"
-#include "eg.h"
+#include "voice.h"
 
 class Synth
 {
-  static uint8_t m_systemExclusive;
-  static uint8_t m_systemDataRemaining;
-  static uint8_t m_runningStatus;
-  static uint8_t m_firstData;
-  static uint8_t m_noteNumber;
+  static uint8_t m_system_exclusive;
+  static uint8_t m_system_data_remaining;
+  static uint8_t m_running_status;
+  static uint8_t m_first_data;
+  static uint8_t m_note_number;
 
 public:
   static void initialize()
   {
+    Voice::initialize();
+    m_note_number = NOTE_NUMBER_MIN;
+    m_system_exclusive = false;
+    m_system_data_remaining = 0;
+    m_running_status = STATUS_BYTE_INVALID;
+    m_first_data = DATA_BYTE_INVALID;
   }
 
-  static void receiveMIDIByte(uint8_t b)
+  static void receive_midi_byte(uint8_t b)
   {
-    if (IsDataByte(b)) {
-      if (m_systemExclusive) {
+    if (is_data_byte(b)) {
+      if (m_system_exclusive) {
         // do nothing
-      } else if (m_systemDataRemaining != (uint8_t) 0) {
-        m_systemDataRemaining--;
-      } else if (m_runningStatus == (NOTE_ON | MIDI_CH)) {
-        if (!IsDataByte(m_firstData)) {
-          m_firstData = b;
+      } else if (m_system_data_remaining != (uint8_t) 0) {
+        m_system_data_remaining--;
+      } else if (m_running_status == (NOTE_ON | MIDI_CH)) {
+        if (!is_data_byte(m_first_data)) {
+          m_first_data = b;
         } else if (b == (uint8_t) 0) {
-          noteOff(m_firstData);
-          m_firstData = DATA_BYTE_INVALID;
+          note_off(m_first_data);
+          m_first_data = DATA_BYTE_INVALID;
         } else {
-          noteOn(m_firstData);
-          m_firstData = DATA_BYTE_INVALID;
+          note_on(m_first_data);
+          m_first_data = DATA_BYTE_INVALID;
         }
-      } else if (m_runningStatus == (NOTE_OFF | MIDI_CH)) {
-        if (!IsDataByte(m_firstData)) {
-          m_firstData = b;
+      } else if (m_running_status == (NOTE_OFF | MIDI_CH)) {
+        if (!is_data_byte(m_first_data)) {
+          m_first_data = b;
         } else {
-          noteOff(m_firstData);
-          m_firstData = DATA_BYTE_INVALID;
+          note_off(m_first_data);
+          m_first_data = DATA_BYTE_INVALID;
         }
-      } else if (m_runningStatus == (CONTROL_CHANGE | MIDI_CH)) {
-        if (!IsDataByte(m_firstData)) {
-          m_firstData = b;
+      } else if (m_running_status == (CONTROL_CHANGE | MIDI_CH)) {
+        if (!is_data_byte(m_first_data)) {
+          m_first_data = b;
         } else {
-          controlChange(m_firstData, b);
-          m_firstData = DATA_BYTE_INVALID;
+          control_change(m_first_data, b);
+          m_first_data = DATA_BYTE_INVALID;
         }
       }
-    } else if (IsSystemMessage(b)) {
+    } else if (is_system_message(b)) {
       switch (b) {
       case SYSTEM_EXCLUSIVE:
-        m_systemExclusive = true;
-        m_runningStatus = STATUS_BYTE_INVALID;
+        m_system_exclusive = true;
+        m_running_status = STATUS_BYTE_INVALID;
         break;
       case EOX:
       case TUNE_REQUEST:
       case 0xF4:
       case 0xF5:
-        m_systemExclusive = false;
-        m_systemDataRemaining = 0;
-        m_runningStatus = STATUS_BYTE_INVALID;
+        m_system_exclusive = false;
+        m_system_data_remaining = 0;
+        m_running_status = STATUS_BYTE_INVALID;
         break;
       case TIME_CODE:
       case SONG_SELECT:
-        m_systemExclusive = false;
-        m_systemDataRemaining = 1;
-        m_runningStatus = STATUS_BYTE_INVALID;
+        m_system_exclusive = false;
+        m_system_data_remaining = 1;
+        m_running_status = STATUS_BYTE_INVALID;
         break;
       case SONG_POSITION:
-        m_systemExclusive = false;
-        m_systemDataRemaining = 2;
-        m_runningStatus = STATUS_BYTE_INVALID;
+        m_system_exclusive = false;
+        m_system_data_remaining = 2;
+        m_running_status = STATUS_BYTE_INVALID;
         break;
       }
-    } else if (IsStatusByte(b)) {
-      m_systemExclusive = false;
-      m_runningStatus = b;
-      m_firstData = DATA_BYTE_INVALID;
+    } else if (is_status_byte(b)) {
+      m_system_exclusive = false;
+      m_running_status = b;
+      m_first_data = DATA_BYTE_INVALID;
     }
   }
 
   static int8_t clock()
   {
-    int8_t level = Mixer::clock(VCO<1>::clock(), VCO<2>::clock(), VCO<3>::clock());
-    uint8_t egOutput = EG::clock();
-    level = VCF::clock(level, egOutput);
-    level = VCA::clock(level, egOutput);
-    return level;
+    return Voice::clock();
   }
 
-  static boolean IsRealTimeMessage(uint8_t b)
+private:
+  static boolean is_real_time_message(uint8_t b)
   {
     return b >= REAL_TIME_MESSAGE_MIN;
   }
 
-  static boolean IsSystemMessage(uint8_t b)
+  static boolean is_system_message(uint8_t b)
   {
     return b >= SYSTEM_MESSAGE_MIN;
   }
 
-  static boolean IsStatusByte(uint8_t b)
+  static boolean is_status_byte(uint8_t b)
   {
     return b >= STATUS_BYTE_MIN;
   }
 
-  static boolean IsDataByte(uint8_t b)
+  static boolean is_data_byte(uint8_t b)
   {
     return b <= DATA_BYTE_MAX;
   }
 
-  static void noteOn(uint8_t noteNumber)
+  static void note_on(uint8_t note_number)
   {
-    uint8_t pitch1 = noteNumber + VCO<1>::coarseTune();
-    if (pitch1 < (uint8_t) (NOTE_NUMBER_MIN + (uint8_t) 64) ||
-        pitch1 > (uint8_t) (NOTE_NUMBER_MAX + (uint8_t) 64)) {
-      return;
-    }
-
-    uint8_t pitch2 = noteNumber + VCO<2>::coarseTune();
-    if (pitch2 < (uint8_t) (NOTE_NUMBER_MIN + (uint8_t) 64) ||
-        pitch2 > (uint8_t) (NOTE_NUMBER_MAX + (uint8_t) 64)) {
-      return;
-    }
-
-    uint8_t pitch3 = noteNumber + VCO<3>::coarseTune();
-    if (pitch3 < (uint8_t) (NOTE_NUMBER_MIN + (uint8_t) 64) ||
-        pitch3 > (uint8_t) (NOTE_NUMBER_MAX + (uint8_t) 64)) {
-      return;
-    }
-
-    m_noteNumber = noteNumber;
-    VCO<1>::noteOn(m_noteNumber);
-    VCO<2>::noteOn(m_noteNumber);
-    VCO<3>::noteOn(m_noteNumber);
-    EG::noteOn();
+    m_note_number = note_number;
+    Voice::note_on(m_note_number);
   }
 
-  static void noteOff(uint8_t noteNumber)
+  static void note_off(uint8_t note_number)
   {
-    if (noteNumber == m_noteNumber) {
-      EG::noteOff();
+    if (m_note_number == note_number) {
+      m_note_number = 0xFF;
+      Voice::note_off();
     }
   }
 
-  static void soundOff()
+  static void control_change(uint8_t controller_number, uint8_t controller_value)
   {
-    EG::soundOff();
-  }
-
-  static void resetPhase()
-  {
-    VCO<1>::resetPhase();
-    VCO<2>::resetPhase();
-    VCO<3>::resetPhase();
-  }
-
-  static void controlChange(uint8_t controllerNumber, uint8_t value)
-  {
-    switch (controllerNumber) {
+    switch (controller_number) {
     case ALL_NOTES_OFF:
-      allNotesOff(value);
+      m_note_number = 0xFF;
+      Voice::note_off();
       break;
-    case VCO_1_COARSE_TUNE:
-      setVCO1CoarseTune(value);
-      break;
-    case VCO_2_COARSE_TUNE:
-      setVCO2CoarseTune(value);
-      break;
-    case VCO_2_FINE_TUNE:
-      setVCO2FineTune(value);
-      break;
-    case VCO_3_COARSE_TUNE:
-      setVCO3CoarseTune(value);
-      break;
-    case VCO_3_FINE_TUNE:
-      setVCO3FineTune(value);
-      break;
-    case VCF_CUTOFF_FREQUENCY:
-      setVCFCutoffFrequency(value);
-      break;
-    case VCF_RESONANCE:
-      setVCFResonance(value);
-      break;
-    case VCF_ENVELOPE_AMOUNT:
-      setVCFEnvelopeAmount(value);
-      break;
-    case EG_ATTACK_TIME:
-      setEGAttackTime(value);
-      break;
-    case EG_DECAY_TIME:
-      setEGDecayTime(value);
-      break;
-    case EG_SUSTAIN_LEVEL:
-      setEGSustainLevel(value);
+    default:
+      Voice::control_change(controller_number, controller_value);
       break;
     }
-  }
-
-  static void setVCO1CoarseTune(uint8_t value)
-  {
-    soundOff();
-    VCO<1>::setCoarseTune(value);
-    resetPhase();
-  }
-
-  static void setVCO2CoarseTune(uint8_t value)
-  {
-    soundOff();
-    VCO<2>::setCoarseTune(value);
-    resetPhase();
-  }
-
-  static void setVCO2FineTune(uint8_t value)
-  {
-    soundOff();
-    VCO<2>::setFineTune(value);
-    resetPhase();
-  }
-
-  static void setVCO3CoarseTune(uint8_t value)
-  {
-    soundOff();
-    VCO<3>::setCoarseTune(value);
-    resetPhase();
-  }
-
-  static void setVCO3FineTune(uint8_t value)
-  {
-    soundOff();
-    VCO<3>::setFineTune(value);
-    resetPhase();
-  }
-
-  static void setVCFCutoffFrequency(uint8_t value)
-  {
-    VCF::setCutoffFrequency(value);
-  }
-
-  static void setVCFResonance(uint8_t value)
-  {
-    VCF::setResonance(value);
-  }
-
-  static void setVCFEnvelopeAmount(uint8_t value)
-  {
-    VCF::setEnvelopeAmount(value);
-  }
-
-  static void setEGAttackTime(uint8_t value)
-  {
-    EG::setAttackTime(value);
-  }
-
-  static void setEGDecayTime(uint8_t value)
-  {
-    EG::setDecayTime(value);
-  }
-
-  static void setEGSustainLevel(uint8_t value)
-  {
-    EG::setSustainLevel(value);
-  }
-
-  static void allNotesOff(uint8_t value)
-  {
-    EG::noteOff();
   }
 };
 
-uint8_t Synth::m_systemExclusive     = false;
-uint8_t Synth::m_systemDataRemaining = 0;
-uint8_t Synth::m_runningStatus       = STATUS_BYTE_INVALID;
-uint8_t Synth::m_firstData           = DATA_BYTE_INVALID;
-uint8_t Synth::m_noteNumber          = 60;
+uint8_t Synth::m_system_exclusive;
+uint8_t Synth::m_system_data_remaining;
+uint8_t Synth::m_running_status;
+uint8_t Synth::m_first_data;
+uint8_t Synth::m_note_number;

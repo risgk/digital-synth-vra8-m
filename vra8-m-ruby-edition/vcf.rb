@@ -2,8 +2,6 @@ require_relative 'common'
 require_relative 'vcf-table'
 
 # refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
-# Cookbook formulae for audio EQ biquad filter coefficients
-# by Robert Bristow-Johnson
 
 class VCF
   def initialize
@@ -21,7 +19,13 @@ class VCF
   end
 
   def set_resonance(controller_value)
-    @resonance = controller_value
+    if (controller_value > 96)
+      @lpf_table = $vcf_lpf_table_q_2_sqrt_2
+    elsif (controller_value > 64)
+      @lpf_table = $vcf_lpf_table_q_1_sqrt_2
+    else
+      @lpf_table = $vcf_lpf_table_q_1_over_sqrt_2
+    end
   end
 
   def set_cv_amt(controller_value)
@@ -34,22 +38,10 @@ class VCF
       cutoff = 127
     end
 
-    if (@resonance > 96)
-      i = cutoff * 3
-      b_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 0]
-      a_1_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 1]
-      a_2_over_a_0 = $vcf_lpf_table_q_2_sqrt_2[i + 2]
-    elsif (@resonance > 64)
-      i = cutoff * 3
-      b_2_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 0]
-      a_1_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 1]
-      a_2_over_a_0 = $vcf_lpf_table_q_1_sqrt_2[i + 2]
-    else
-      i = cutoff * 3
-      b_2_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 0]
-      a_1_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 1]
-      a_2_over_a_0 = $vcf_lpf_table_q_1_over_sqrt_2[i + 2]
-    end
+    i = cutoff * 3
+    b_2_over_a_0 = @lpf_table[i + 0]
+    a_1_over_a_0 = @lpf_table[i + 1]
+    a_2_over_a_0 = @lpf_table[i + 2]
 
     x_0 = audio_input << 8
     tmp  = mul_q15_q15(b_2_over_a_0, x_0 + (@x_1 << 1) + @x_2)

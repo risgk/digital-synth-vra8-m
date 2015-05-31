@@ -90,7 +90,7 @@ end
 
 $file.printf("const uint8_t* g_vco_wave_tables[] = {\n  ")
 $vco_freq_restriction_table.each_with_index do |freq, idx|
-  $file.printf("$vco_wave_table_%-3d,", max_overtone(freq))
+  $file.printf("g_vco_wave_table_%-3d,", max_overtone(freq))
   if idx == DATA_BYTE_MAX
     $file.printf("\n")
   elsif idx % 4 == 3
