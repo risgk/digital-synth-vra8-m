@@ -17,7 +17,8 @@ $synth = Synth.new
 if ARGV.length == 1
   # make WAV file
   File.open(ARGV[0], "rb") do |bin_file|
-    wav_file_out = WAVFileOut.new(RECORDING_FILE, RECORDING_SEC)
+    wav_file_out = WAVFileOut.new
+    wav_file_out.open(RECORDING_FILE, RECORDING_SEC)
     while(c = bin_file.read(1)) do
       b = c.ord
       $synth.receive_midi_byte(b)
@@ -57,7 +58,8 @@ end
 q = Queue.new
 
 t = Thread.new do
-  wav_file_out = WAVFileOut.new(RECORDING_FILE, RECORDING_SEC) if RECORDING_REAL_TIME
+  wav_file_out = WAVFileOut.new
+  wav_file_out.open(RECORDING_FILE, RECORDING_SEC) if RECORDING_REAL_TIME
   AudioOut.open(AUDIO_OUT_BUFFER_SIZE, AUDIO_OUT_NUM_OF_BUFFER)
   loop do
     if (!q.empty?)

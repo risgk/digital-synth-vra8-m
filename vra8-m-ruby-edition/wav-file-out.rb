@@ -1,7 +1,7 @@
 require_relative 'common'
 
 class WAVFileOut
-  def initialize(path, sec)
+  def open(path, sec)
     @file = File.open(path, "wb")
     @file.write("RIFF")
     @file.write([0].pack("V"))

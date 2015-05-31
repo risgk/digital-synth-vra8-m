@@ -11,7 +11,7 @@ class WAVFileOut
   static boolean  m_closed;
 
 public:
-  static void initialize(const char* path, uint16_t sec)
+  static void open(const char* path, uint16_t sec)
   {
     m_file = fopen(path, "wb");
     fwrite("RIFF", 1, 4, m_file);

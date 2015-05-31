@@ -31,7 +31,7 @@ int main()
   // setup
   Synth::initialize();
   FILE* bin_file = ::fopen(MIDI_STREAM_FILE, "rb");
-  WAVFileOut::initialize(RECORDING_FILE, RECORDING_SEC);
+  WAVFileOut::open(RECORDING_FILE, RECORDING_SEC);
 
   // loop
   int c;
