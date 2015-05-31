@@ -36,7 +36,7 @@ class WAVFileOut
       @file.seek(40, IO::SEEK_SET)
       @file.write([file_size - 36].pack("V"))
       @file.close
-      puts "Recording end."
+      puts "End Of Recording"
     end
   end
 end
