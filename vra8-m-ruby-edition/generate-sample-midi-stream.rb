@@ -31,6 +31,7 @@ end
 
 control_change(ALL_NOTES_OFF,     0  )
 
+# Preset #1
 control_change(VCO_PULSE_SAW_MIX, 64 )
 control_change(VCO_PULSE_WIDTH,   0  )
 control_change(VCO_SAW_SHIFT,     64 )
@@ -42,11 +43,11 @@ control_change(EG_ATTACK,         32 )
 control_change(EG_DECAY_RELEASE,  96 )
 control_change(EG_SUSTAIN,        127)
 control_change(LFO_RATE,          32 )
-control_change(LFO_VCO_COLOR_AMT, 64 )
+control_change(LFO_VCO_COLOR_AMT, 32 )
 control_change(PORTAMENTO,        96 )
 
 play_cegbdfac(2)
-play_cegbdfac(4)
 play_cegbdfac(3)
-# play_cegbdfac(5)
-# play_cegbdfac(6)
+play_cegbdfac(4)
+play_cegbdfac(5)
+play_cegbdfac(6)
