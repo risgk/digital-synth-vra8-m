@@ -30,7 +30,7 @@ public:
       m_count = 0;
       if (m_level > input + m_slew_rate) {
         m_level -= m_slew_rate;
-      } else if (m_level < input - m_slew_rate) {
+      } else if (m_level + m_slew_rate < input) {
         m_level += m_slew_rate;
       } else {
         m_level = input;
