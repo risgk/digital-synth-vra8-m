@@ -75,7 +75,7 @@ public:
             m_level = m_sustain_level;
           } else {
             m_level = m_sustain_level +
-                      mul_q15_q16(m_level - m_sustain_level, EG_DECAY_RELEASE_RATE);
+                      mul_q16_q16(m_level - m_sustain_level, EG_DECAY_RELEASE_RATE);
           }
         }
       }
@@ -84,7 +84,7 @@ public:
       m_decay_release_count += 1;
       if (m_decay_release_count >= m_decay_release_update_interval) {
         m_decay_release_count = 0;
-        m_level = mul_q15_q16(m_level, EG_DECAY_RELEASE_RATE);
+        m_level = mul_q16_q16(m_level, EG_DECAY_RELEASE_RATE);
         if (m_level <= EG_LEVEL_MAX >> 10) {
           m_state = STATE_IDLE;
           m_level = 0;

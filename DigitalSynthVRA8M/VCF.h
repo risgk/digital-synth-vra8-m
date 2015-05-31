@@ -34,9 +34,9 @@ public:
 
   static void set_resonance(uint8_t controller_value)
   {
-    if (controller_value > 96) {
+    if (controller_value >= 96) {
       m_lpf_table = g_vcf_lpf_table_q_2_sqrt_2;
-    } else if (controller_value > 64) {
+    } else if (controller_value >= 32) {
       m_lpf_table = g_vcf_lpf_table_q_1_sqrt_2;
     } else {
       m_lpf_table = g_vcf_lpf_table_q_1_over_sqrt_2;
@@ -56,12 +56,14 @@ public:
     }
 
     const uint16_t* p = m_lpf_table + (cutoff * 3);
-    uint8_t b_2_over_a_0 = pgm_read_word(p++);
-    uint8_t a_1_over_a_0 = pgm_read_word(p++);
-    uint8_t a_2_over_a_0 = pgm_read_word(p++);
+    int16_t b_2_over_a_0 = pgm_read_word(p++);
+    int16_t a_1_over_a_0 = pgm_read_word(p++);
+    int16_t a_2_over_a_0 = pgm_read_word(p++);
 
     int16_t x_0 = audio_input << 8;
-    int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + (m_x_1 << 1) + m_x_2);
+
+    int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + m_x_2);
+    tmp         += mul_q15_q15(b_2_over_a_0, m_x_1 << 1);
     tmp         -= mul_q15_q15(a_1_over_a_0, m_y_1);
     tmp         -= mul_q15_q15(a_2_over_a_0, m_y_2);
     int16_t y_0 = tmp << ((15 - VCF_TABLE_FRACTION_BITS) << 1);
