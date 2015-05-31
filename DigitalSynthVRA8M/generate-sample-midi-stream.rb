@@ -1,9 +1,9 @@
-require './common'
+require_relative 'common'
 
-$file = File::open("sample-midi-stream.bin", "wb")
+$file = File.open("sample-midi-stream.bin", "wb")
 
 def control_change(control_number, value)
-    $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
+  $file.write([(CONTROL_CHANGE | MIDI_CH), control_number, value].pack("C*"))
 end
 
 def play(note_number, length)
@@ -17,28 +17,39 @@ def wait(length)
   length.times { $file.write([ACTIVE_SENSING].pack("C")) }
 end
 
-def play_cdefgabc(c)
+def play_cegbdfac(c)
   play(12 + (c * 12), 1200)
-  play(14 + (c * 12), 1200)
   play(16 + (c * 12), 1200)
-  play(17 + (c * 12), 1200)
   play(19 + (c * 12), 1200)
-  play(21 + (c * 12), 1200)
   play(23 + (c * 12), 1200)
+  play(14 + (c * 12), 1200)
+  play(17 + (c * 12), 1200)
+  play(21 + (c * 12), 1200)
   play(24 + (c * 12), 4800)
   wait(4800)
 end
 
-control_change(ALL_NOTES_OFF,        0)
-control_change(VCO_1_COARSE_TUNE,    64)
-control_change(VCO_2_COARSE_TUNE,    64)
-control_change(VCO_2_FINE_TUNE,      70)
-control_change(VCO_3_COARSE_TUNE,    52)
-control_change(VCO_3_FINE_TUNE,      64)
-control_change(VCF_CUTOFF_FREQUENCY, 85)
-control_change(VCF_RESONANCE,        ON)
-control_change(VCF_ENVELOPE_AMOUNT,  42)
-control_change(EG_ATTACK_TIME,       21)
-control_change(EG_DECAY_TIME,        85)
-control_change(EG_SUSTAIN_LEVEL,     127)
-play_cdefgabc(3)
+control_change(ALL_NOTES_OFF,     0  )
+
+# Preset #1
+control_change(VCO_PULSE_SAW_MIX, 64 )
+control_change(VCO_PULSE_WIDTH,   0  )
+control_change(VCO_SAW_SHIFT,     64 )
+control_change(VCF_CUTOFF,        0  )
+control_change(VCF_RESONANCE,     127)
+control_change(VCF_EG_AMT,        127)
+control_change(VCA_GAIN,          64 )
+control_change(EG_ATTACK,         32 )
+control_change(EG_DECAY_RELEASE,  96 )
+control_change(EG_SUSTAIN,        127)
+control_change(LFO_RATE,          32 )
+control_change(LFO_VCO_COLOR_AMT, 32 )
+control_change(PORTAMENTO,        96 )
+
+play_cegbdfac(2)
+play_cegbdfac(3)
+play_cegbdfac(4)
+# play_cegbdfac(5)
+# play_cegbdfac(6)
+
+$file.close

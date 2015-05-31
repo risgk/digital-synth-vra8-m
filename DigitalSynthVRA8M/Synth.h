@@ -1,11 +1,12 @@
+// todo
+
 #pragma once
 
-#include "Common.h"
-#include "VCO.h"
-#include "VCF.h"
-#include "VCA.h"
-#include "EG.h"
-#include "Mixer.h"
+#include "common.h"
+#include "vco.h"
+#include "vcf.h"
+#include "vca.h"
+#include "eg.h"
 
 class Synth
 {

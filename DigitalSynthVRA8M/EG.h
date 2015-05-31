@@ -1,7 +1,9 @@
+// todo
+
 #pragma once
 
-#include "Common.h"
-#include "EnvTable.h"
+#include "common.h"
+#include "eg-table.h"
 
 class EG
 {

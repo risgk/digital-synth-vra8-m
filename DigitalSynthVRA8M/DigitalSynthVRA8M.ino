@@ -1,8 +1,8 @@
 #include "Arduino.h"
-#include "Common.h"
-#include "Synth.h"
-#include "SerialIn.h"
-#include "AudioOut.h"
+#include "common.h"
+#include "synth.h"
+#include "serial-in.h"
+#include "audio-out.h"
 
 void setup() {
   Synth::initialize();

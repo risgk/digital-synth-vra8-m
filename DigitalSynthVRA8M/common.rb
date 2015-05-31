@@ -1,12 +1,18 @@
-MIDI_CH            = 0
-SERIAL_SPEED       = 38400
-SAMPLING_RATE      = 15625
-NOTE_NUMBER_MIN    = 24
-NOTE_NUMBER_MAX    = 96
-EG_UPDATE_INTERVAL = 25
+MIDI_CH         = 0
+SERIAL_SPEED    = 38400
+SAMPLING_RATE   = 15625
+FREQUENCY_MAX   = 7812
+BIT_DEPTH       = 8
+NOTE_NUMBER_MIN = 36
+NOTE_NUMBER_MAX = 96
 
-ON  = 127
-OFF = 0
+VCO_TUNE_RATE_TABLE_STEPS         = 256
+VCO_TUNE_RATE_DENOMINATOR         = 65536
+VCO_PHASE_RESOLUTION              = 65536
+VCO_WAVE_TABLE_SAMPLES            = 256
+VCF_TABLE_FRACTION_BITS           = 14
+EG_LEVEL_MAX                      = (127 << 1) << 8
+EG_DECAY_RELEASE_RATE_DENOMINATOR = 65536
 
 DATA_BYTE_MAX         = 0x7F
 STATUS_BYTE_INVALID   = 0x7F
@@ -25,23 +31,52 @@ EOX                   = 0xF7
 REAL_TIME_MESSAGE_MIN = 0xF8
 ACTIVE_SENSING        = 0xFE
 
-VCO_1_COARSE_TUNE     = 15
-VCO_2_COARSE_TUNE     = 17
-VCO_2_FINE_TUNE       = 18
-VCO_3_COARSE_TUNE     = 20
-VCO_3_FINE_TUNE       = 21
-VCF_CUTOFF_FREQUENCY  = 22
-VCF_RESONANCE         = 23
-VCF_ENVELOPE_AMOUNT   = 24
-EG_ATTACK_TIME        = 25
-EG_DECAY_TIME         = 26
-EG_SUSTAIN_LEVEL      = 27
-ALL_NOTES_OFF         = 123
+VCO_PULSE_SAW_MIX = 14
+VCO_PULSE_WIDTH   = 15
+VCO_SAW_SHIFT     = 16
+VCF_CUTOFF        = 17
+VCF_RESONANCE     = 18
+VCF_EG_AMT        = 19
+VCA_GAIN          = 20
+EG_ATTACK         = 21
+EG_DECAY_RELEASE  = 22
+EG_SUSTAIN        = 23
+LFO_RATE          = 24
+LFO_VCO_COLOR_AMT = 25
+PORTAMENTO        = 26
+ALL_NOTES_OFF     = 123
 
-def high_byte(ui16)
-  ui16 >> 8
+def low_byte(x)
+  return x & 0xFF
 end
 
-def low_byte(ui16)
-  ui16 & 0xFF
+def high_byte(x)
+  return x >> 8
+end
+
+def high_sbyte(x)
+  return x >> 8
+end
+
+# refs http://www.atmel.com/images/doc1631.pdf
+
+def mul_q16_q16(x, y)
+  result  = high_byte(low_byte(x) * high_byte(y))
+  result += high_byte(high_byte(x) * low_byte(y))
+  result += high_byte(x) * high_byte(y)
+  return result
+end
+
+def mul_q15_q15(x, y)
+  result  = high_sbyte(low_byte(x) * high_sbyte(y))
+  result += high_sbyte(high_sbyte(x) * low_byte(y))
+  result += high_sbyte(x) * high_sbyte(y)
+  return result
+end
+
+def mul_q15_q16(x, y)
+  result  = high_byte(low_byte(x) * high_byte(y))
+  result += high_sbyte(high_sbyte(x) * low_byte(y))
+  result += high_sbyte(x) * high_byte(y)
+  return result
 end

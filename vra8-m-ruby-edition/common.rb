@@ -47,15 +47,15 @@ PORTAMENTO        = 26
 ALL_NOTES_OFF     = 123
 
 def low_byte(x)
-  x & 0xFF
+  return x & 0xFF
 end
 
 def high_byte(x)
-  x >> 8
+  return x >> 8
 end
 
 def high_sbyte(x)
-  x >> 8
+  return x >> 8
 end
 
 # refs http://www.atmel.com/images/doc1631.pdf
@@ -64,16 +64,19 @@ def mul_q16_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_byte(high_byte(x) * low_byte(y))
   result += high_byte(x) * high_byte(y)
+  return result
 end
 
 def mul_q15_q15(x, y)
   result  = high_sbyte(low_byte(x) * high_sbyte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_sbyte(y)
+  return result
 end
 
 def mul_q15_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_byte(y)
+  return result
 end

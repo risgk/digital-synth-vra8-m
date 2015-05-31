@@ -1,8 +1,9 @@
+// todo
+
 #pragma once
 
-#include "Common.h"
-#include "FreqTable.h"
-#include "WaveTable.h"
+#include "common.h"
+#include "vco-table.h"
 
 template <uint8_t T>
 class VCO

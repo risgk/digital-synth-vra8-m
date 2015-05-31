@@ -1,7 +1,9 @@
+// todo
+
 #pragma once
 
-#include "Common.h"
-#include "LPFTable.h"
+#include "common.h"
+#include "vcf-table.h"
 
 class VCF
 {
