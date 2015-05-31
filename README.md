@@ -50,6 +50,8 @@
     | VCF Resonance     | Q = 0.7       | Q = 1.4       | Q = 2.8       |
     | VCF EG Amt        | 0%            | 50%           | 99.2%         |
     +-------------------+---------------+---------------+---------------+
+    | VCA Gain          | 0%            | 50%           | 99.2%         |
+    +-------------------+---------------+---------------+---------------+
     | EG Attack         | 2.1 ms        | 67.6 ms       | 2.1 s         |
     | EG Decay/Release  | 10.2 ms       | 415.9 ms      | 10.2 s        |
     | EG Sustain        | 0%            | 50%           | 99.2%         |
@@ -91,12 +93,13 @@
     |                            17 | x             | o             | VCF Cutoff            |
     |                            18 | x             | o             | VCF Resonance         |
     |                            19 | x             | o             | VCF EG Amt            |
-    |                            20 | x             | o             | EG Attack             |
-    |                            21 | x             | o             | EG Decay/Release      |
-    |                            22 | x             | o             | EG Sustain            |
-    |                            23 | x             | o             | LFO Rate              |
-    |                            24 | x             | o             | LFO VCO Color Amt     |
-    |                            25 | x             | o             | Portamento            |
+    |                            20 | x             | o             | VCA Gain              |
+    |                            21 | x             | o             | EG Attack             |
+    |                            22 | x             | o             | EG Decay/Release      |
+    |                            23 | x             | o             | EG Sustain            |
+    |                            24 | x             | o             | LFO Rate              |
+    |                            25 | x             | o             | LFO VCO Color Amt     |
+    |                            26 | x             | o             | Portamento            |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

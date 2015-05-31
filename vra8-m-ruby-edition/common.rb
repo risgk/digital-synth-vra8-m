@@ -34,12 +34,13 @@ VCO_SAW_SHIFT     = 16
 VCF_CUTOFF        = 17
 VCF_RESONANCE     = 18
 VCF_EG_AMT        = 19
-EG_ATTACK         = 20
-EG_DECAY_RELEASE  = 21
-EG_SUSTAIN        = 22
-LFO_RATE          = 23
-LFO_VCO_COLOR_AMT = 24
-PORTAMENTO        = 25
+VCA_GAIN          = 20
+EG_ATTACK         = 21
+EG_DECAY_RELEASE  = 22
+EG_SUSTAIN        = 23
+LFO_RATE          = 24
+LFO_VCO_COLOR_AMT = 25
+PORTAMENTO        = 26
 ALL_NOTES_OFF     = 123
 
 def low_byte(x)

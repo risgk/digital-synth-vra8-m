@@ -40,6 +40,8 @@ class Voice
       @vcf.set_resonance(controller_value)
     when VCF_EG_AMT
       @vcf.set_cv_amt(controller_value)
+    when VCA_GAIN
+      @vca.set_gain(controller_value)
     when EG_ATTACK
       @eg.set_attack(controller_value)
     when EG_DECAY_RELEASE
