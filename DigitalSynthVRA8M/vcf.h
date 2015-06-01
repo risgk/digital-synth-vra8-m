@@ -54,7 +54,7 @@ public:
     int16_t a_1_over_a_0 = pgm_read_word(p++);
     int16_t a_2_over_a_0 = pgm_read_word(p++);
 
-    int16_t x_0 = audio_input << 8;
+    int16_t x_0 = audio_input << 6;
 
     int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + m_x_2);
     tmp         += mul_q15_q15(b_2_over_a_0, m_x_1 << 1);
@@ -67,7 +67,14 @@ public:
     m_x_1 = x_0;
     m_y_1 = y_0;
 
-    return high_sbyte(y_0);
+    if (y_0 > 8191) {
+      y_0 = 8191;
+    }
+    if (y_0 < -8192) {
+      y_0 = -8192;
+    }
+
+    return y_0 >> 6;
   }
 };
 
