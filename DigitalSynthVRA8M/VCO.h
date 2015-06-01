@@ -59,7 +59,7 @@ public:
                      saw_up        * (127 - m_pulse_saw_mix) +
                      saw_down_copy * high_byte(m_pulse_saw_mix * 192);
 
-    return high_sbyte(output);
+    return high_sbyte(output) >> 1;
   }
 
 private:

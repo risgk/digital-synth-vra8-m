@@ -49,6 +49,7 @@ class VCF
     tmp -= mul_q15_q15(a_1_over_a_0, @y_1)
     tmp -= mul_q15_q15(a_2_over_a_0, @y_2)
     y_0 = tmp << ((15 - VCF_TABLE_FRACTION_BITS) << 1)
+
     @x_2 = @x_1
     @y_2 = @y_1
     @x_1 = x_0

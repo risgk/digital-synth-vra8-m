@@ -43,7 +43,7 @@ class VCO
              saw_up        * (127 - @pulse_saw_mix) +
              saw_down_copy * high_byte(@pulse_saw_mix * 192)
 
-    return high_sbyte(output)
+    return high_sbyte(output) >> 1
   end
 
   private
