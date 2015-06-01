@@ -2,22 +2,18 @@
 
 #include "common.h"
 
-class SerialIn
-{
+class SerialIn {
 public:
-  static void open()
-  {
+  static void open() {
     UBRR0 = (1000000 / SERIAL_SPEED) - 1;
     UCSR0B = _BV(RXEN0);
   }
 
-  static boolean available()
-  {
+  static boolean available() {
     return UCSR0A & _BV(RXC0);
   }
 
-  static int8_t read()
-  {
+  static int8_t read() {
     return UDR0;
   }
 };

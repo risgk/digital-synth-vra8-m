@@ -6,13 +6,11 @@
 #include "lfo.h"
 #include "slew-rate-limiter.h"
 
-class Voice
-{
+class Voice {
   static uint8_t m_note_number;
 
 public:
-  static void initialize()
-  {
+  static void initialize() {
     VCO::initialize();
     VCF::initialize();
     VCA::initialize();
@@ -37,19 +35,16 @@ public:
     control_change(PORTAMENTO,        96 );
   }
 
-  static void note_on(uint8_t note_number)
-  {
+  static void note_on(uint8_t note_number) {
     m_note_number = note_number;
     EG::note_on();
   }
 
-  static void note_off()
-  {
+  static void note_off() {
     EG::note_off();
   }
 
-  static void control_change(uint8_t controller_number, uint8_t controller_value)
-  {
+  static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
     case VCO_PULSE_SAW_MIX:
       VCO::set_pulse_saw_mix(controller_value);
@@ -96,8 +91,7 @@ public:
     }
   }
 
-  static int8_t clock()
-  {
+  static int8_t clock() {
     uint8_t  eg_output = EG::clock();
     uint8_t  lfo_output = LFO::clock();
     uint16_t srl_output = SlewRateLimiter::clock(m_note_number << 8);

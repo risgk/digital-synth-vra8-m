@@ -5,8 +5,7 @@
 
 // refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
 
-class VCF
-{
+class VCF {
   static int16_t         m_x_1;
   static int16_t         m_x_2;
   static int16_t         m_y_1;
@@ -16,8 +15,7 @@ class VCF
   static uint8_t         m_cv_amt;
 
 public:
-  static void initialize()
-  {
+  static void initialize() {
     m_x_1 = 0;
     m_x_2 = 0;
     m_y_1 = 0;
@@ -27,13 +25,11 @@ public:
     set_cv_amt(0);
   }
 
-  static void set_cutoff(uint8_t controller_value)
-  {
+  static void set_cutoff(uint8_t controller_value) {
     m_cutoff = controller_value;
   }
 
-  static void set_resonance(uint8_t controller_value)
-  {
+  static void set_resonance(uint8_t controller_value) {
     if (controller_value >= 96) {
       m_lpf_table = g_vcf_lpf_table_q_2_sqrt_2;
     } else if (controller_value >= 32) {
@@ -43,13 +39,11 @@ public:
     }
   }
 
-  static void set_cv_amt(uint8_t controller_value)
-  {
+  static void set_cv_amt(uint8_t controller_value) {
     m_cv_amt = controller_value;
   }
 
-  static int8_t clock(int8_t audio_input, uint8_t cutoff_control)
-  {
+  static int8_t clock(int8_t audio_input, uint8_t cutoff_control) {
     uint8_t cutoff = m_cutoff + high_byte(m_cv_amt * cutoff_control);
     if (cutoff > 127) {
       cutoff = 127;

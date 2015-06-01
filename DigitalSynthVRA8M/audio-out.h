@@ -4,14 +4,12 @@
 
 #include "common.h"
 
-class AudioOut
-{
+class AudioOut {
   static const int SPEAKER_PIN = 6;   // PD6 (OC0A)
   static const int LED_PIN     = 13;  // PB5
 
 public:
-  static void open()
-  {
+  static void open() {
     pinMode(SPEAKER_PIN, OUTPUT);
     pinMode(LED_PIN,     OUTPUT);
 
@@ -25,8 +23,7 @@ public:
     TCCR1B = 0x09;
   }
 
-  static void write(int8_t level)
-  {
+  static void write(int8_t level) {
     if (TIFR1 & _BV(TOV1)) {
       PORTB |= _BV(5);
     } else {

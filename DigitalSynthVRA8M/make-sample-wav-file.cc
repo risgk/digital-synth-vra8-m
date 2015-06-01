@@ -7,13 +7,11 @@ typedef signed   short int16_t;
 typedef unsigned short uint16_t;
 typedef unsigned int   uint32_t;
 
-inline uint8_t pgm_read_byte(const uint8_t* p)
-{
+inline uint8_t pgm_read_byte(const uint8_t* p) {
   return *p;
 }
 
-inline uint16_t pgm_read_word(const uint16_t* p)
-{
+inline uint16_t pgm_read_word(const uint16_t* p) {
   return *p;
 }
 
@@ -26,8 +24,7 @@ const char*    MIDI_STREAM_FILE = "sample-midi-stream.bin";
 const char*    RECORDING_FILE = "a.wav";
 const uint16_t RECORDING_SEC = 60;
 
-int main()
-{
+int main() {
   // setup
   Synth::initialize();
   FILE* bin_file = ::fopen(MIDI_STREAM_FILE, "rb");
