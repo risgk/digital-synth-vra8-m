@@ -60,7 +60,7 @@ public:
     tmp         += mul_q15_q15(b_2_over_a_0, m_x_1 << 1);
     tmp         -= mul_q15_q15(a_1_over_a_0, m_y_1);
     tmp         -= mul_q15_q15(a_2_over_a_0, m_y_2);
-    int16_t y_0 = tmp << ((15 - VCF_TABLE_FRACTION_BITS) << 1);
+    int16_t y_0 = tmp << (16 - VCF_TABLE_FRACTION_BITS);
 
     m_x_2 = m_x_1;
     m_y_2 = m_y_1;
