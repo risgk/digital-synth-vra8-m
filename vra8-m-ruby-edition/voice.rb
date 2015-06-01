@@ -23,7 +23,7 @@ class Voice
     control_change(VCF_CUTOFF,        0  )
     control_change(VCF_RESONANCE,     127)
     control_change(VCF_EG_AMT,        127)
-    control_change(VCA_GAIN,          64 )
+    control_change(VCA_GAIN,          96 )
     control_change(EG_ATTACK,         32 )
     control_change(EG_DECAY_RELEASE,  96 )
     control_change(EG_SUSTAIN,        127)
