@@ -31,6 +31,6 @@ public:
     }
     while ((TIFR1 & _BV(TOV1)) == 0);
     TIFR1 = _BV(TOV1);
-    OCR0A = (uint8_t) 0x80 - (uint8_t) level;
+    OCR0A = 0x80 - level;
   }
 };

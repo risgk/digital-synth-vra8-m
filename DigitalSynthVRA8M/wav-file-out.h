@@ -29,9 +29,9 @@ public:
     m_closed = false;
   }
 
-  static void write(uint8_t level) {
+  static void write(int8_t level) {
     if (m_data_size < m_max_size) {
-      uint8_t a[1] = {(uint8_t) level + (uint8_t) 0x80};
+      uint8_t a[1] = {level + 0x80};
       fwrite(a, 1, 1, m_file);
       m_data_size++;
     } else {
