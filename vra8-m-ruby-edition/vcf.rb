@@ -34,9 +34,7 @@ class VCF
 
   def clock(audio_input, cutoff_control)
     cutoff = @cutoff + high_byte(@cv_amt * cutoff_control)
-    if (cutoff > 127)
-      cutoff = 127
-    end
+    cutoff &= 0x7F
 
     i = cutoff * 3
     b_2_over_a_0 = @lpf_table[i + 0]

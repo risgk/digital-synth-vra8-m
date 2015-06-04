@@ -45,9 +45,7 @@ public:
 
   static int8_t clock(int8_t audio_input, uint8_t cutoff_control) {
     uint8_t cutoff = m_cutoff + high_byte(m_cv_amt * cutoff_control);
-    if (cutoff > 127) {
-      cutoff = 127;
-    }
+    cutoff &= 0x7F;
 
     const uint16_t* p = m_lpf_table + (cutoff * 3);
     int16_t b_2_over_a_0 = pgm_read_word(p++);
