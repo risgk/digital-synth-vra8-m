@@ -34,7 +34,9 @@ class VCF
 
   def clock(audio_input, cutoff_control)
     cutoff = @cutoff + high_byte(@cv_amt * cutoff_control)
-    cutoff &= 0x7F
+    if (cutoff > 127)
+      cutoff = 127
+    end
 
     i = cutoff * 3
     b_2_over_a_0_low  = @lpf_table[i + 0]
@@ -44,12 +46,12 @@ class VCF
     a_1_over_a_0 = a_1_over_a_0_high << 8
     a_2_over_a_0 = (b_2_over_a_0 << 2) - a_1_over_a_0 - VCF_TABLE_ONE
 
-    x_0 = (audio_input << 8) >> 2
+    x_0  = (audio_input << 8) >> 2
     tmp  = mul_q15_q15(b_2_over_a_0, x_0 + @x_2)
     tmp += mul_q15_q15(b_2_over_a_0, @x_1 << 1)
     tmp -= mul_q15_q15(a_1_over_a_0, @y_1)
     tmp -= mul_q15_q15(a_2_over_a_0, @y_2)
-    y_0 = tmp << (16 - VCF_TABLE_FRACTION_BITS)
+    y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
     if (y_0 > 8191)
       printf("y_0 overflow: %d\n", y_0)
