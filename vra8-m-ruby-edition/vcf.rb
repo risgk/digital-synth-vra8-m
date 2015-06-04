@@ -41,7 +41,7 @@ class VCF
     a_1_over_a_0 = @lpf_table[i + 1]
     a_2_over_a_0 = @lpf_table[i + 2]
 
-    x_0 = audio_input << 6
+    x_0 = (audio_input << 8) >> 2
     tmp  = mul_q15_q15(b_2_over_a_0, x_0 + @x_2)
     tmp += mul_q15_q15(b_2_over_a_0, @x_1 << 1)
     tmp -= mul_q15_q15(a_1_over_a_0, @y_1)
@@ -62,6 +62,6 @@ class VCF
     @x_1 = x_0
     @y_1 = y_0
 
-    return y_0 >> 6
+    return (y_0 << 2) >> 8
   end
 end
