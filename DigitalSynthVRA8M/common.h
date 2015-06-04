@@ -8,7 +8,7 @@ const uint8_t  BIT_DEPTH       = 8;
 const uint8_t  NOTE_NUMBER_MIN = 36;
 const uint8_t  NOTE_NUMBER_MAX = 96;
 
-const uint16_t VCO_TUNE_RATE_TABLE_STEPS         = 256;
+const uint16_t VCO_TUNE_RATE_TABLE_STEPS_BITS    = 6;
 const uint32_t VCO_TUNE_RATE_DENOMINATOR         = 65536;
 const uint32_t VCO_PHASE_RESOLUTION              = 65536;
 const uint16_t VCO_WAVE_TABLE_SAMPLES            = 256;

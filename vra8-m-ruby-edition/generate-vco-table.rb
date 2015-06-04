@@ -28,12 +28,12 @@ end
 $file.printf("]\n\n")
 
 $file.printf("$vco_tune_rate_table = [\n  ")
-(0..VCO_TUNE_RATE_TABLE_STEPS - 1).each do |i|
-  tune_rate = ((2.0 ** (i / (12.0 * VCO_TUNE_RATE_TABLE_STEPS))) *
+(0..(2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1).each do |i|
+  tune_rate = ((2.0 ** (i / (12.0 * (2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS)))) *
                VCO_TUNE_RATE_DENOMINATOR / 2.0).round
 
   $file.printf("%5d,", tune_rate)
-  if i == VCO_TUNE_RATE_TABLE_STEPS - 1
+  if i == (2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1
     $file.printf("\n")
   elsif i % 8 == 7
     $file.printf("\n  ")
