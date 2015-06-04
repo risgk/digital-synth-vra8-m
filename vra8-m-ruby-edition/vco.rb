@@ -3,8 +3,8 @@ require_relative 'vco-table'
 
 class VCO
   def initialize
-    @phase = 0
     @wave_table = nil
+    @phase = 0
     set_pulse_saw_mix(0)
     set_pulse_width(0)
     set_saw_shift(0)
@@ -31,10 +31,10 @@ class VCO
     coarse_pitch = high_byte(pitch_control)
     fine_pitch = low_byte(pitch_control)
 
+    @wave_table = $vco_wave_tables[coarse_pitch]
     freq = mul_q16_q16($vco_freq_table[coarse_pitch],
                        $vco_tune_rate_table[fine_pitch >>
                                             (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)])
-    @wave_table = $vco_wave_tables[coarse_pitch]
     @phase += freq
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
@@ -51,7 +51,6 @@ class VCO
   end
 
   private
-
   def get_level_from_wave_table(phase)
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01
