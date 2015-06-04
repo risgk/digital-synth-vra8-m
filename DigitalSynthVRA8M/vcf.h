@@ -47,10 +47,10 @@ public:
     uint8_t cutoff = m_cutoff + high_byte(m_cv_amt * cutoff_control);
     cutoff &= 0x7F;
 
-    const uint16_t* p = m_lpf_table + (cutoff * 3);
+    const uint16_t* p = m_lpf_table + (cutoff * 2);
     int16_t b_2_over_a_0 = pgm_read_word(p++);
     int16_t a_1_over_a_0 = pgm_read_word(p++);
-    int16_t a_2_over_a_0 = pgm_read_word(p++);
+    int16_t a_2_over_a_0 = (b_2_over_a_0 << 2) - a_1_over_a_0 - VCF_TABLE_ONE;
 
     int16_t x_0 = (audio_input << 8) >> 2;
     int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + m_x_2);

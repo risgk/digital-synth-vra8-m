@@ -16,14 +16,11 @@ def generate_vcf_lpf_table(name, q)
     b_2 = (1.0 - Math.cos(w_0)) / 2.0
     a_0 = 1.0 + alpha
     a_1 = (-2.0) * Math.cos(w_0)
-    a_2 = 1.0 - alpha
 
-    vcf_table_one = 2 ** VCF_TABLE_FRACTION_BITS
-    b_2_over_a_0 = ((b_2 / a_0) * vcf_table_one).round.to_i
-    a_1_over_a_0 = ((a_1 / a_0) * vcf_table_one).round.to_i
-    a_2_over_a_0 = (b_2_over_a_0 * 4) - a_1_over_a_0 - vcf_table_one
+    b_2_over_a_0 = ((b_2 / a_0) * VCF_TABLE_ONE).round.to_i
+    a_1_over_a_0 = ((a_1 / a_0) * VCF_TABLE_ONE).round.to_i
 
-    $file.printf("%+6d, %+6d, %+6d,", b_2_over_a_0, a_1_over_a_0, a_2_over_a_0)
+    $file.printf("%+6d, %+6d,", b_2_over_a_0, a_1_over_a_0)
     if i == DATA_BYTE_MAX
       $file.printf("\n")
     elsif i % 4 == 3

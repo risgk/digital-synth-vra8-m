@@ -12,6 +12,7 @@ const uint16_t VCO_TUNE_RATE_TABLE_STEPS_BITS    = 6;
 const uint32_t VCO_TUNE_RATE_DENOMINATOR         = 65536;
 const uint32_t VCO_PHASE_RESOLUTION              = 65536;
 const uint16_t VCO_WAVE_TABLE_SAMPLES            = 256;
+const int16_t  VCF_TABLE_ONE                     = 16384;
 const uint8_t  VCF_TABLE_FRACTION_BITS           = 14;
 const uint16_t EG_LEVEL_MAX                      = (127 << 1) << 8;
 const uint32_t EG_DECAY_RELEASE_RATE_DENOMINATOR = 65536;
