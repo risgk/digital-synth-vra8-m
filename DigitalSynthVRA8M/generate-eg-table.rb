@@ -4,7 +4,7 @@ $file = File.open("eg-table.h", "w")
 
 $file.printf("#pragma once\n\n")
 
-$file.printf("const uint16_t g_eg_attack_rate_table[] = {\n  ")
+$file.printf("const uint16_t g_eg_attack_rate_table[] PROGMEM = {\n  ")
 (0..DATA_BYTE_MAX).each do |time|
   sec = (EG_LEVEL_MAX.to_f / SAMPLING_RATE) /
         (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0))) / 2.0
@@ -27,7 +27,7 @@ eg_decay_release_rate = (((1.0 / 2.0) ** (1.0 / HALF_LIFE)) *
 $file.printf("const uint16_t EG_DECAY_RELEASE_RATE = %d;\n", eg_decay_release_rate)
 $file.printf("\n")
 
-$file.printf("const uint16_t g_eg_decay_release_update_interval_table[] = {\n  ")
+$file.printf("const uint16_t g_eg_decay_release_update_interval_table[] PROGMEM = {\n  ")
 (0..DATA_BYTE_MAX).each do |time|
   sec = 12.8 / (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0)))
   update_interval = ((sec * SAMPLING_RATE) /

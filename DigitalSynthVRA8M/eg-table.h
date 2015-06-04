@@ -1,6 +1,6 @@
 #pragma once
 
-const uint16_t g_eg_attack_rate_table[] = {
+const uint16_t g_eg_attack_rate_table[] PROGMEM = {
    2000,  1894,  1794,  1699,  1609,  1524,  1443,  1367,  1294,  1226,  1161,  1099,  1041,   986,   934,   885,
     838,   793,   751,   712,   674,   638,   604,   572,   542,   513,   486,   461,   436,   413,   391,   370,
     351,   332,   315,   298,   282,   267,   253,   240,   227,   215,   204,   193,   183,   173,   164,   155,
@@ -13,7 +13,7 @@ const uint16_t g_eg_attack_rate_table[] = {
 
 const uint16_t EG_DECAY_RELEASE_RATE = 62757;
 
-const uint16_t g_eg_decay_release_update_interval_table[] = {
+const uint16_t g_eg_decay_release_update_interval_table[] PROGMEM = {
       1,     1,     1,     1,     2,     2,     2,     2,     2,     2,     2,     2,     2,     3,     3,     3,
       3,     3,     3,     4,     4,     4,     4,     4,     5,     5,     5,     5,     6,     6,     6,     7,
       7,     8,     8,     8,     9,     9,    10,    10,    11,    12,    12,    13,    14,    14,    15,    16,
