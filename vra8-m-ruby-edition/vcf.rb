@@ -36,9 +36,12 @@ class VCF
     cutoff = @cutoff + high_byte(@cv_amt * cutoff_control)
     cutoff &= 0x7F
 
-    i = cutoff * 2
-    b_2_over_a_0 = @lpf_table[i + 0]
-    a_1_over_a_0 = @lpf_table[i + 1]
+    i = cutoff * 3
+    b_2_over_a_0_low  = @lpf_table[i + 0]
+    b_2_over_a_0_high = @lpf_table[i + 1]
+    a_1_over_a_0_high = @lpf_table[i + 2]
+    b_2_over_a_0 = b_2_over_a_0_low | (b_2_over_a_0_high << 8)
+    a_1_over_a_0 = a_1_over_a_0_high << 8
     a_2_over_a_0 = (b_2_over_a_0 << 2) - a_1_over_a_0 - VCF_TABLE_ONE
 
     x_0 = (audio_input << 8) >> 2
