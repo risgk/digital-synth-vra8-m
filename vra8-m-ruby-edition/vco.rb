@@ -4,6 +4,7 @@ require_relative 'vco-table'
 class VCO
   def initialize
     @phase = 0
+    @wave_table = nil
     set_pulse_saw_mix(0)
     set_pulse_width(0)
     set_saw_shift(0)
@@ -31,13 +32,14 @@ class VCO
     fine_pitch = low_byte(pitch_control)
 
     freq = mul_q16_q16($vco_freq_table[coarse_pitch], $vco_tune_rate_table[fine_pitch])
+    @wave_table = $vco_wave_tables[coarse_pitch]
     @phase += freq
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
-    saw_down      = +get_level_from_wave_table(coarse_pitch, @phase)
-    saw_up        = -get_level_from_wave_table(coarse_pitch,
+    saw_down      = +get_level_from_wave_table(@phase)
+    saw_up        = -get_level_from_wave_table(
                        (@phase + @pulse_width - (phase_control * @color_lfo_amt)) & 0xFFFF)
-    saw_down_copy = +get_level_from_wave_table(coarse_pitch,
+    saw_down_copy = +get_level_from_wave_table(
                        (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
     output = saw_down      * 127 +
              saw_up        * (127 - @pulse_saw_mix) +
@@ -48,14 +50,13 @@ class VCO
 
   private
 
-  def get_level_from_wave_table(coarse_pitch, phase)
+  def get_level_from_wave_table(phase)
     curr_index = high_byte(phase)
     next_index = curr_index + 0x01
     next_index &= 0xFF
 
-    wave_table = $vco_wave_tables[coarse_pitch]
-    curr_data = wave_table[curr_index]
-    next_data = wave_table[next_index]
+    curr_data = @wave_table[curr_index]
+    next_data = @wave_table[next_index]
 
     curr_weight = 0x100 - low_byte(phase)
     next_weight = 0x100 - curr_weight

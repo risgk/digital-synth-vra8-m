@@ -53,7 +53,6 @@ public:
     int16_t a_2_over_a_0 = pgm_read_word(p++);
 
     int16_t x_0 = audio_input << 6;
-
     int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + m_x_2);
     tmp         += mul_q15_q15(b_2_over_a_0, m_x_1 << 1);
     tmp         -= mul_q15_q15(a_1_over_a_0, m_y_1);
