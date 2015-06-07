@@ -64,7 +64,7 @@ class EG
       @decay_release_count += 1
       if (@decay_release_count >= @decay_release_update_interval)
         @decay_release_count = 0
-        if (@level <= EG_LEVEL_MAX >> 10)
+        if (@level <= (EG_LEVEL_MAX >> 10))
           @state = STATE_IDLE
           @level = 0
         else
