@@ -53,11 +53,8 @@ class VCO
   private
   def get_level_from_wave_table(phase)
     curr_index = high_byte(phase)
-    next_index = curr_index + 0x01
-    next_index &= 0xFF
-
     curr_data = @wave_table[curr_index]
-    next_data = @wave_table[next_index]
+    next_data = @wave_table[curr_index + 1]
 
     curr_weight = 0x100 - low_byte(phase)
     next_weight = 0x100 - curr_weight

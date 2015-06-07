@@ -63,10 +63,9 @@ public:
 private:
   static int8_t get_level_from_wave_table(uint16_t phase) {
     uint8_t curr_index = high_byte(phase);
-    uint8_t next_index = curr_index + 0x01;
-
-    int8_t curr_data = pgm_read_byte(m_wave_table + curr_index);
-    int8_t next_data = pgm_read_byte(m_wave_table + next_index);
+    uint16_t tmp = pgm_read_word(m_wave_table + curr_index);
+    int8_t curr_data = low_byte(tmp);
+    int8_t next_data = high_byte(tmp);
 
     uint8_t curr_weight = -low_byte(phase);
     uint8_t next_weight = -curr_weight;

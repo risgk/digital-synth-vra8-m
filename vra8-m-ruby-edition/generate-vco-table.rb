@@ -47,7 +47,7 @@ LEVEL_ONE_RESOLUTION = 108
 
 def generate_vco_wave_table(max)
   $file.printf("$vco_wave_table_%d = [\n  ", max)
-  (0..VCO_WAVE_TABLE_SAMPLES - 1).each do |n|
+  (0..VCO_WAVE_TABLE_SAMPLES).each do |n|
     level = 0
     (1..max).each do |k|
       level += yield(n, k)
@@ -55,7 +55,7 @@ def generate_vco_wave_table(max)
     level = (level * LEVEL_ONE_RESOLUTION).round.to_i
 
     $file.printf("%+4d,", level)
-    if n == VCO_WAVE_TABLE_SAMPLES - 1
+    if n == VCO_WAVE_TABLE_SAMPLES
       $file.printf("\n")
     elsif n % 16 == 15
       $file.printf("\n  ")

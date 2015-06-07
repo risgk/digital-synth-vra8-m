@@ -7,12 +7,14 @@ typedef signed   short int16_t;
 typedef unsigned short uint16_t;
 typedef unsigned int   uint32_t;
 
-inline uint8_t pgm_read_byte(const uint8_t* p) {
-  return *p;
+inline uint8_t pgm_read_byte(const void* addr) {
+  const uint8_t* p = (const uint8_t*) addr;
+  return p[0];
 }
 
-inline uint16_t pgm_read_word(const uint16_t* p) {
-  return *p;
+inline uint16_t pgm_read_word(const void* addr) {
+  const uint8_t* p = (const uint8_t*) addr;
+  return p[0] | (p[1] << 8);
 }
 
 #include <stdio.h>
