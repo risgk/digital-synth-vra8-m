@@ -54,7 +54,7 @@ public:
                               (m_phase + m_saw_shift + (phase_control * m_color_lfo_amt)));
 
     int16_t output = saw_down      * 127 +
-                     saw_up        * (127 - m_pulse_saw_mix) +
+                     saw_up        * (uint8_t) (127 - m_pulse_saw_mix) +
                      saw_down_copy * high_byte(m_pulse_saw_mix * 192);
 
     return high_sbyte(output) >> 1;
