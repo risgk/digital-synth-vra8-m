@@ -77,10 +77,11 @@ public:
       m_decay_release_count += 1;
       if (m_decay_release_count >= m_decay_release_update_interval) {
         m_decay_release_count = 0;
-        m_level = mul_q16_q16(m_level, EG_DECAY_RELEASE_RATE);
         if (m_level <= EG_LEVEL_MAX >> 10) {
           m_state = STATE_IDLE;
           m_level = 0;
+        } else {
+          m_level = mul_q16_q16(m_level, EG_DECAY_RELEASE_RATE);
         }
       }
       break;

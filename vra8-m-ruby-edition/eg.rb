@@ -64,10 +64,11 @@ class EG
       @decay_release_count += 1
       if (@decay_release_count >= @decay_release_update_interval)
         @decay_release_count = 0
-        @level = mul_q16_q16(@level, EG_DECAY_RELEASE_RATE)
         if (@level <= EG_LEVEL_MAX >> 10)
           @state = STATE_IDLE
           @level = 0
+        else
+          @level = mul_q16_q16(@level, EG_DECAY_RELEASE_RATE)
         end
       end
     when STATE_IDLE
