@@ -38,20 +38,20 @@ class VCO
     @phase += freq
     @phase &= (VCO_PHASE_RESOLUTION - 1)
 
-    saw_down      = +get_level_from_wave_table(@phase)
-    saw_up        = -get_level_from_wave_table(
+    saw_down      = +get_saw_wave_level(@phase)
+    saw_up        = -get_saw_wave_level(
                        (@phase + @pulse_width - (phase_control * @color_lfo_amt)) & 0xFFFF)
-    saw_down_copy = +get_level_from_wave_table(
+    saw_down_copy = +get_saw_wave_level(
                        (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
-    output = saw_down      * 127 +
-             saw_up        * (127 - @pulse_saw_mix) +
-             saw_down_copy * high_byte(@pulse_saw_mix * 192)
+    mixed = saw_down      * 127 +
+            saw_up        * (127 - @pulse_saw_mix) +
+            saw_down_copy * high_byte(@pulse_saw_mix * 192)
 
-    return high_sbyte(output) >> 1
+    return high_sbyte(mixed) >> 1
   end
 
   private
-  def get_level_from_wave_table(phase)
+  def get_saw_wave_level(phase)
     curr_index = high_byte(phase)
     curr_data = @wave_table[curr_index]
     next_data = @wave_table[curr_index + 1]

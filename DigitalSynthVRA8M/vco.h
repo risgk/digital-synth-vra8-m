@@ -47,21 +47,21 @@ public:
                                                       (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)]);
     m_phase += freq;
 
-    int8_t saw_down      = +get_level_from_wave_table(m_phase);
-    int8_t saw_up        = -get_level_from_wave_table(
+    int8_t saw_down      = +get_saw_wave_level(m_phase);
+    int8_t saw_up        = -get_saw_wave_level(
                               (m_phase + m_pulse_width - (phase_control * m_color_lfo_amt)));
-    int8_t saw_down_copy = +get_level_from_wave_table(
+    int8_t saw_down_copy = +get_saw_wave_level(
                               (m_phase + m_saw_shift + (phase_control * m_color_lfo_amt)));
 
-    int16_t output = saw_down      * 127 +
-                     saw_up        * (uint8_t) (127 - m_pulse_saw_mix) +
-                     saw_down_copy * high_byte(m_pulse_saw_mix * 192);
+    int16_t mixed = saw_down      * 127 +
+                    saw_up        * (uint8_t) (127 - m_pulse_saw_mix) +
+                    saw_down_copy * high_byte(m_pulse_saw_mix * 192);
 
-    return high_sbyte(output) >> 1;
+    return high_sbyte(mixed) >> 1;
   }
 
 private:
-  static int8_t get_level_from_wave_table(uint16_t phase) {
+  static int8_t get_saw_wave_level(uint16_t phase) {
     uint8_t curr_index = high_byte(phase);
     uint16_t tmp = pgm_read_word(m_wave_table + curr_index);
     int8_t curr_data = low_byte(tmp);
