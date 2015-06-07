@@ -21,7 +21,7 @@ public:
   }
 
   static uint16_t clock(uint16_t input) {
-    m_count += 1;
+    m_count++;
     if (m_count >= UPDATE_INTERVAL) {
       m_count = 0;
       if (m_level > input + m_slew_rate) {

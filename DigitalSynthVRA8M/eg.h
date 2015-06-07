@@ -60,7 +60,7 @@ public:
       }
       break;
     case STATE_DECAY_SUSTAIN:
-      m_decay_release_count += 1;
+      m_decay_release_count++;
       if (m_decay_release_count >= m_decay_release_update_interval) {
         m_decay_release_count = 0;
         if (m_level > m_sustain_level) {
@@ -74,7 +74,7 @@ public:
       }
       break;
     case STATE_RELEASE:
-      m_decay_release_count += 1;
+      m_decay_release_count++;
       if (m_decay_release_count >= m_decay_release_update_interval) {
         m_decay_release_count = 0;
         if (m_level <= EG_LEVEL_MAX >> 10) {
