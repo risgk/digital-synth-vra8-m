@@ -13,7 +13,7 @@ VCO_WAVE_TABLE_SAMPLES            = 256
 VCF_TABLE_ONE                     = 16384
 VCF_TABLE_FRACTION_BITS           = 14
 EG_LEVEL_MAX                      = (127 << 1) << 8
-EG_DECAY_RELEASE_RATE_DENOMINATOR = 65536
+EG_DECAY_RELEASE_RATE_DENOMINATOR = 256
 
 DATA_BYTE_MAX         = 0x7F
 STATUS_BYTE_INVALID   = 0x7F
@@ -79,5 +79,17 @@ def mul_q15_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
   result += high_sbyte(high_sbyte(x) * low_byte(y))
   result += high_sbyte(x) * high_byte(y)
+  return result
+end
+
+def mul_q16_q8(x, y)
+  result  = high_byte(low_byte(x) * y)
+  result += high_byte(x) * y
+  return result
+end
+
+def mul_q15_q7(x, y)
+  result  = high_sbyte(low_byte(x) * y)
+  result += high_sbyte(x) * y
   return result
 end

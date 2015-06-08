@@ -54,14 +54,13 @@ public:
     int8_t  b_2_over_a_0_high = *p++;
     int8_t  a_1_over_a_0_high = *p;
     int16_t b_2_over_a_0      = b_2_over_a_0_low | (b_2_over_a_0_high << 8);
-    int16_t a_1_over_a_0      = a_1_over_a_0_high << 8;
-    int16_t a_2_over_a_0      = (b_2_over_a_0 << 2) - a_1_over_a_0 - VCF_TABLE_ONE;
+    int16_t a_2_over_a_0      = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) - VCF_TABLE_ONE;
 
     int16_t x_0  = (audio_input << 8) >> 2;
-    int16_t tmp  = mul_q15_q15(b_2_over_a_0, x_0 + m_x_2);
-    tmp         += mul_q15_q15(b_2_over_a_0, m_x_1 << 1);
-    tmp         -= mul_q15_q15(a_1_over_a_0, m_y_1);
-    tmp         -= mul_q15_q15(a_2_over_a_0, m_y_2);
+    int16_t tmp  = mul_q15_q15(x_0 + m_x_2, b_2_over_a_0);
+    tmp         += mul_q15_q15(m_x_1 << 1,  b_2_over_a_0);
+    tmp         -= mul_q15_q7( m_y_1,       a_1_over_a_0_high);
+    tmp         -= mul_q15_q15(m_y_2,       a_2_over_a_0);
     int16_t y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS);
 
     if (y_0 > 8191) {

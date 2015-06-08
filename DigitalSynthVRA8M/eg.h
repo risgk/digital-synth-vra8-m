@@ -68,7 +68,7 @@ public:
             m_level = m_sustain_level;
           } else {
             m_level = m_sustain_level +
-                      mul_q16_q16(m_level - m_sustain_level, EG_DECAY_RELEASE_RATE);
+                      mul_q16_q8(m_level - m_sustain_level, EG_DECAY_RELEASE_RATE);
           }
         }
       }
@@ -81,7 +81,7 @@ public:
           m_state = STATE_IDLE;
           m_level = 0;
         } else {
-          m_level = mul_q16_q16(m_level, EG_DECAY_RELEASE_RATE);
+          m_level = mul_q16_q8(m_level, EG_DECAY_RELEASE_RATE);
         }
       }
       break;

@@ -15,7 +15,7 @@ const uint16_t VCO_WAVE_TABLE_SAMPLES            = 256;
 const int16_t  VCF_TABLE_ONE                     = 16384;
 const uint8_t  VCF_TABLE_FRACTION_BITS           = 14;
 const uint16_t EG_LEVEL_MAX                      = (127 << 1) << 8;
-const uint32_t EG_DECAY_RELEASE_RATE_DENOMINATOR = 65536;
+const uint32_t EG_DECAY_RELEASE_RATE_DENOMINATOR = 256;
 
 const uint8_t DATA_BYTE_MAX         = 0x7F;
 const uint8_t STATUS_BYTE_INVALID   = 0x7F;
@@ -81,5 +81,17 @@ inline int16_t mul_q15_q16(int16_t x, uint16_t y) {
   uint16_t result  = high_byte(low_byte(x) * high_byte(y));
   result          += high_sbyte(high_sbyte(x) * low_byte(y));
   result          += high_sbyte(x) * high_byte(y);
+  return result;
+}
+
+inline uint16_t mul_q16_q8(uint16_t x, uint8_t y) {
+  uint16_t result  = high_byte(low_byte(x) * y);
+  result          += high_byte(x) * y;
+  return result;
+}
+
+inline int16_t mul_q15_q7(uint16_t x, int8_t y) {
+  int16_t result  = high_sbyte(low_byte(x) * y);
+  result         += high_sbyte(x) * y;
   return result;
 }
