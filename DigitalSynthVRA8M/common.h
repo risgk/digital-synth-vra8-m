@@ -49,48 +49,50 @@ const uint8_t LFO_VCO_COLOR_AMT = 25;
 const uint8_t PORTAMENTO        = 26;
 const uint8_t ALL_NOTES_OFF     = 123;
 
-inline uint8_t low_byte(uint16_t x) {
+#define INLINE inline __attribute__((always_inline))
+
+INLINE uint8_t low_byte(uint16_t x) {
   return x & 0xFF;
 }
 
-inline uint8_t high_byte(uint16_t x) {
+INLINE uint8_t high_byte(uint16_t x) {
   return x >> 8;
 }
 
-inline int8_t high_sbyte(int16_t x) {
+INLINE int8_t high_sbyte(int16_t x) {
   return x >> 8;
 }
 
 // refs http://www.atmel.com/images/doc1631.pdf
 
-inline uint16_t mul_q16_q16(uint16_t x, uint16_t y) {
+INLINE uint16_t mul_q16_q16(uint16_t x, uint16_t y) {
   uint16_t result  = high_byte(low_byte(x) * high_byte(y));
   result          += high_byte(high_byte(x) * low_byte(y));
   result          += high_byte(x) * high_byte(y);
   return result;
 }
 
-inline int16_t mul_q15_q15(int16_t x, int16_t y) {
+INLINE int16_t mul_q15_q15(int16_t x, int16_t y) {
   int16_t result  = high_sbyte(low_byte(x) * high_sbyte(y));
   result         += high_sbyte(high_sbyte(x) * low_byte(y));
   result         += high_sbyte(x) * high_sbyte(y);
   return result;
 }
 
-inline int16_t mul_q15_q16(int16_t x, uint16_t y) {
+INLINE int16_t mul_q15_q16(int16_t x, uint16_t y) {
   uint16_t result  = high_byte(low_byte(x) * high_byte(y));
   result          += high_sbyte(high_sbyte(x) * low_byte(y));
   result          += high_sbyte(x) * high_byte(y);
   return result;
 }
 
-inline uint16_t mul_q16_q8(uint16_t x, uint8_t y) {
+INLINE uint16_t mul_q16_q8(uint16_t x, uint8_t y) {
   uint16_t result  = high_byte(low_byte(x) * y);
   result          += high_byte(x) * y;
   return result;
 }
 
-inline int16_t mul_q15_q7(uint16_t x, int8_t y) {
+INLINE int16_t mul_q15_q7(uint16_t x, int8_t y) {
   int16_t result  = high_sbyte(low_byte(x) * y);
   result         += high_sbyte(x) * y;
   return result;
