@@ -12,7 +12,7 @@ class VCO {
    static uint8_t        m_color_lfo_amt;
 
 public:
-  static void initialize() {
+  INLINE static void initialize() {
     m_wave_table = NULL;
     m_phase = 0;
     set_pulse_saw_mix(0);
@@ -21,23 +21,23 @@ public:
     set_color_lfo_amt(0);
   }
 
-  static void set_pulse_saw_mix(uint8_t controller_value) {
+  INLINE static void set_pulse_saw_mix(uint8_t controller_value) {
     m_pulse_saw_mix = controller_value;
   }
 
-  static void set_pulse_width(uint8_t controller_value) {
+  INLINE static void set_pulse_width(uint8_t controller_value) {
     m_pulse_width = (controller_value + 128) << 8;
   }
 
-  static void set_saw_shift(uint8_t controller_value) {
+  INLINE static void set_saw_shift(uint8_t controller_value) {
     m_saw_shift = controller_value << 8;
   }
 
-  static void set_color_lfo_amt(uint8_t controller_value) {
+  INLINE static void set_color_lfo_amt(uint8_t controller_value) {
     m_color_lfo_amt = controller_value << 1;
   }
 
-  static int8_t clock(uint16_t pitch_control, int8_t phase_control) {
+  INLINE static int8_t clock(uint16_t pitch_control, int8_t phase_control) {
     uint8_t coarse_pitch = high_byte(pitch_control);
     uint8_t fine_pitch = low_byte(pitch_control);
 
@@ -61,7 +61,7 @@ public:
   }
 
 private:
-  static int8_t get_saw_wave_level(uint16_t phase) {
+  INLINE static int8_t get_saw_wave_level(uint16_t phase) {
     uint8_t curr_index = high_byte(phase);
     uint16_t tmp = pgm_read_word(m_wave_table + curr_index);
     int8_t curr_data = low_byte(tmp);

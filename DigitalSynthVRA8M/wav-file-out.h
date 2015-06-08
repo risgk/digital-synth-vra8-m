@@ -10,7 +10,7 @@ class WAVFileOut {
   static boolean  m_closed;
 
 public:
-  static void open(const char* path, uint16_t sec) {
+  INLINE static void open(const char* path, uint16_t sec) {
     m_file = fopen(path, "wb");
     fwrite("RIFF", 1, 4, m_file);
     fwrite("\x00\x00\x00\x00", 1, 4, m_file);
@@ -29,7 +29,7 @@ public:
     m_closed = false;
   }
 
-  static void write(int8_t level) {
+  INLINE static void write(int8_t level) {
     if (m_data_size < m_max_size) {
       uint8_t a[1] = {level + 0x80};
       fwrite(a, 1, 1, m_file);
@@ -40,7 +40,7 @@ public:
     }
   }
 
-  static void close() {
+  INLINE static void close() {
     if (!m_closed) {
       fpos_t file_size = 0;
       fseek(m_file, 0, SEEK_END);

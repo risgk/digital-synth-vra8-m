@@ -9,7 +9,7 @@ class AudioOut {
   static const int LED_PIN     = 13;  // PB5
 
 public:
-  static void open() {
+  INLINE static void open() {
     pinMode(SPEAKER_PIN, OUTPUT);
     pinMode(LED_PIN,     OUTPUT);
 
@@ -23,7 +23,7 @@ public:
     TCCR1B = 0x09;
   }
 
-  static void write(int8_t level) {
+  INLINE static void write(int8_t level) {
     if (TIFR1 & _BV(TOV1)) {
       PORTB |= _BV(5);
     } else {

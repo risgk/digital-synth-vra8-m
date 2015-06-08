@@ -17,7 +17,7 @@ class EG {
   static uint16_t m_sustain_level;
 
 public:
-  static void initialize() {
+  INLINE static void initialize() {
     m_state = STATE_IDLE;
     m_decay_release_count = 0;
     m_level = 0;
@@ -26,30 +26,30 @@ public:
     set_sustain(127);
   }
 
-  static void set_attack(uint8_t controller_value) {
+  INLINE static void set_attack(uint8_t controller_value) {
     m_attack_rate = pgm_read_word(g_eg_attack_rate_table + controller_value);
   }
 
-  static void set_decay_release(uint8_t controller_value) {
+  INLINE static void set_decay_release(uint8_t controller_value) {
     m_decay_release_update_interval = pgm_read_word(g_eg_decay_release_update_interval_table +
                                                     controller_value);
   }
 
-  static void set_sustain(uint8_t controller_value) {
+  INLINE static void set_sustain(uint8_t controller_value) {
     m_sustain_level = (controller_value << 1) << 8;
   }
 
-  static void note_on() {
+  INLINE static void note_on() {
     m_state = STATE_ATTACK;
     m_decay_release_count = 0;
   }
 
-  static void note_off() {
+  INLINE static void note_off() {
     m_state = STATE_RELEASE;
     m_decay_release_count = 0;
   }
 
-  static int8_t clock() {
+  INLINE static int8_t clock() {
     switch (m_state) {
     case STATE_ATTACK:
       if (m_level >= EG_LEVEL_MAX - m_attack_rate) {

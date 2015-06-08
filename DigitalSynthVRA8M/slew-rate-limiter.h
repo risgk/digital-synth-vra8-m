@@ -10,17 +10,17 @@ class SlewRateLimiter {
   static uint16_t m_slew_rate;
 
 public:
-  static void initialize() {
+  INLINE static void initialize() {
     m_count = 0;
     m_level = NOTE_NUMBER_MIN << 8;
     set_slew_time(NOTE_NUMBER_MIN);
   }
 
-  static void set_slew_time(uint8_t controller_value) {
+  INLINE static void set_slew_time(uint8_t controller_value) {
     m_slew_rate = 0x8000 >> (controller_value >> 3);
   }
 
-  static uint16_t clock(uint16_t input) {
+  INLINE static uint16_t clock(uint16_t input) {
     m_count++;
     if (m_count >= UPDATE_INTERVAL) {
       m_count = 0;
