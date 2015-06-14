@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
-<title>Digital Synth WRA32</title>
+<title>Digital Synth VRA8-M HTML Edition</title>
 <style>
+* {
+  -webkit-user-select: none;
+}
 td {
   text-align: left;
 }
@@ -37,27 +40,13 @@ window.onload = function() {
     onChangeChannel(1);
     onChangeVolume(100);
     onChangeTranspose(0);
-    resetControllers();
+    preset0();
   }
 };
 
 function loadParameters() {
   var value;
-  for (var i = 14; i <= 30; i++) {
-    value = localStorage.getItem("keyCC" + String(i));
-    if (!value) {
-      return false;
-    }
-    onChangeControlChange(i, value);
-  }
-  for (var i = 80; i <= 83; i++) {
-    value = localStorage.getItem("keyCC" + String(i));
-    if (!value) {
-      return false;
-    }
-    onChangeControlChange(i, value);
-  }
-  for (var i = 85; i <= 86; i++) {
+  for (var i = 14; i <= 26; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -152,30 +141,56 @@ function onChangeControlChange(number, value) {
   synth.receive([(CONTROL_CHANGE | midiCh), number, parseInt(value)]);
 }
 
-function resetControllers() {
+function preset0() {
   onChangeControlChange(14, 0  );
-  onChangeControlChange(15, 64 );
+  onChangeControlChange(15, 0  );
   onChangeControlChange(16, 0  );
-  onChangeControlChange(17, 64 );
-  onChangeControlChange(18, 70 );
-  onChangeControlChange(19, 2  );
-  onChangeControlChange(20, 52 );
-  onChangeControlChange(21, 64 );
-  onChangeControlChange(22, 91 );
-  onChangeControlChange(23, 51 );
-  onChangeControlChange(24, 12 );
-  onChangeControlChange(25, 21 );
-  onChangeControlChange(26, 85 );
-  onChangeControlChange(27, 127);
-  onChangeControlChange(28, 21 );
-  onChangeControlChange(29, 85 );
-  onChangeControlChange(30, 127);
-  onChangeControlChange(80, 64 );
-  onChangeControlChange(81, 64 );
-  onChangeControlChange(82, 64 );
-  onChangeControlChange(83, 0  );
-  onChangeControlChange(85, 85 );
-  onChangeControlChange(86, 85 );
+  onChangeControlChange(17, 127);
+  onChangeControlChange(18, 0  );
+  onChangeControlChange(19, 0  );
+  onChangeControlChange(20, 96 );
+  onChangeControlChange(21, 0  );
+  onChangeControlChange(22, 0  );
+  onChangeControlChange(23, 127);
+  onChangeControlChange(24, 0  );
+  onChangeControlChange(25, 0  );
+  onChangeControlChange(26, 0  );
+}
+
+function preset1() {
+  onChangeControlChange(14, 64 );
+  onChangeControlChange(15, 0  );
+  onChangeControlChange(16, 64 );
+  onChangeControlChange(17, 0  );
+  onChangeControlChange(18, 127);
+  onChangeControlChange(19, 127);
+  onChangeControlChange(20, 96 );
+  onChangeControlChange(21, 32 );
+  onChangeControlChange(22, 96 );
+  onChangeControlChange(23, 127);
+  onChangeControlChange(24, 32 );
+  onChangeControlChange(25, 32 );
+  onChangeControlChange(26, 96 );
+}
+
+function rand() {
+  return Math.floor(Math.random() * 128);
+}
+
+function setRandom() {
+  onChangeControlChange(14, rand());
+  onChangeControlChange(15, rand());
+  onChangeControlChange(16, rand());
+  onChangeControlChange(17, rand());
+  onChangeControlChange(18, rand());
+  onChangeControlChange(19, rand());
+  onChangeControlChange(20, 96    );
+  onChangeControlChange(21, rand());
+  onChangeControlChange(22, rand());
+  onChangeControlChange(23, rand());
+  onChangeControlChange(24, rand());
+  onChangeControlChange(25, rand());
+  onChangeControlChange(26, rand());
 }
 
 function noteOn(noteNumber) {
@@ -202,13 +217,13 @@ function onAudioProcess(event) {
   }
 }
 </script>
-<script src="complex.js" charset="utf-8"></script>
-<script src="fft.js" charset="utf-8"></script>
 <script src="vco.js" charset="utf-8"></script>
 <script src="vcf.js" charset="utf-8"></script>
 <script src="vca.js" charset="utf-8"></script>
 <script src="eg.js" charset="utf-8"></script>
-<script src="mixer.js" charset="utf-8"></script>
+<script src="lfo.js" charset="utf-8"></script>
+<script src="slew-rate-limiter.js" charset="utf-8"></script>
+<script src="voice.js" charset="utf-8"></script>
 <script src="synth.js" charset="utf-8"></script>
 <script>
 var synth = new Synth();
@@ -217,7 +232,7 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth WRA32 5.1.1</h1>
+<h1>Digital Synth VRA8-M HTML Edition 0.0.0</h1>
 
 <p>Virtual Analog Synthesizer Web App<p>
 
@@ -233,7 +248,7 @@ node.connect(audioContext.destination);
 <td><input id="inputChannel" type="range" min="1" max="16"  step="1" onchange="onChangeChannel(value)"></td><td><span id="spanChannel">-1</span></td>
 </tr>
 <tr>
-<td>Volume</td>
+<td>Master Volume</td>
 <td><input id="inputVolume"  type="range" min="0" max="127" step="1" onchange="onChangeVolume(value)" ></td><td><span id="spanVolume" >-1</span></td>
 </tr>
 </table>
@@ -243,34 +258,22 @@ node.connect(audioContext.destination);
 <h2>Controllers</h2>
 
 <table>
-<tr><td>VCO 1 Waveform      </td><td><input id="inputCC14"  type="range" min="0"  max="6"   step="1" onchange="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>Mixer VCO 1 Level   </td><td><input id="inputCC80"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(80, value)"></td><td><span id="spanCC80">-1</span></td></tr>
-<tr><td>VCO 1 Coarse Tune   </td><td><input id="inputCC15"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
-<tr><td>VCO 2 Waveform      </td><td><input id="inputCC16"  type="range" min="0"  max="6"   step="1" onchange="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>Mixer VCO 2 Level   </td><td><input id="inputCC81"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(81, value)"></td><td><span id="spanCC81">-1</span></td></tr>
-<tr><td>VCO 2 Coarse Tune   </td><td><input id="inputCC17"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
-<tr><td>VCO 2 Fine Tune     </td><td><input id="inputCC18"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
-<tr><td>VCO 3 Waveform      </td><td><input id="inputCC19"  type="range" min="0"  max="6"   step="1" onchange="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>Mixer VCO 3 Level   </td><td><input id="inputCC82"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(82, value)"></td><td><span id="spanCC82">-1</span></td></tr>
-<tr><td>VCO 3 Coarse Tune   </td><td><input id="inputCC20"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
-<tr><td>VCO 3 Fine Tune     </td><td><input id="inputCC21"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
-<tr><td>VCF Cutoff Frequency</td><td><input id="inputCC22"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FEG Attack Time     </td><td><input id="inputCC28"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(28, value)"></td><td><span id="spanCC28">-1</span></td></tr>
-<tr><td>VCF Resonance       </td><td><input id="inputCC23"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FEG Decay Time      </td><td><input id="inputCC29"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(29, value)"></td><td><span id="spanCC29">-1</span></td></tr>
-<tr><td>VCF Envelope Amount </td><td><input id="inputCC24"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FEG Sustain Level   </td><td><input id="inputCC30"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(30, value)"></td><td><span id="spanCC30">-1</span></td></tr>
-<tr><td>VCF Key Follow      </td><td><input id="inputCC83"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(83, value)"></td><td><span id="spanCC83">-1</span></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>FEG Release Time    </td><td><input id="inputCC86"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(86, value)"></td><td><span id="spanCC86">-1</span></td></tr>
-<tr><td>AEG Attack Time     </td><td><input id="inputCC25"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
-<tr><td>AEG Decay Time      </td><td><input id="inputCC26"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
-<tr><td>AEG Sustain Level   </td><td><input id="inputCC27"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(27, value)"></td><td><span id="spanCC27">-1</span></td></tr>
-<tr><td>AEG Release Time    </td><td><input id="inputCC85"  type="range" min="0"  max="127" step="1" onchange="onChangeControlChange(85, value)"></td><td><span id="spanCC85">-1</span></td></tr>
-
-<tr><td><input id="inputReset" type="button" value="Reset Controllers" onclick ="resetControllers()"></td><td></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr><td>VCO Pulse/Saw Mix</td><td><input id="inputCC14"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td></tr>
+<tr><td>VCO Pulse Width  </td><td><input id="inputCC15"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
+<tr><td>VCO Saw Shift    </td><td><input id="inputCC16"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
+<tr><td>VCF Cutoff       </td><td><input id="inputCC17"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
+<tr><td>VCF Resonance    </td><td><input id="inputCC18"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
+<tr><td>VCF EG Amt       </td><td><input id="inputCC19"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
+<tr><td>VCA Gain         </td><td><input id="inputCC20"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
+<tr><td>EG Attack        </td><td><input id="inputCC21"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
+<tr><td>EG Decay/Release </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
+<tr><td>EG Sustain       </td><td><input id="inputCC23"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
+<tr><td>LFO Rate         </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
+<tr><td>LFO VCO Color Amt</td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
+<tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p></p>
+<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>
 
 <h2>Software Keyboard</h2>
 
@@ -321,13 +324,13 @@ node.connect(audioContext.destination);
 <table>
 <tr>
 <td>Transpose</td>
-<td><input id="inputTranspose" type="range" min="-48" max="48" step="12" onchange="onChangeTranspose(value)" ></td><td><span id="spanTranspose" >-1</span></td>
+<td><input id="inputTranspose" type="range" min="-12" max="24" step="12" onchange="onChangeTranspose(value)" ></td><td><span id="spanTranspose" >-1</span></td>
 </tr>
 </table>
 
 <h2>About</h2>
 
-<p>Made by ISGK Instruments (<a href="https://github.com/risgk/digital-synth-wra32">View on GitHub</a>)</p>
+<p>Made by ISGK Instruments (<a href="https://github.com/risgk/DigitalSynthVRA8M">View on GitHub</a>)</p>
 
 </body>
 </html>

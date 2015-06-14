@@ -1,11 +1,7 @@
-var vco1 = new VCO();
-var vco2 = new VCO();
-var vco3 = new VCO();
+var vco = new VCO();
 var vcf = new VCF();
 var vca = new VCA();
-var feg = new EG();
-var aeg = new EG();
-var mixer = new Mixer();
+var eg = new EG();
 
 var Synth = function() {
   this.receive = function(array) {
@@ -80,11 +76,10 @@ var Synth = function() {
   };
 
   this.clock = function() {
-    var level = mixer.clock(vco1.clock(), vco2.clock(), vco3.clock());
-    fegOutput = feg.clock();
-    level = vcf.clock(level, fegOutput);
-    aegOutput = aeg.clock();
-    level = vca.clock(level, aegOutput);
+    var level = vco.clock();
+    egOutput = eg.clock();
+    level = vcf.clock(level, egOutput);
+    level = vca.clock(level, egOutput);
     return level;
   };
 
@@ -105,49 +100,24 @@ var Synth = function() {
   };
 
   this.noteOn = function(noteNumber) {
-    pitch1 = noteNumber + vco1.coarseTune();
-    if (pitch1 < (NOTE_NUMBER_MIN + 64) ||
-        pitch1 > (NOTE_NUMBER_MAX + 64)) {
-      return;
-    }
-
-    pitch2 = noteNumber + vco2.coarseTune();
-    if (pitch2 < (NOTE_NUMBER_MIN + 64) ||
-        pitch2 > (NOTE_NUMBER_MAX + 64)) {
-      return;
-    }
-
-    pitch3 = noteNumber + vco3.coarseTune();
-    if (pitch3 < (NOTE_NUMBER_MIN + 64) ||
-        pitch3 > (NOTE_NUMBER_MAX + 64)) {
-      return;
-    }
-
     this.noteNumber = noteNumber;
-    vco1.noteOn(this.noteNumber);
-    vco2.noteOn(this.noteNumber);
-    vco3.noteOn(this.noteNumber);
+    vco.noteOn(this.noteNumber);
     vcf.noteOn(this.noteNumber);
-    feg.noteOn();
-    aeg.noteOn();
+    eg.noteOn();
   };
 
   this.noteOff = function(noteNumber) {
     if (noteNumber == this.noteNumber) {
-      feg.noteOff();
-      aeg.noteOff();
+      eg.noteOff();
     }
   };
 
   this.soundOff = function() {
-    feg.soundOff();
-    aeg.soundOff();
+    eg.soundOff();
   };
 
   this.resetPhase = function() {
-    vco1.resetPhase();
-    vco2.resetPhase();
-    vco3.resetPhase();
+    vco.resetPhase();
   };
 
   this.controlChange = function(controllerNumber, value) {
@@ -161,24 +131,6 @@ var Synth = function() {
     case VCO_1_COARSE_TUNE:
       this.setVCO1CoarseTune(value);
       break;
-    case VCO_2_WAVEFORM:
-      this.setVCO2Waveform(value);
-      break;
-    case VCO_2_COARSE_TUNE:
-      this.setVCO2CoarseTune(value);
-      break;
-    case VCO_2_FINE_TUNE:
-      this.setVCO2FineTune(value);
-      break;
-    case VCO_3_WAVEFORM:
-      this.setVCO3Waveform(value);
-      break;
-    case VCO_3_COARSE_TUNE:
-      this.setVCO3CoarseTune(value);
-      break;
-    case VCO_3_FINE_TUNE:
-      this.setVCO3FineTune(value);
-      break;
     case VCF_CUTOFF_FREQUENCY:
       this.setVCFCutoffFrequency(value);
       break;
@@ -187,15 +139,6 @@ var Synth = function() {
       break;
     case VCF_ENVELOPE_AMOUNT:
       this.setVCFEnvelopeAmount(value);
-      break;
-    case AEG_ATTACK_TIME:
-      this.setAEGAttackTime(value);
-      break;
-    case AEG_DECAY_TIME:
-      this.setAEGDecayTime(value);
-      break;
-    case AEG_SUSTAIN_LEVEL:
-      this.setAEGSustainLevel(value);
       break;
     case FEG_ATTACK_TIME:
       this.setFEGAttackTime(value);
@@ -206,75 +149,21 @@ var Synth = function() {
     case FEG_SUSTAIN_LEVEL:
       this.setFEGSustainLevel(value);
       break;
-    case MIXER_VCO_1_LEVEL:
-      this.setMixerVCO1Level(value);
-      break;
-    case MIXER_VCO_2_LEVEL:
-      this.setMixerVCO2Level(value);
-      break;
-    case MIXER_VCO_3_LEVEL:
-      this.setMixerVCO3Level(value);
-      break;
-
     case VCF_KEY_FOLLOW:
       this.setVCFKeyFollow(value);
       break;
-    case AEG_RELEASE_TIME:
-      this.setAEGReleaseTime(value);
-      break;
-    case FEG_RELEASE_TIME:
-      this.setFEGReleaseTime(value);
-      break;
-
-    
     }
   };
 
   this.setVCO1Waveform = function(value) {
     this.soundOff();
-    vco1.setWaveform(value);
+    vco.setWaveform(value);
     this.resetPhase();
   };
 
   this.setVCO1CoarseTune = function(value) {
     this.soundOff();
-    vco1.setCoarseTune(value);
-    this.resetPhase();
-  };
-
-  this.setVCO2Waveform = function(value) {
-    this.soundOff();
-    vco2.setWaveform(value);
-    this.resetPhase();
-  };
-
-  this.setVCO2CoarseTune = function(value) {
-    this.soundOff();
-    vco2.setCoarseTune(value);
-    this.resetPhase();
-  };
-
-  this.setVCO2FineTune = function(value) {
-    this.soundOff();
-    vco2.setFineTune(value);
-    this.resetPhase();
-  };
-
-  this.setVCO3Waveform = function(value) {
-    this.soundOff();
-    vco3.setWaveform(value);
-    this.resetPhase();
-  };
-
-  this.setVCO3CoarseTune = function(value) {
-    this.soundOff();
-    vco3.setCoarseTune(value);
-    this.resetPhase();
-  };
-
-  this.setVCO3FineTune = function(value) {
-    this.soundOff();
-    vco3.setFineTune(value);
+    vco.setCoarseTune(value);
     this.resetPhase();
   };
 
@@ -290,57 +179,28 @@ var Synth = function() {
     vcf.setEnvelopeAmount(value);
   };
 
-  this.setAEGAttackTime = function(value) {
-    aeg.setAttackTime(value);
-  };
-
-  this.setAEGDecayTime = function(value) {
-    aeg.setDecayTime(value);
-  };
-
-  this.setAEGSustainLevel = function(value) {
-    aeg.setSustainLevel(value);
-  };
-
   this.setFEGAttackTime = function(value) {
-    feg.setAttackTime(value);
+    eg.setAttackTime(value);
   };
 
   this.setFEGDecayTime = function(value) {
-    feg.setDecayTime(value);
+    eg.setDecayTime(value);
   };
 
   this.setFEGSustainLevel = function(value) {
-    feg.setSustainLevel(value);
-  };
-
-  this.setMixerVCO1Level = function(value) {
-    mixer.setInput1Level(value);
-  };
-
-  this.setMixerVCO2Level = function(value) {
-    mixer.setInput2Level(value);
-  };
-
-  this.setMixerVCO3Level = function(value) {
-    mixer.setInput3Level(value);
+    eg.setSustainLevel(value);
   };
 
   this.setVCFKeyFollow = function(value) {
     vcf.setKeyFollow(value);
   };
 
-  this.setAEGReleaseTime = function(value) {
-    aeg.setReleaseTime(value);
-  };
-
   this.setFEGReleaseTime = function(value) {
-    feg.setReleaseTime(value);
+    eg.setReleaseTime(value);
   };
 
   this.allNotesOff = function(value) {
-    feg.noteOff();
-    aeg.noteOff();
+    eg.noteOff();
   };
 
   this.systemExclusive     = false;
