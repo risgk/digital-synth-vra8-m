@@ -16,7 +16,7 @@ public:
 
   INLINE static int16_t clock(int16_t audio_input, uint8_t gain_control) {
     uint8_t g = high_byte(m_gain * gain_control);
-    return high_sbyte(audio_input << 1) * g;
+    return high_sbyte(audio_input) * g;
   }
 };
 

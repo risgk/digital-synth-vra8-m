@@ -11,6 +11,6 @@ class VCA
 
   def clock(audio_input, gain_control)
     g = high_byte(@gain * gain_control)
-    return high_sbyte(audio_input << 1) * g;
+    return high_sbyte(audio_input) * g;
   end
 end

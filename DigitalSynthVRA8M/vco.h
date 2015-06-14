@@ -57,7 +57,7 @@ public:
                     saw_up        * (uint8_t) (127 - m_pulse_saw_mix) +
                     saw_down_copy * high_byte(m_pulse_saw_mix * 192);
 
-    return mixed >> 2;
+    return mixed >> 1;
   }
 
 private:
