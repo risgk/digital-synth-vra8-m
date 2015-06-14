@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
-<title>Digital Synth VRA8-M HTML Edition</title>
+<title>VRA8-M HTML Edition</title>
 <style>
 * {
   -webkit-user-select: none;
@@ -24,7 +24,7 @@ td.keyh {
 </style>
 <script src="common.js" charset="utf-8"></script>
 <script>
-var midiCh    = 0;
+const MIDI_CH        = 0;
 var volume    = 0;
 var transpose = 0;
 
@@ -37,7 +37,6 @@ window.onload = function() {
 
   var result = loadParameters();
   if (!result) {
-    onChangeChannel(1);
     onChangeVolume(100);
     onChangeTranspose(0);
     preset0();
@@ -54,12 +53,6 @@ function loadParameters() {
     onChangeControlChange(i, value);
   }
 
-  value = localStorage.getItem("keyChannel");
-  if (!value) {
-    return false;
-  }
-  onChangeChannel(value);
-
   value = localStorage.getItem("keyVolume");
   if (!value) {
     return false;
@@ -73,13 +66,6 @@ function loadParameters() {
   onChangeTranspose(value);
 
   return true;
-}
-
-function onChangeChannel(value) {
-  document.getElementById("inputChannel").value = parseInt(value);
-  document.getElementById("spanChannel").innerHTML = value;
-  localStorage.setItem("keyChannel", value);
-  midiCh = parseInt(value) - 1;
 }
 
 function onChangeVolume(value) {
@@ -138,7 +124,7 @@ function onChangeControlChange(number, value) {
   document.getElementById("inputCC" + String(number)).value = parseInt(value);
   document.getElementById("spanCC" + String(number)).innerHTML = value;
   localStorage.setItem("keyCC" + String(number), value);
-  synth.receive([(CONTROL_CHANGE | midiCh), number, parseInt(value)]);
+  synth.receive([(CONTROL_CHANGE | MIDI_CH), number, parseInt(value)]);
 }
 
 function preset0() {
@@ -194,11 +180,11 @@ function setRandom() {
 }
 
 function noteOn(noteNumber) {
-  synth.receive([(NOTE_ON | midiCh), noteNumber + transpose, 64]);
+  synth.receive([(NOTE_ON | MIDI_CH), noteNumber + transpose, 64]);
 }
 
 function noteOff(noteNumber) {
-  synth.receive([(NOTE_OFF | midiCh), noteNumber + transpose, 0]);
+  synth.receive([(NOTE_OFF | MIDI_CH), noteNumber + transpose, 0]);
 }
 </script>
 <script>
@@ -232,9 +218,9 @@ node.connect(audioContext.destination);
 </script>
 </head>
 <body>
-<h1>Digital Synth VRA8-M HTML Edition 0.0.0</h1>
+<h1>VRA8-M HTML Edition 0.0.0</h1>
 
-<p>Virtual Analog Synthesizer Web App<p>
+<p>Monophonic Synthesizer Web App, Simulator of Digital Synth VRA8-M<p>
 
 <h2>Synth Settings</h2>
 
@@ -242,10 +228,6 @@ node.connect(audioContext.destination);
 <tr>
 <td>MIDI IN</td>
 <td colspan="2"><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
-</tr>
-<tr>
-<td>Basic Channel</td>
-<td><input id="inputChannel" type="range" min="1" max="16"  step="1" onchange="onChangeChannel(value)"></td><td><span id="spanChannel">-1</span></td>
 </tr>
 <tr>
 <td>Master Volume</td>

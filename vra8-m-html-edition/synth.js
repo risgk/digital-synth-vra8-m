@@ -17,7 +17,7 @@ var Synth = function() {
         // do nothing
       } else if (this.systemDataRemaining != 0) {
         this.systemDataRemaining--;
-      } else if (this.runningStatus == (NOTE_ON | midiCh)) {
+      } else if (this.runningStatus == (NOTE_ON | MIDI_CH)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else if (b == 0) {
@@ -27,14 +27,14 @@ var Synth = function() {
           this.noteOn(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (this.runningStatus == (NOTE_OFF | midiCh)) {
+      } else if (this.runningStatus == (NOTE_OFF | MIDI_CH)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
           this.noteOff(this.firstData);
           this.firstData = DATA_BYTE_INVALID;
         }
-      } else if (this.runningStatus == (CONTROL_CHANGE | midiCh)) {
+      } else if (this.runningStatus == (CONTROL_CHANGE | MIDI_CH)) {
         if (!this.IsDataByte(this.firstData)) {
           this.firstData = b;
         } else {
