@@ -43,7 +43,7 @@ public:
     m_cv_amt = controller_value;
   }
 
-  INLINE static int8_t clock(int8_t audio_input, uint8_t cutoff_control) {
+  INLINE static int16_t clock(int16_t audio_input, uint8_t cutoff_control) {
     uint8_t cutoff = m_cutoff + high_byte(m_cv_amt * cutoff_control);
     if (cutoff > 127) {
       cutoff = 127;
@@ -56,18 +56,17 @@ public:
     int16_t b_2_over_a_0      = b_2_over_a_0_low | (b_2_over_a_0_high << 8);
     int16_t a_2_over_a_0      = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) - VCF_TABLE_ONE;
 
-    int16_t x_0  = (audio_input << 8) >> 2;
-    int16_t tmp  = mul_q15_q15(x_0 + m_x_2, b_2_over_a_0);
-    tmp         += mul_q15_q15(m_x_1 << 1,  b_2_over_a_0);
+    int16_t x_0  = audio_input >> 2;
+    int16_t tmp  = mul_q15_q15(x_0 + (m_x_1 << 1) + m_x_2, b_2_over_a_0);
     tmp         -= mul_q15_q7( m_y_1,       a_1_over_a_0_high);
     tmp         -= mul_q15_q15(m_y_2,       a_2_over_a_0);
     int16_t y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS);
 
-    if (y_0 > 8191) {
-      y_0 = 8191;
+    if (y_0 > 4095) {
+      y_0 = 4095;
     }
-    if (y_0 < -8192) {
-      y_0 = -8192;
+    if (y_0 < -4096) {
+      y_0 = -4096;
     }
 
     m_x_2 = m_x_1;
@@ -75,7 +74,7 @@ public:
     m_x_1 = x_0;
     m_y_1 = y_0;
 
-    return (y_0 << 2) >> 8;
+    return y_0 << 2;
   }
 };
 

@@ -37,7 +37,7 @@ public:
     m_color_lfo_amt = controller_value << 1;
   }
 
-  INLINE static int8_t clock(uint16_t pitch_control, int8_t phase_control) {
+  INLINE static int16_t clock(uint16_t pitch_control, int8_t phase_control) {
     uint8_t coarse_pitch = high_byte(pitch_control);
     uint8_t fine_pitch = low_byte(pitch_control);
 
@@ -57,7 +57,7 @@ public:
                     saw_up        * (uint8_t) (127 - m_pulse_saw_mix) +
                     saw_down_copy * high_byte(m_pulse_saw_mix * 192);
 
-    return high_sbyte(mixed) >> 1;
+    return mixed >> 2;
   }
 
 private:

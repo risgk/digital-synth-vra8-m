@@ -45,20 +45,19 @@ class VCF
     b_2_over_a_0 = b_2_over_a_0_low | (b_2_over_a_0_high << 8)
     a_2_over_a_0 = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) - VCF_TABLE_ONE
 
-    x_0  = (audio_input << 8) >> 2
-    tmp  = mul_q15_q15(x_0 + @x_2, b_2_over_a_0)
-    tmp += mul_q15_q15(@x_1 << 1,  b_2_over_a_0)
+    x_0  = audio_input >> 2
+    tmp  = mul_q15_q15(x_0 + (@x_1 << 1) + @x_2, b_2_over_a_0)
     tmp -= mul_q15_q7( @y_1,       a_1_over_a_0_high)
     tmp -= mul_q15_q15(@y_2,       a_2_over_a_0)
     y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
-    if (y_0 > 8191)
+    if (y_0 > 4095)
       printf("y_0 overflow: %d\n", y_0)
-      y_0 = 8191
+      y_0 = 4095
     end
-    if (y_0 < -8192)
+    if (y_0 < -4096)
       printf("y_0 overflow: %d\n", y_0)
-      y_0 = -8192
+      y_0 = -4096
     end
 
     @x_2 = @x_1
@@ -66,6 +65,6 @@ class VCF
     @x_1 = x_0
     @y_1 = y_0
 
-    return (y_0 << 2) >> 8
+    return y_0 << 2
   end
 end

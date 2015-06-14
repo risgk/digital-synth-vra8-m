@@ -95,10 +95,10 @@ public:
     uint8_t  eg_output = EG::clock();
     uint8_t  lfo_output = LFO::clock();
     uint16_t srl_output = SlewRateLimiter::clock(m_note_number << 8);
-    int8_t   vco_output = VCO::clock(srl_output, lfo_output);
-    int8_t   vcf_output = VCF::clock(vco_output, eg_output);
-    int8_t   vca_output = VCA::clock(vcf_output, eg_output);
-    return vca_output;
+    int16_t  vco_output = VCO::clock(srl_output, lfo_output);
+    int16_t  vcf_output = VCF::clock(vco_output, eg_output);
+    int16_t  vca_output = VCA::clock(vcf_output, eg_output);
+    return high_sbyte(vca_output);
   }
 };
 

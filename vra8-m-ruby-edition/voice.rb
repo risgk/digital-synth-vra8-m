@@ -81,6 +81,6 @@ class Voice
     vco_output = @vco.clock(srl_output, lfo_output)
     vcf_output = @vcf.clock(vco_output, eg_output)
     vca_output = @vca.clock(vcf_output, eg_output)
-    return vca_output
+    return high_sbyte(vca_output)
   end
 end

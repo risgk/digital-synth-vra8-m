@@ -14,9 +14,9 @@ public:
     m_gain = controller_value << 1;
   }
 
-  INLINE static int8_t clock(int8_t audio_input, uint8_t gain_control) {
+  INLINE static int16_t clock(int16_t audio_input, uint8_t gain_control) {
     uint8_t g = high_byte(m_gain * gain_control);
-    return high_sbyte(audio_input * g);
+    return high_sbyte(audio_input << 1) * g;
   }
 };
 
