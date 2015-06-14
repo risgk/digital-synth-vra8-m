@@ -10,7 +10,7 @@ def freq_from_note_number(note_number)
   cent = (note_number * 100.0) - 6900.0
   hz = 440.0 * (2.0 ** (cent / 1200.0))
   freq = (hz * VCO_PHASE_RESOLUTION / SAMPLING_RATE * 2.0).floor
-  freq = freq + 1 if freq.even?
+  freq = freq + 1 if freq.odd?
   freq
 end
 
