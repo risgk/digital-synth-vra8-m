@@ -2,7 +2,7 @@ require_relative 'common'
 
 class VCA
   def initialize
-    set_gain(96)
+    set_gain(127)
   end
 
   def set_gain(controller_value)

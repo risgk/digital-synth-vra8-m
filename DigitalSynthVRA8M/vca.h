@@ -7,7 +7,7 @@ class VCA {
 
 public:
   INLINE static void initialize() {
-    set_gain(96);
+    set_gain(127);
   }
 
   INLINE static void set_gain(uint8_t controller_value) {
