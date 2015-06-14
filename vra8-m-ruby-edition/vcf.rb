@@ -51,13 +51,13 @@ class VCF
     tmp -= mul_q15_q15(@y_2,       a_2_over_a_0)
     y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
-    if (y_0 > 4095)
+    if (y_0 > 8191)
       printf("y_0 overflow: %d\n", y_0)
-      y_0 = 4095
+      y_0 = 8191
     end
-    if (y_0 < -4096)
+    if (y_0 < -8192)
       printf("y_0 overflow: %d\n", y_0)
-      y_0 = -4096
+      y_0 = -8192
     end
 
     @x_2 = @x_1

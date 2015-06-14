@@ -62,11 +62,11 @@ public:
     tmp         -= mul_q15_q15(m_y_2,       a_2_over_a_0);
     int16_t y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS);
 
-    if (y_0 > 4095) {
-      y_0 = 4095;
+    if (y_0 > 8191) {
+      y_0 = 8191;
     }
-    if (y_0 < -4096) {
-      y_0 = -4096;
+    if (y_0 < -8192) {
+      y_0 = -8192;
     }
 
     m_x_2 = m_x_1;
