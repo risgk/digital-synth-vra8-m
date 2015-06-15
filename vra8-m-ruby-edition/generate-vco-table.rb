@@ -1,5 +1,7 @@
 require_relative 'common'
 
+LEVEL_ONE_RESOLUTION = 96
+
 $file = File.open("vco-table.rb", "w")
 
 $vco_freq_table = []
@@ -47,8 +49,6 @@ $file.printf("$vco_tune_rate_table = [\n  ")
   end
 end
 $file.printf("]\n\n")
-
-LEVEL_ONE_RESOLUTION = 108
 
 def generate_vco_wave_table(max)
   $file.printf("$vco_wave_table_%d = [\n  ", max)

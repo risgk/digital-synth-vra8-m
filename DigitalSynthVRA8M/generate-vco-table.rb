@@ -1,5 +1,7 @@
 require_relative 'common'
 
+LEVEL_ONE_RESOLUTION = 96
+
 $file = File.open("vco-table.h", "w")
 
 $file.printf("#pragma once\n\n")
@@ -49,8 +51,6 @@ $file.printf("const uint16_t g_vco_tune_rate_table[] = {\n  ")
   end
 end
 $file.printf("};\n\n")
-
-LEVEL_ONE_RESOLUTION = 108
 
 def generate_vco_wave_table(max)
   $file.printf("const uint8_t g_vco_wave_table_%d[] PROGMEM = {\n  ", max)
