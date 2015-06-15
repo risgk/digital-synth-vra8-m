@@ -54,7 +54,8 @@ class VCF
     if (y_0 > 8191)
       printf("y_0 overflow: %d\n", y_0)
       y_0 = 8191
-    elsif (y_0 < -8192)
+    end
+    if (y_0 < -8192)
       printf("y_0 overflow: %d\n", y_0)
       y_0 = -8192
     end
