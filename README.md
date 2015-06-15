@@ -5,7 +5,7 @@
 
 ## Concept
 
-- Virtual Analog Synthesizer (MIDI Sound Module) for Arduino Uno
+- Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
 ## VRA8-M Features
 
@@ -64,7 +64,7 @@
 
 ## MIDI Implementation Chart
 
-      [Virtual Analog Synthesizer]                                    Date: 2015-00-00       
+      [Monophonic Synthesizer]                                        Date: 2015-00-00       
       Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 0.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
