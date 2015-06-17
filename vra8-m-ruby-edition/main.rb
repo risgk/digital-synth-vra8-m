@@ -1,5 +1,3 @@
-# VRA8-M Ruby Edition
-
 require_relative 'common'
 require_relative 'synth'
 require_relative 'audio-out'
