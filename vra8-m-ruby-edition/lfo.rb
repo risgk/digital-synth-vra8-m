@@ -18,6 +18,6 @@ class LFO
       level = ~level + 0x10000
     end
     level -= 0x4000
-    return high_sbyte(level) << 1
+    return high_sbyte(level << 1)
   end
 end

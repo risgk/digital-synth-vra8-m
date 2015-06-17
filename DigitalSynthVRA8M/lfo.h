@@ -23,7 +23,7 @@ public:
       level = ~level;
     }
     level -= 0x4000;
-    return high_sbyte(level) << 1;
+    return high_sbyte(level << 1);
   }
 };
 
