@@ -64,6 +64,7 @@ INLINE int8_t high_sbyte(int16_t x) {
 }
 
 // refs http://www.atmel.com/images/doc1631.pdf
+// results of mul_q*_q* are approximated
 
 INLINE uint16_t mul_q16_q16(uint16_t x, uint16_t y) {
   uint16_t result  = high_byte(low_byte(x) * high_byte(y));

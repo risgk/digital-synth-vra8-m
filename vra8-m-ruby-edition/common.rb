@@ -60,6 +60,7 @@ def high_sbyte(x)
 end
 
 # refs http://www.atmel.com/images/doc1631.pdf
+# results of mul_q*_q* are approximated
 
 def mul_q16_q16(x, y)
   result  = high_byte(low_byte(x) * high_byte(y))
