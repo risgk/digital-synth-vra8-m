@@ -18,6 +18,21 @@ public:
     m_system_data_remaining = 0;
     m_running_status = STATUS_BYTE_INVALID;
     m_first_data = DATA_BYTE_INVALID;
+
+    // Preset Lead
+    control_change(VCO_PULSE_SAW_MIX, 64 );
+    control_change(VCO_PULSE_WIDTH,   0  );
+    control_change(VCO_SAW_SHIFT,     64 );
+    control_change(VCF_CUTOFF,        0  );
+    control_change(VCF_RESONANCE,     127);
+    control_change(VCF_EG_AMT,        127);
+    control_change(VCA_GAIN,          96 );
+    control_change(EG_ATTACK,         32 );
+    control_change(EG_DECAY_RELEASE,  96 );
+    control_change(EG_SUSTAIN,        127);
+    control_change(LFO_RATE,          32 );
+    control_change(LFO_VCO_COLOR_AMT, 32 );
+    control_change(PORTAMENTO,        96 );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
