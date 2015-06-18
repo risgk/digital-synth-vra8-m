@@ -52,11 +52,11 @@ class VCF
     y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
     if (y_0 > 8191)
-      printf("y_0 overflow: %d\n", y_0)
+      # printf("y_0 overflow: %d\n", y_0)
       y_0 = 8191
     end
     if (y_0 < -8192)
-      printf("y_0 overflow: %d\n", y_0)
+      # printf("y_0 overflow: %d\n", y_0)
       y_0 = -8192
     end
 
