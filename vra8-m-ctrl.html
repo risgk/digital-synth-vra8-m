@@ -27,6 +27,11 @@ const MIDI_CH        = 0;
 const NOTE_OFF       = 0x80;
 const NOTE_ON        = 0x90;
 const CONTROL_CHANGE = 0xB0;
+
+const CONTROLLERS_FIRST = 14;
+const VCA_GAIN          = 20;
+const CONTROLLERS_LAST  = 26;
+const ALL_NOTES_OFF     = 123;
 </script>
 <script>
 var transpose = 0;
@@ -38,16 +43,16 @@ window.onload = function() {
     console.log("No MIDI support present in your browser.");
   }
 
-  var result = loadParameters();
+  var result = restoreParameters();
   if (!result) {
     onChangeTranspose(0);
-    preset0();
+    preset(0);
   }
 };
 
-function loadParameters() {
+function restoreParameters() {
   var value;
-  for (var i = 14; i <= 26; i++) {
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -60,6 +65,10 @@ function loadParameters() {
     return false;
   }
   onChangeTranspose(value);
+
+  if (midiOutput) {
+    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), ALL_NOTES_OFF, 0]);
+  }
 
   return true;
 }
@@ -127,10 +136,10 @@ function onChangeOutputPort() {
   var selectOutputPort = document.getElementById("selectOutputPort");
   midiOutput = midiOutputs[selectOutputPort.selectedIndex];
   if (midiOutput) {
-    var result = loadParameters();
+    var result = restoreParameters();
     if (!result) {
       onChangeTranspose(0);
-      preset0();
+      preset(0);
     }
   }
 }
@@ -144,56 +153,32 @@ function onChangeControlChange(number, value) {
   }
 }
 
-function preset0() {
-  onChangeControlChange(14, 0  );
-  onChangeControlChange(15, 0  );
-  onChangeControlChange(16, 0  );
-  onChangeControlChange(17, 127);
-  onChangeControlChange(18, 0  );
-  onChangeControlChange(19, 0  );
-  onChangeControlChange(20, 96 );
-  onChangeControlChange(21, 0  );
-  onChangeControlChange(22, 0  );
-  onChangeControlChange(23, 127);
-  onChangeControlChange(24, 32 );
-  onChangeControlChange(25, 0  );
-  onChangeControlChange(26, 0  );
+function setRandom() {
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    if (i == VCA_GAIN) {
+      onChangeControlChange(i, 96);
+    } else {
+      onChangeControlChange(i, rand());
+    }
+  }
 }
 
-function preset1() {
-  onChangeControlChange(14, 64 );
-  onChangeControlChange(15, 0  );
-  onChangeControlChange(16, 64 );
-  onChangeControlChange(17, 0  );
-  onChangeControlChange(18, 127);
-  onChangeControlChange(19, 127);
-  onChangeControlChange(20, 96 );
-  onChangeControlChange(21, 32 );
-  onChangeControlChange(22, 96 );
-  onChangeControlChange(23, 127);
-  onChangeControlChange(24, 32 );
-  onChangeControlChange(25, 32 );
-  onChangeControlChange(26, 96 );
+function preset(number) {
+  var presetParameters = [
+    [64 , 0  , 64 , 0  , 127, 127, 96 , 32 , 96 , 127, 32 , 32 , 96 ],
+    [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+    [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+    [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+    [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+  ];
+
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    onChangeControlChange(i, presetParameters[number][i - CONTROLLERS_FIRST]);
+  }
 }
 
 function rand() {
   return Math.floor(Math.random() * 128);
-}
-
-function setRandom() {
-  onChangeControlChange(14, rand());
-  onChangeControlChange(15, rand());
-  onChangeControlChange(16, rand());
-  onChangeControlChange(17, rand());
-  onChangeControlChange(18, rand());
-  onChangeControlChange(19, rand());
-  onChangeControlChange(20, 96    );
-  onChangeControlChange(21, rand());
-  onChangeControlChange(22, rand());
-  onChangeControlChange(23, rand());
-  onChangeControlChange(24, rand());
-  onChangeControlChange(25, rand());
-  onChangeControlChange(26, rand());
 }
 
 function noteOn(noteNumber) {
@@ -247,7 +232,12 @@ function noteOff(noteNumber) {
 <tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>
+<p><input type="button" value="Random"       onclick ="setRandom()">
+   <input type="button" value="Preset Lead"  onclick ="preset(0)">
+   <input type="button" value="Preset Saw"   onclick ="preset(1)">
+   <input type="button" value="Preset Pulse" onclick ="preset(2)">
+   <input type="button" value="Preset Pad"   onclick ="preset(3)">
+   <input type="button" value="Preset Bass"  onclick ="preset(4)"></p>
 
 <h2>Software Keyboard</h2>
 
