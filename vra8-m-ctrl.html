@@ -167,7 +167,7 @@ function preset(number) {
   }
 }
 
-function setRandom() {
+function setRandomly() {
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     if (i == VCA_GAIN) {
       onChangeControlChange(i, 96);
@@ -255,25 +255,25 @@ function noteOff(noteNumber) {
 <tr><td>Portamento       </td><td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p><input type="button" value="Lead"    onclick ="preset(0)">
-   <input type="button" value="Saw"     onclick ="preset(1)">
-   <input type="button" value="Pulse"   onclick ="preset(2)">
-   <input type="button" value="Pad"     onclick ="preset(3)">
-   <input type="button" value="Bass"    onclick ="preset(4)">
+<p><input type="button" value="Preset Lead"  onclick="preset(0)">
+   <input type="button" value="Preset Saw"   onclick="preset(1)">
+   <input type="button" value="Preset Pulse" onclick="preset(2)">
+   <input type="button" value="Preset Pad"   onclick="preset(3)">
+   <input type="button" value="Preset Bass"  onclick="preset(4)">
    &nbsp;
-   <input type="button" value="Random"  onclick ="setRandom()"></p>
+   <input type="button" value="Random"       onclick="setRandomly()"></p>
 
-<p><input type="button" value="Load #0" onclick ="loadParameters(0)">
-   <input type="button" value="Load #1" onclick ="loadParameters(1)">
-   <input type="button" value="Load #2" onclick ="loadParameters(2)">
-   <input type="button" value="Load #3" onclick ="loadParameters(3)">
-   <input type="button" value="Load #4" onclick ="loadParameters(4)">
+<p><input type="button" value="Load #0" onclick="loadParameters(0)">
+   <input type="button" value="Load #1" onclick="loadParameters(1)">
+   <input type="button" value="Load #2" onclick="loadParameters(2)">
+   <input type="button" value="Load #3" onclick="loadParameters(3)">
+   <input type="button" value="Load #4" onclick="loadParameters(4)">
    &nbsp;
-   <input type="button" value="Save #0" onclick ="saveParameters(0)">
-   <input type="button" value="Save #1" onclick ="saveParameters(1)">
-   <input type="button" value="Save #2" onclick ="saveParameters(2)">
-   <input type="button" value="Save #3" onclick ="saveParameters(3)">
-   <input type="button" value="Save #4" onclick ="saveParameters(4)"></p>
+   <input type="button" value="Save #0" onclick="saveParameters(0)">
+   <input type="button" value="Save #1" onclick="saveParameters(1)">
+   <input type="button" value="Save #2" onclick="saveParameters(2)">
+   <input type="button" value="Save #3" onclick="saveParameters(3)">
+   <input type="button" value="Save #4" onclick="saveParameters(4)"></p>
 
 <h2>Software Keyboard</h2>
 
