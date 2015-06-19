@@ -25,6 +25,7 @@ public:
 
   INLINE static void write(int8_t level) {
     if (TIFR1 & _BV(TOV1)) {
+      // overload
       PORTB |= _BV(5);
     } else {
       PORTB &= ~_BV(5);
