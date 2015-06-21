@@ -91,7 +91,9 @@ $vco_overtones_restriction_table = []
 end
 
 def max_overtone(freq)
-  (freq != 0) ? ((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) / ((freq / 2) * SAMPLING_RATE)) : 0
+  max = (freq != 0) ? ((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) / ((freq / 2) * SAMPLING_RATE)) : 0
+  max = 127 if max > 127
+  max
 end
 
 $vco_overtones_restriction_table.map { |freq| max_overtone(freq) }.uniq.sort.reverse.each do |i|
