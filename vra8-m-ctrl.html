@@ -43,7 +43,7 @@ window.onload = function() {
     console.log("No MIDI support present in your browser.");
   }
 
-  var result = restoreParameters();
+  var result = restoreControllers();
   if (!result) {
     onChangeTranspose(0);
     preset(0);
@@ -54,7 +54,7 @@ window.onload = function() {
   }
 };
 
-function restoreParameters() {
+function restoreControllers() {
   var value;
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyCC" + String(i));
@@ -136,7 +136,7 @@ function onChangeOutputPort() {
   var selectOutputPort = document.getElementById("selectOutputPort");
   midiOutput = midiOutputs[selectOutputPort.selectedIndex];
   if (midiOutput) {
-    var result = restoreParameters();
+    var result = restoreControllers();
     if (!result) {
       onChangeTranspose(0);
       preset(0);
@@ -154,7 +154,7 @@ function onChangeControlChange(number, value) {
 }
 
 function preset(number) {
-  var presetParameters = [
+  var presetControllers = [
     [64 , 0  , 64 , 0  , 127, 127, 96 , 32 , 96 , 127, 32 , 32 , 96 ],
     [127, 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
     [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
@@ -163,7 +163,7 @@ function preset(number) {
   ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
-    onChangeControlChange(i, presetParameters[number][i - CONTROLLERS_FIRST]);
+    onChangeControlChange(i, presetControllers[number][i - CONTROLLERS_FIRST]);
   }
 }
 
@@ -181,7 +181,7 @@ function rand() {
   return Math.floor(Math.random() * 128);
 }
 
-function loadParameters(number) {
+function loadControllers(number) {
   var value;
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
@@ -192,7 +192,7 @@ function loadParameters(number) {
   }
 }
 
-function saveParameters(number) {
+function saveControllers(number) {
   var r = confirm("Save current parameters to Memory #" + String(number) + "?");
   if (r == false) {
     return;
@@ -263,17 +263,17 @@ function noteOff(noteNumber) {
    &nbsp;
    <input type="button" value="Random"       onclick="setRandomly()"></p>
 
-<p><input type="button" value="Load #0" onclick="loadParameters(0)">
-   <input type="button" value="Load #1" onclick="loadParameters(1)">
-   <input type="button" value="Load #2" onclick="loadParameters(2)">
-   <input type="button" value="Load #3" onclick="loadParameters(3)">
-   <input type="button" value="Load #4" onclick="loadParameters(4)">
+<p><input type="button" value="Load #0" onclick="loadControllers(0)">
+   <input type="button" value="Load #1" onclick="loadControllers(1)">
+   <input type="button" value="Load #2" onclick="loadControllers(2)">
+   <input type="button" value="Load #3" onclick="loadControllers(3)">
+   <input type="button" value="Load #4" onclick="loadControllers(4)">
    &nbsp;
-   <input type="button" value="Save #0" onclick="saveParameters(0)">
-   <input type="button" value="Save #1" onclick="saveParameters(1)">
-   <input type="button" value="Save #2" onclick="saveParameters(2)">
-   <input type="button" value="Save #3" onclick="saveParameters(3)">
-   <input type="button" value="Save #4" onclick="saveParameters(4)"></p>
+   <input type="button" value="Save #0" onclick="saveControllers(0)">
+   <input type="button" value="Save #1" onclick="saveControllers(1)">
+   <input type="button" value="Save #2" onclick="saveControllers(2)">
+   <input type="button" value="Save #3" onclick="saveControllers(3)">
+   <input type="button" value="Save #4" onclick="saveControllers(4)"></p>
 
 <h2>Software Keyboard</h2>
 

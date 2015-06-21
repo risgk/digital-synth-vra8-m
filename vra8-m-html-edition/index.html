@@ -25,6 +25,9 @@ td.keyh {
 <script src="common.js" charset="utf-8"></script>
 <script>
 const MIDI_CH        = 0;
+const CONTROLLERS_FIRST = 14;
+const VCA_GAIN          = 20;
+const CONTROLLERS_LAST  = 26;
 var volume    = 0;
 var transpose = 0;
 
@@ -35,17 +38,17 @@ window.onload = function() {
     console.log("No MIDI support present in your browser.");
   }
 
-  var result = loadParameters();
+  var result = restoreControllers();
   if (!result) {
     onChangeVolume(100);
     onChangeTranspose(0);
-    preset0();
+    preset(0);
   }
 };
 
-function loadParameters() {
+function restoreControllers() {
   var value;
-  for (var i = 14; i <= 26; i++) {
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyCC" + String(i));
     if (!value) {
       return false;
@@ -127,56 +130,55 @@ function onChangeControlChange(number, value) {
   synth.receive([(CONTROL_CHANGE | MIDI_CH), number, parseInt(value)]);
 }
 
-function preset0() {
-  onChangeControlChange(14, 0  );
-  onChangeControlChange(15, 0  );
-  onChangeControlChange(16, 0  );
-  onChangeControlChange(17, 127);
-  onChangeControlChange(18, 0  );
-  onChangeControlChange(19, 0  );
-  onChangeControlChange(20, 96 );
-  onChangeControlChange(21, 0  );
-  onChangeControlChange(22, 0  );
-  onChangeControlChange(23, 127);
-  onChangeControlChange(24, 0  );
-  onChangeControlChange(25, 0  );
-  onChangeControlChange(26, 0  );
+function preset(number) {
+  var presetControllers = [
+    [64 , 0  , 64 , 0  , 127, 127, 96 , 32 , 96 , 127, 32 , 32 , 96 ],
+    [127, 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+    [0  , 0  , 0  , 127, 0  , 0  , 96 , 0  , 0  , 127, 32 , 0  , 0  ],
+    [0  , 0  , 0  , 64 , 64 , 64 , 96 , 96 , 96 , 96 , 32 , 32 , 96 ],
+    [64 , 64 , 0  , 0  , 127, 127, 96 , 32 , 96 , 0  , 32 , 32 , 0  ],
+  ];
+
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    onChangeControlChange(i, presetControllers[number][i - CONTROLLERS_FIRST]);
+  }
 }
 
-function preset1() {
-  onChangeControlChange(14, 64 );
-  onChangeControlChange(15, 0  );
-  onChangeControlChange(16, 64 );
-  onChangeControlChange(17, 0  );
-  onChangeControlChange(18, 127);
-  onChangeControlChange(19, 127);
-  onChangeControlChange(20, 96 );
-  onChangeControlChange(21, 32 );
-  onChangeControlChange(22, 96 );
-  onChangeControlChange(23, 127);
-  onChangeControlChange(24, 32 );
-  onChangeControlChange(25, 32 );
-  onChangeControlChange(26, 96 );
+function setRandomly() {
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    if (i == VCA_GAIN) {
+      onChangeControlChange(i, 96);
+    } else {
+      onChangeControlChange(i, rand());
+    }
+  }
 }
 
 function rand() {
   return Math.floor(Math.random() * 128);
 }
 
-function setRandom() {
-  onChangeControlChange(14, rand());
-  onChangeControlChange(15, rand());
-  onChangeControlChange(16, rand());
-  onChangeControlChange(17, rand());
-  onChangeControlChange(18, rand());
-  onChangeControlChange(19, rand());
-  onChangeControlChange(20, 96    );
-  onChangeControlChange(21, rand());
-  onChangeControlChange(22, rand());
-  onChangeControlChange(23, rand());
-  onChangeControlChange(24, rand());
-  onChangeControlChange(25, rand());
-  onChangeControlChange(26, rand());
+function loadControllers(number) {
+  var value;
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
+    if (!value) {
+      return;
+    }
+    onChangeControlChange(i, value);
+  }
+}
+
+function saveControllers(number) {
+  var r = confirm("Save current parameters to Memory #" + String(number) + "?");
+  if (r == false) {
+    return;
+  }
+
+  for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    var value = document.getElementById("inputCC" + String(i)).value;
+    localStorage.setItem("keyMemory" + String(number) + "CC" + String(i), value);
+  }
 }
 
 function noteOn(noteNumber) {
@@ -240,22 +242,40 @@ node.connect(audioContext.destination);
 <h2>Controllers</h2>
 
 <table>
-<tr><td>VCO Pulse/Saw Mix</td><td><input id="inputCC14"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td></tr>
-<tr><td>VCO Pulse Width  </td><td><input id="inputCC15"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
-<tr><td>VCO Saw Shift    </td><td><input id="inputCC16"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
-<tr><td>VCF Cutoff       </td><td><input id="inputCC17"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
-<tr><td>VCF Resonance    </td><td><input id="inputCC18"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
-<tr><td>VCF EG Amt       </td><td><input id="inputCC19"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
-<tr><td>VCA Gain         </td><td><input id="inputCC20"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
-<tr><td>EG Attack        </td><td><input id="inputCC21"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
-<tr><td>EG Decay/Release </td><td><input id="inputCC22"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
-<tr><td>EG Sustain       </td><td><input id="inputCC23"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
-<tr><td>LFO Rate         </td><td><input id="inputCC24"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
-<tr><td>LFO VCO Color Amt</td><td><input id="inputCC25"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
-<tr><td>Portamento       </td><td><input id="inputCC26"  type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
+<tr><td>VCO Pulse/Saw Mix</td><td><input id="inputCC14" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(14, value)"></td><td><span id="spanCC14">-1</span></td></tr>
+<tr><td>VCO Pulse Width  </td><td><input id="inputCC15" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(15, value)"></td><td><span id="spanCC15">-1</span></td></tr>
+<tr><td>VCO Saw Shift    </td><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td></tr>
+<tr><td>VCF Cutoff       </td><td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td></tr>
+<tr><td>VCF Resonance    </td><td><input id="inputCC18" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td></tr>
+<tr><td>VCF EG Amt       </td><td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
+<tr><td>VCA Gain         </td><td><input id="inputCC20" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(20, value)"></td><td><span id="spanCC20">-1</span></td></tr>
+<tr><td>EG Attack        </td><td><input id="inputCC21" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(21, value)"></td><td><span id="spanCC21">-1</span></td></tr>
+<tr><td>EG Decay/Release </td><td><input id="inputCC22" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(22, value)"></td><td><span id="spanCC22">-1</span></td></tr>
+<tr><td>EG Sustain       </td><td><input id="inputCC23" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(23, value)"></td><td><span id="spanCC23">-1</span></td></tr>
+<tr><td>LFO Rate         </td><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td></tr>
+<tr><td>LFO VCO Color Amt</td><td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td></tr>
+<tr><td>Portamento       </td><td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td></tr>
 </table>
 
-<p><input type="button" value="Preset #0" onclick ="preset0()"> <input type="button" value="Preset #1" onclick ="preset1()"> <input type="button" value="Random" onclick ="setRandom()"></p>
+<p><input type="button" value="Preset Lead"  onclick="preset(0)">
+   <input type="button" value="Preset Saw"   onclick="preset(1)">
+   <input type="button" value="Preset Pulse" onclick="preset(2)">
+   <input type="button" value="Preset Pad"   onclick="preset(3)">
+   <input type="button" value="Preset Bass"  onclick="preset(4)">
+   &nbsp;
+   <input type="button" value="Random"       onclick="setRandomly()"></p>
+
+<p><input type="button" value="Load #0" onclick="loadControllers(0)">
+   <input type="button" value="Load #1" onclick="loadControllers(1)">
+   <input type="button" value="Load #2" onclick="loadControllers(2)">
+   <input type="button" value="Load #3" onclick="loadControllers(3)">
+   <input type="button" value="Load #4" onclick="loadControllers(4)">
+   &nbsp;
+   <input type="button" value="Save #0" onclick="saveControllers(0)">
+   <input type="button" value="Save #1" onclick="saveControllers(1)">
+   <input type="button" value="Save #2" onclick="saveControllers(2)">
+   <input type="button" value="Save #3" onclick="saveControllers(3)">
+   <input type="button" value="Save #4" onclick="saveControllers(4)"></p>
 
 <h2>Software Keyboard</h2>
 
