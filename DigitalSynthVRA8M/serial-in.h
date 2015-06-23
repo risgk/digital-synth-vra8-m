@@ -9,7 +9,7 @@ public:
     UCSR0B = _BV(RXEN0);
   }
 
-  INLINE static boolean available() const {
+  INLINE static boolean available() {
     return UCSR0A & _BV(RXC0);
   }
 
