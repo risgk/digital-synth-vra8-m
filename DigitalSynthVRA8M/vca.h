@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+template <uint8_t T>
 class VCA {
   static uint8_t m_gain;
 
@@ -20,4 +21,4 @@ public:
   }
 };
 
-uint8_t VCA::m_gain;
+template <uint8_t T> uint8_t VCA<T>::m_gain;

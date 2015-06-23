@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+template <uint8_t T>
 class SlewRateLimiter {
   static const uint8_t UPDATE_INTERVAL = 5;
 
@@ -36,6 +37,6 @@ public:
   }
 };
 
-uint8_t  SlewRateLimiter::m_count;
-uint16_t SlewRateLimiter::m_level;
-uint16_t SlewRateLimiter::m_slew_rate;
+template <uint8_t T> uint8_t  SlewRateLimiter<T>::m_count;
+template <uint8_t T> uint16_t SlewRateLimiter<T>::m_level;
+template <uint8_t T> uint16_t SlewRateLimiter<T>::m_slew_rate;

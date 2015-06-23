@@ -1,10 +1,12 @@
 #pragma once
 
-#include "common.h"
-#include "vcf-table.h"
-
 // refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
 
+#include "common.h"
+#include "mul-q.h"
+#include "vcf-table.h"
+
+template <uint8_t T>
 class VCF {
   static int16_t        m_x_1;
   static int16_t        m_x_2;
@@ -78,10 +80,10 @@ public:
   }
 };
 
-int16_t        VCF::m_x_1;
-int16_t        VCF::m_x_2;
-int16_t        VCF::m_y_1;
-int16_t        VCF::m_y_2;
-uint16_t       VCF::m_cutoff;
-const uint8_t* VCF::m_lpf_table;
-uint8_t        VCF::m_cv_amt;
+template <uint8_t T> int16_t        VCF<T>::m_x_1;
+template <uint8_t T> int16_t        VCF<T>::m_x_2;
+template <uint8_t T> int16_t        VCF<T>::m_y_1;
+template <uint8_t T> int16_t        VCF<T>::m_y_2;
+template <uint8_t T> uint16_t       VCF<T>::m_cutoff;
+template <uint8_t T> const uint8_t* VCF<T>::m_lpf_table;
+template <uint8_t T> uint8_t        VCF<T>::m_cv_amt;

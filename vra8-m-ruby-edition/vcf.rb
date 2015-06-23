@@ -1,7 +1,8 @@
-require_relative 'common'
-require_relative 'vcf-table'
-
 # refs http://www.musicdsp.org/files/Audio-EQ-Cookbook.txt
+
+require_relative 'common'
+require_relative 'mul-q'
+require_relative 'vcf-table'
 
 class VCF
   def initialize

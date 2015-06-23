@@ -13,6 +13,7 @@ inline uint8_t pgm_read_byte(const void* addr) {
 }
 
 inline uint16_t pgm_read_word(const void* addr) {
+  // for little endian cpu
   const uint8_t* p = (const uint8_t*) addr;
   return p[0] | (p[1] << 8);
 }

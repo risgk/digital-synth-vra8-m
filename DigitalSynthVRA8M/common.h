@@ -62,39 +62,3 @@ INLINE uint8_t high_byte(uint16_t x) {
 INLINE int8_t high_sbyte(int16_t x) {
   return x >> 8;
 }
-
-// refs http://www.atmel.com/images/doc1631.pdf
-// results of mul_q*_q* are approximated
-
-INLINE uint16_t mul_q16_q16(uint16_t x, uint16_t y) {
-  uint16_t result  = high_byte(low_byte(x) * high_byte(y));
-  result          += high_byte(high_byte(x) * low_byte(y));
-  result          += high_byte(x) * high_byte(y);
-  return result;
-}
-
-INLINE int16_t mul_q15_q15(int16_t x, int16_t y) {
-  int16_t result  = high_sbyte(low_byte(x) * high_sbyte(y));
-  result         += high_sbyte(high_sbyte(x) * low_byte(y));
-  result         += high_sbyte(x) * high_sbyte(y);
-  return result;
-}
-
-INLINE int16_t mul_q15_q16(int16_t x, uint16_t y) {
-  uint16_t result  = high_byte(low_byte(x) * high_byte(y));
-  result          += high_sbyte(high_sbyte(x) * low_byte(y));
-  result          += high_sbyte(x) * high_byte(y);
-  return result;
-}
-
-INLINE uint16_t mul_q16_q8(uint16_t x, uint8_t y) {
-  uint16_t result  = high_byte(low_byte(x) * y);
-  result          += high_byte(x) * y;
-  return result;
-}
-
-INLINE int16_t mul_q15_q7(uint16_t x, int8_t y) {
-  int16_t result  = high_sbyte(low_byte(x) * y);
-  result         += high_sbyte(x) * y;
-  return result;
-}

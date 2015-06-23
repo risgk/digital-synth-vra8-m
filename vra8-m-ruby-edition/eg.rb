@@ -1,4 +1,5 @@
 require_relative 'common'
+require_relative 'mul-q'
 require_relative 'eg-table'
 
 class EG

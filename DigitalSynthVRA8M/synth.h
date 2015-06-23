@@ -12,7 +12,7 @@ class Synth {
 
 public:
   INLINE static void initialize() {
-    Voice::initialize();
+    Voice<0>::initialize();
     m_note_number = NOTE_NUMBER_MIN;
     m_system_exclusive = false;
     m_system_data_remaining = 0;
@@ -100,7 +100,7 @@ public:
   }
 
   INLINE static int8_t clock() {
-    return Voice::clock();
+    return Voice<0>::clock();
   }
 
 private:
@@ -122,13 +122,13 @@ private:
 
   INLINE static void note_on(uint8_t note_number) {
     m_note_number = note_number;
-    Voice::note_on(m_note_number);
+    Voice<0>::note_on(m_note_number);
   }
 
   INLINE static void note_off(uint8_t note_number) {
     if (m_note_number == note_number) {
       m_note_number = 0xFF;
-      Voice::note_off();
+      Voice<0>::note_off();
     }
   }
 
@@ -136,10 +136,10 @@ private:
     switch (controller_number) {
     case ALL_NOTES_OFF:
       m_note_number = 0xFF;
-      Voice::note_off();
+      Voice<0>::note_off();
       break;
     default:
-      Voice::control_change(controller_number, controller_value);
+      Voice<0>::control_change(controller_number, controller_value);
       break;
     }
   }

@@ -50,11 +50,11 @@ $file.printf("$vco_tune_rate_table = [\n  ")
 end
 $file.printf("]\n\n")
 
-def generate_vco_wave_table(max)
-  $file.printf("$vco_wave_table_%d = [\n  ", max)
+def generate_vco_wave_table(last)
+  $file.printf("$vco_wave_table_%d = [\n  ", last)
   (0..VCO_WAVE_TABLE_SAMPLES).each do |n|
     level = 0
-    (1..max).each do |k|
+    (1..last).each do |k|
       level += yield(n, k)
     end
     level = (level * LEVEL_ONE_RESOLUTION).round.to_i
@@ -71,13 +71,13 @@ def generate_vco_wave_table(max)
   $file.printf("]\n\n")
 end
 
-def generate_vco_wave_table_sawtooth(max)
-  generate_vco_wave_table(max) do |n, k|
+def generate_vco_wave_table_sawtooth(last)
+  generate_vco_wave_table(last) do |n, k|
     (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) / VCO_WAVE_TABLE_SAMPLES) * k) / k
   end
 end
 
-$vco_overtones_restriction_table = []
+$vco_harmonics_restriction_table = []
 
 (0..DATA_BYTE_MAX).each do |note_number|
   if (note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)
@@ -85,22 +85,22 @@ $vco_overtones_restriction_table = []
   else
     freq = freq_from_note_number(note_number + 1)
   end
-  $vco_overtones_restriction_table << freq
+  $vco_harmonics_restriction_table << freq
 end
 
-def max_overtone(freq)
-  max = (freq != 0) ? ((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) / ((freq / 2) * SAMPLING_RATE)) : 0
-  max = 127 if max > 127
-  max
+def last_harmonic(freq)
+  last = (freq != 0) ? ((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) / ((freq / 2) * SAMPLING_RATE)) : 0
+  last = 127 if last > 127
+  last
 end
 
-$vco_overtones_restriction_table.map { |freq| max_overtone(freq) }.uniq.sort.reverse.each do |i|
+$vco_harmonics_restriction_table.map { |freq| last_harmonic(freq) }.uniq.sort.reverse.each do |i|
   generate_vco_wave_table_sawtooth(i) if i != -1
 end
 
 $file.printf("$vco_wave_tables = [\n  ")
-$vco_overtones_restriction_table.each_with_index do |freq, idx|
-  $file.printf("$vco_wave_table_%-3d,", max_overtone(freq))
+$vco_harmonics_restriction_table.each_with_index do |freq, idx|
+  $file.printf("$vco_wave_table_%-3d,", last_harmonic(freq))
   if idx == DATA_BYTE_MAX
     $file.printf("\n")
   elsif idx % 4 == 3

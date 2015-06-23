@@ -24,7 +24,6 @@ class WAVFileOut
       @data_size += 1
     else
       close
-      @closed = true
     end
   end
 
@@ -37,6 +36,7 @@ class WAVFileOut
       @file.write([file_size - 36].pack("V"))
       @file.close
       puts "End Of Recording"
+      @closed = true
     end
   end
 end

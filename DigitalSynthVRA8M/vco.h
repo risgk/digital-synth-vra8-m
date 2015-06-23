@@ -1,8 +1,10 @@
 #pragma once
 
 #include "common.h"
+#include "mul-q.h"
 #include "vco-table.h"
 
+template <uint8_t T>
 class VCO {
    static const uint8_t* m_wave_table;
    static uint16_t       m_phase;
@@ -81,9 +83,9 @@ private:
   }
 };
 
-const uint8_t* VCO::m_wave_table;
-uint16_t       VCO::m_phase;
-uint8_t        VCO::m_pulse_saw_mix;
-uint16_t       VCO::m_pulse_width;
-uint16_t       VCO::m_saw_shift;
-uint8_t        VCO::m_color_lfo_amt;
+template <uint8_t T> const uint8_t* VCO<T>::m_wave_table;
+template <uint8_t T> uint16_t       VCO<T>::m_phase;
+template <uint8_t T> uint8_t        VCO<T>::m_pulse_saw_mix;
+template <uint8_t T> uint16_t       VCO<T>::m_pulse_width;
+template <uint8_t T> uint16_t       VCO<T>::m_saw_shift;
+template <uint8_t T> uint8_t        VCO<T>::m_color_lfo_amt;

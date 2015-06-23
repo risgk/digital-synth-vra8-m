@@ -1,8 +1,10 @@
 #pragma once
 
 #include "common.h"
+#include "mul-q.h"
 #include "eg-table.h"
 
+template <uint8_t T>
 class EG {
   static const uint8_t  STATE_ATTACK        = 0;
   static const uint8_t  STATE_DECAY_SUSTAIN = 1;
@@ -93,9 +95,9 @@ public:
   }
 };
 
-uint8_t  EG::m_state;
-uint16_t EG::m_decay_release_count;
-uint16_t EG::m_level;
-uint16_t EG::m_attack_rate;
-uint16_t EG::m_decay_release_update_interval;
-uint16_t EG::m_sustain_level;
+template <uint8_t T> uint8_t  EG<T>::m_state;
+template <uint8_t T> uint16_t EG<T>::m_decay_release_count;
+template <uint8_t T> uint16_t EG<T>::m_level;
+template <uint8_t T> uint16_t EG<T>::m_attack_rate;
+template <uint8_t T> uint16_t EG<T>::m_decay_release_update_interval;
+template <uint8_t T> uint16_t EG<T>::m_sustain_level;

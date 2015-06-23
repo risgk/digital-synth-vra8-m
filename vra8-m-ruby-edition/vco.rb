@@ -1,4 +1,5 @@
 require_relative 'common'
+require_relative 'mul-q'
 require_relative 'vco-table'
 
 class VCO

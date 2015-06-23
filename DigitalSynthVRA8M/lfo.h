@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+template <uint8_t T>
 class LFO {
   static uint16_t m_phase;
   static uint8_t  m_rate;
@@ -27,5 +28,5 @@ public:
   }
 };
 
-uint16_t LFO::m_phase;
-uint8_t  LFO::m_rate;
+template <uint8_t T> uint16_t LFO<T>::m_phase;
+template <uint8_t T> uint8_t  LFO<T>::m_rate;
