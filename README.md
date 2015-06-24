@@ -7,7 +7,7 @@
 
 - Monophonic Synthesizer (MIDI Sound Module) for Arduino Uno
 
-## VRA8-M Features
+## Features
 
 - Sketch for Arduino Uno
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
@@ -17,9 +17,17 @@
     - "DigitalSynthVRA8M.ino" for Arduino Uno
     - "MakeSampleWavFile.cc" for Debugging on PC, that makes a sample WAV file
 
-## VRA8-M Ruby Edition Features
+## VRA8-M CTRL
 
-- Simulator of VRA8-M, Software Synthesizer for Windows
+- Parameter Editor (MIDI Controller) for VRA8-M, Web App
+- We recommend Google Chrome, which implements Web MIDI API
+- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
+
+## Other Softwares
+
+### VRA8-M Ruby Edition
+
+- Software Synthesizer for Windows, Faithful Simulator of VRA8-M
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
 - Requiring Ruby (JRuby), UniMIDI, and win32-sound
     - `jgem install unimidi`
@@ -30,11 +38,10 @@
 - Known Issues
     - VRA8-M Ruby Edition spends the full power of 2 CPU cores...
 
-## VRA8-M CTRL Features
+### VRA8-M HTML Edition
 
-- Parameter Editor (MIDI Controller) for VRA8-M, HTML5 App
+- Software Synthesizer Web App, Simulator of VRA8-M
 - We recommend Google Chrome, which implements Web MIDI API
-- Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
 
 ## Controllers
 
