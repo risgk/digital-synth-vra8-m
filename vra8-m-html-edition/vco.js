@@ -1,143 +1,147 @@
 var VCO = function() {
-  const CYCLE_RESOLUTION  = 0x100000000;
-  const MAX_OVERTONE      = 127;
-  const SAMPLES_PER_CYCLE = 256;
+  const AMPLITUDE = 96;
 
-  that = this;
-
-  var generateWaveTable = function(waveTables, amp, f) {
-    for (var m = 0; m <= Math.floor((MAX_OVERTONE + 1) / 2) - 1; m++) {
-      var waveTable = new Float64Array(SAMPLES_PER_CYCLE);
-      for (var n = 0; n < SAMPLES_PER_CYCLE; n++) {
-        var level = 0;
-        for (var k = 1; k <= (m * 2) + 1; k++) {
-          level += amp * f(n, k);
-        }
-        waveTable[n] = level;
-      }
-      waveTables[m] = waveTable;
+  var freq_from_note_number = function(note_number) {
+    var cent = (note_number * 100.0) - 6900.0;
+    var hz = 440.0 * Math.pow(2.0, (cent / 1200.0));
+    var freq = Math.floor(hz * VCO_PHASE_RESOLUTION / SAMPLING_RATE * 2.0);
+    if ((freq % 2) == 1) {
+      freq = freq + 1;
     }
+    return freq;
   };
 
-  this.waveTablesSawtooth = [];
-  generateWaveTable(this.waveTablesSawtooth, 1, function(n, k) {
-    return (2 / Math.PI) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
-  });
+  this.vco_freq_table = [];
+  for (var note_number = 0; note_number <= DATA_BYTE_MAX; note_number++) {
+    var freq;
+    if ((note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)) {
+      freq = 0;
+    } else {
+      freq = freq_from_note_number(note_number);
+    };
+    this.vco_freq_table[note_number] = freq;
+  };
 
-  this.waveTablesSquare = [];
-  generateWaveTable(this.waveTablesSquare, 1 / Math.sqrt(3), function(n, k) {
-    if (k % 2 == 1) {
-      return (4 / Math.PI) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / k;
+  this.vco_tune_rate_table = [];
+  for (var i = 0; i <= Math.pow(2, VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1; i++) {
+    this.vco_tune_rate_table[i] =
+      Math.round(Math.pow(2.0, (i / (12.0 * Math.pow(2, VCO_TUNE_RATE_TABLE_STEPS_BITS)))) *
+                 VCO_TUNE_RATE_DENOMINATOR / 2.0)
+  };
+
+  var generate_vco_wave_table = function(wave_tables, note_number, last, callback) {
+    var wave_table = new Int8Array(VCO_WAVE_TABLE_SAMPLES);
+    for (var n = 0; n <= VCO_WAVE_TABLE_SAMPLES; n++) {
+      var level = 0;
+      for (var k = 1; k <= last; k++) {
+        level += callback(n, k);
+      };
+      level = Math.round(level * AMPLITUDE);
+      wave_table[n] = level;
     }
-    return 0;
-  });
+    wave_tables[note_number] = wave_table;
+  };
 
-  this.waveTablesTriangle = [];
-  generateWaveTable(this.waveTablesTriangle, 1, function(n, k) {
-    if (k % 4 == 1) {
-      return (8 / Math.pow(Math.PI, 2)) * Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
-    } else if (k % 4 == 3) {
-      return (8 / Math.pow(Math.PI, 2)) * -Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE) * k) / Math.pow(k, 2);
+  var generate_vco_wave_table_sawtooth = function(wave_tables, note_number, last) {
+    generate_vco_wave_table(wave_tables, note_number, last, function(n, k) {
+      return (2.0 / Math.PI) * Math.sin((2.0 * Math.PI) *
+                                        ((n + 0.5) / VCO_WAVE_TABLE_SAMPLES) * k) / k;
+    });
+  };
+
+  var vco_harmonics_restriction_table = [];
+  for (var note_number = 0; note_number <= DATA_BYTE_MAX; note_number++) {
+    var freq;
+    if ((note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)) {
+      freq = 0;
+    } else {
+      freq = freq_from_note_number(note_number + 1);
+    };
+    vco_harmonics_restriction_table[note_number] = freq;
+  };
+
+  var last_harmonic = function(freq) {
+    var last = (freq != 0) ? Math.round((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) /
+                                        (Math.round(freq / 2) * SAMPLING_RATE)) : 0;
+    if (last > 127) {
+      last = 127;
     }
-    return 0;
-  });
+    return last;
+  };
 
-  this.waveTablesSine = [];
-  generateWaveTable(this.waveTablesSine, Math.sqrt(2) / Math.sqrt(3), function(n, k) {
-    if (k == 1) {
-      return Math.sin((2 * Math.PI) * ((n + 0.5) / SAMPLES_PER_CYCLE));
-    }
-    return 0;
-  });
+  this.vco_wave_tables = [];
+  for (var note_number = 0; note_number <= DATA_BYTE_MAX; note_number++) {
+    var freq = vco_harmonics_restriction_table[note_number];
+    var last = last_harmonic(freq);
+    generate_vco_wave_table_sawtooth(this.vco_wave_tables, note_number, last);
+  };
 
-  this.freqTableC4toB4 = [];
-  var generatefreqTable = function() {
-    for (var i = 0; i <= 11; i++) {
-      n = i + 60;
-      cent = (n * 100) - 6900;
-      hz = 440 * Math.pow(2, cent / 1200);
-      that.freqTableC4toB4[i] = hz * CYCLE_RESOLUTION / SAMPLING_RATE;
-    }
-  }();
-
-  this.resetPhase = function() {
+  this.initialize = function() {
+    this.wave_table = null;
     this.phase = 0;
+    this.set_pulse_saw_mix(0);
+    this.set_pulse_width(0);
+    this.set_saw_shift(0);
+    this.set_color_lfo_amt(0);
   };
 
-  this.setWaveform = function(waveform) {
-    switch (waveform) {
-    case SAWTOOTH:
-      this.waveTables = this.waveTablesSawtooth;
-      break;
-    case SQUARE:
-      this.waveTables = this.waveTablesSquare;
-      break;
-    case TRIANGLE:
-      this.waveTables = this.waveTablesTriangle;
-      break;
-    case SINE:
-      this.waveTables = this.waveTablesSine;
-      break;
+  this.set_pulse_saw_mix = function(controller_value) {
+    this.pulse_saw_mix = controller_value;
+  };
+
+  this.set_pulse_width = function(controller_value) {
+    this.pulse_width = (controller_value + 128) << 8;
+  };
+
+  this.set_saw_shift = function(controller_value) {
+    this.saw_shift = controller_value << 8;
+  };
+
+  this.set_color_lfo_amt = function(controller_value) {
+    this.color_lfo_amt = controller_value << 1;
+  };
+
+  this.clock = function(pitch_control, phase_control) {
+    coarse_pitch = high_byte(pitch_control);
+    fine_pitch = low_byte(pitch_control);
+
+    this.wave_table = this.vco_wave_tables[coarse_pitch];
+    freq = mul_q16_q16(this.vco_freq_table[coarse_pitch],
+                       this.vco_tune_rate_table[fine_pitch >>
+                                                (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)]);
+    this.phase += freq;
+    this.phase &= (VCO_PHASE_RESOLUTION - 1);
+
+    saw_down      = +this.get_saw_wave_level(this.phase);
+    saw_up        = -this.get_saw_wave_level(
+                       (this.phase + this.pulse_width - (phase_control * this.color_lfo_amt)) & 0xFFFF);
+    saw_down_copy = +this.get_saw_wave_level(
+                       (this.phase + this.saw_shift + (phase_control * this.color_lfo_amt)) & 0xFFFF);
+    mixed = saw_down      * 127 +
+            saw_up        * (127 - this.pulse_saw_mix) +
+            saw_down_copy * high_byte(this.pulse_saw_mix * 192);
+
+    return mixed >> 1;
+  };
+
+  // private
+  this.get_saw_wave_level = function(phase) {
+    curr_index = high_byte(phase);
+    curr_data = this.wave_table[curr_index];
+    next_data = this.wave_table[curr_index + 1];
+
+    curr_weight = 0x100 - low_byte(phase);
+    next_weight = 0x100 - curr_weight;
+
+    // lerp
+    if (next_weight == 0) {
+      level = curr_data;
+    } else {
+      level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight));
     }
-  };
-
-  this.setCoarseTune = function(coarseTune) {
-    this.courseTune = coarseTune;
-    this.updateFreq();
-  };
-
-  this.coarseTune = function() {
-    return this.courseTune;
-  };
-
-  this.setFineTune = function(fineTune) {
-    this.fineTune = fineTune;
-    this.updateFreq();
-  };
-
-  this.noteOn = function(noteNumber) {
-    this.noteNumber = noteNumber;
-    this.updateFreq();
-  };
-
-  this.clock = function() {
-    this.phase += this.freq;
-    if (this.phase >= CYCLE_RESOLUTION) {
-      this.phase -= CYCLE_RESOLUTION;
-    }
-    var currIndex = Math.floor(this.phase / (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE));
-    var nextIndex = currIndex + 1;
-    if (nextIndex >= SAMPLES_PER_CYCLE) {
-      nextIndex -= SAMPLES_PER_CYCLE;
-    }
-    var waveTable = this.waveTables[Math.floor((this.overtone + 1) / 2) - 1];
-    var currData = waveTable[currIndex];
-    var nextData = waveTable[nextIndex];
-
-    var level;
-    var nextWeight = this.phase % (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE);
-    var currWeight = (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE) - nextWeight;
-    level = ((currData * currWeight) + (nextData * nextWeight)) / (CYCLE_RESOLUTION / SAMPLES_PER_CYCLE);
 
     return level;
   };
 
-  this.updateFreq = function() {
-    var noteNumber = this.noteNumber + this.courseTune - 64;
-    var base = Math.floor(this.freqTableC4toB4[noteNumber % 12] *
-                          Math.pow(2, (this.fineTune - 64) / 768) / 32) * 32;
-    this.freq = base * Math.pow(2, Math.floor(noteNumber / 12) - 5);
-    this.overtone = Math.floor((MAX_FREQ * CYCLE_RESOLUTION) / (this.freq * SAMPLING_RATE));
-    if (this.overtone > MAX_OVERTONE) {
-      this.overtone = MAX_OVERTONE;
-    }
-  };
-
-  this.courseTune  = 64;
-  this.fineTune    = 64;
-  this.noteNumber  = 60;
-  this.phase       = 0;
-  this.freq        = 0;
-  this.overtone    = 1;
-  this.waveTables  = this.waveTablesSawtooth;
+  this.initialize();
 };

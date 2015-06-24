@@ -1,3 +1,4 @@
+// TODO
 var EG = function() {
   const STATE_ATTACK        = 0;
   const STATE_DECAY_SUSTAIN = 1;
@@ -20,16 +21,12 @@ var EG = function() {
     this.releaseTime = releaseTime;
   };
 
-  this.noteOn = function() {
+  this.note_on = function() {
     this.state = STATE_ATTACK;
   };
 
-  this.noteOff = function() {
+  this.note_off = function() {
     this.state = STATE_RELEASE;
-  };
-
-  this.soundOff = function() {
-    this.state = STATE_IDLE;
   };
 
   this.clock = function() {

@@ -1,17 +1,21 @@
-const MAX_FREQ        = 20000;
-const NOTE_NUMBER_MIN = 0;
-const NOTE_NUMBER_MAX = 127;
+"use strict";
 
-const SAWTOOTH   = 0;
-const SQUARE     = 1;
-const TRIANGLE   = 2;
-const SINE       = 3;
-const PULSE_25   = 4;
-const PULSE_12   = 5;
-const PSEUDO_TRI = 6;
+const MIDI_CH                = 0;
+const SERIAL_SPEED           = 38400;
+const ORIGINAL_SAMPLING_RATE = 15625;
+const FREQUENCY_MAX          = 7812;
+const BIT_DEPTH              = 8;
+const NOTE_NUMBER_MIN        = 36;
+const NOTE_NUMBER_MAX        = 96;
 
-const ON  = 127;
-const OFF = 0;
+const VCO_TUNE_RATE_TABLE_STEPS_BITS    = 6;
+const VCO_TUNE_RATE_DENOMINATOR         = 65536;
+const VCO_PHASE_RESOLUTION              = 65536;
+const VCO_WAVE_TABLE_SAMPLES            = 256;
+const VCF_TABLE_ONE                     = 16384;
+const VCF_TABLE_FRACTION_BITS           = 14;
+const EG_LEVEL_MAX                      = (127 << 1) << 8;
+const EG_DECAY_RELEASE_RATE_DENOMINATOR = 256;
 
 const DATA_BYTE_MAX         = 0x7F;
 const STATUS_BYTE_INVALID   = 0x7F;
@@ -30,27 +34,29 @@ const EOX                   = 0xF7;
 const REAL_TIME_MESSAGE_MIN = 0xF8;
 const ACTIVE_SENSING        = 0xFE;
 
-const VCO_1_WAVEFORM        = 14;
-const VCO_1_COARSE_TUNE     = 15;
-const VCO_2_WAVEFORM        = 16;
-const VCO_2_COARSE_TUNE     = 17;
-const VCO_2_FINE_TUNE       = 18;
-const VCO_3_WAVEFORM        = 19;
-const VCO_3_COARSE_TUNE     = 20;
-const VCO_3_FINE_TUNE       = 21;
-const VCF_CUTOFF_FREQUENCY  = 22;
-const VCF_RESONANCE         = 23;
-const VCF_ENVELOPE_AMOUNT   = 24;
-const AEG_ATTACK_TIME       = 25;
-const AEG_DECAY_TIME        = 26;
-const AEG_SUSTAIN_LEVEL     = 27;
-const FEG_ATTACK_TIME       = 28;
-const FEG_DECAY_TIME        = 29;
-const FEG_SUSTAIN_LEVEL     = 30;
-const MIXER_VCO_1_LEVEL     = 80;
-const MIXER_VCO_2_LEVEL     = 81;
-const MIXER_VCO_3_LEVEL     = 82;
-const VCF_KEY_FOLLOW        = 83;
-const AEG_RELEASE_TIME      = 85;
-const FEG_RELEASE_TIME      = 86;
-const ALL_NOTES_OFF         = 123;
+const VCO_PULSE_SAW_MIX = 14;
+const VCO_PULSE_WIDTH   = 15;
+const VCO_SAW_SHIFT     = 16;
+const VCF_CUTOFF        = 17;
+const VCF_RESONANCE     = 18;
+const VCF_EG_AMT        = 19;
+const VCA_GAIN          = 20;
+const EG_ATTACK         = 21;
+const EG_DECAY_RELEASE  = 22;
+const EG_SUSTAIN        = 23;
+const LFO_RATE          = 24;
+const LFO_VCO_COLOR_AMT = 25;
+const PORTAMENTO        = 26;
+const ALL_NOTES_OFF     = 123;
+
+var low_byte = function(x) {
+  return x & 0xFF;
+};
+
+var high_byte = function(x) {
+  return x >> 8;
+};
+
+var high_sbyte = function(x) {
+  return x >> 8;
+};

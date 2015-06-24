@@ -23,10 +23,9 @@ td.keyh {
 }
 </style>
 <script src="common.js" charset="utf-8"></script>
+<script src="mul-q.js" charset="utf-8"></script>
 <script>
-const MIDI_CH        = 0;
 const CONTROLLERS_FIRST = 14;
-const VCA_GAIN          = 20;
 const CONTROLLERS_LAST  = 26;
 var volume    = 0;
 var transpose = 0;
@@ -201,7 +200,7 @@ function onAudioProcess(event) {
   var bufferL = event.outputBuffer.getChannelData(0);
   var bufferR = event.outputBuffer.getChannelData(1);
   for (var i = 0; i < bufferSize; i++) {
-    bufferL[i] = bufferR[i] = synth.clock() * (Math.pow(volume, 2) / 16129);
+    bufferL[i] = bufferR[i] = (synth.clock() / 32768) * (Math.pow(volume, 2) / 16129);
   }
 }
 </script>
