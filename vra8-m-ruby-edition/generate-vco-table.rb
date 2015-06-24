@@ -4,8 +4,6 @@ AMPLITUDE = 96
 
 $file = File.open("vco-table.rb", "w")
 
-$vco_freq_table = []
-
 def freq_from_note_number(note_number)
   cent = (note_number * 100.0) - 6900.0
   hz = 440.0 * (2.0 ** (cent / 1200.0))
@@ -21,7 +19,6 @@ $file.printf("$vco_freq_table = [\n  ")
   else
     freq = freq_from_note_number(note_number)
   end
-  $vco_freq_table << freq
 
   $file.printf("%5d,", freq)
   if note_number == DATA_BYTE_MAX
