@@ -60,6 +60,7 @@ class VCO
     curr_weight = 0x100 - low_byte(phase)
     next_weight = 0x100 - curr_weight
 
+    # lerp
     if (next_weight == 0)
       level = curr_data
     else

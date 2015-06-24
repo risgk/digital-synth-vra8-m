@@ -72,6 +72,7 @@ private:
     uint8_t curr_weight = -low_byte(phase);
     uint8_t next_weight = -curr_weight;
 
+    // lerp
     int8_t level;
     if (next_weight == 0) {
       level = curr_data;
