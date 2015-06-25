@@ -19,7 +19,6 @@ var Voice = function() {
   };
 
   this.control_change = function(controller_number, controller_value) {
-/*
     switch (controller_number) {
     case VCO_PULSE_SAW_MIX:
       this.vco.set_pulse_saw_mix(controller_value);
@@ -30,6 +29,7 @@ var Voice = function() {
     case VCO_SAW_SHIFT:
       this.vco.set_saw_shift(controller_value);
       break;
+/*
     case VCF_CUTOFF:
       this.vcf.set_cutoff(controller_value);
       break;
@@ -60,11 +60,11 @@ var Voice = function() {
     case PORTAMENTO:
       this.srl.set_slew_time(controller_value);
       break;
+*/
     case ALL_NOTES_OFF:
       this.eg.note_off();
       break;
     }
-*/
   };
 
   this.clock = function() {
