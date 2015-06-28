@@ -4,7 +4,7 @@
 
 template <uint8_t T>
 class SlewRateLimiter {
-  static const uint8_t UPDATE_INTERVAL = 5;
+  static const uint8_t UPDATE_INTERVAL = 25;
 
   static uint8_t  m_count;
   static uint16_t m_level;
@@ -18,7 +18,11 @@ public:
   }
 
   INLINE static void set_slew_time(uint8_t controller_value) {
-    m_slew_rate = 0x8000 >> (controller_value >> 3);
+    if (controller_value < 4) {
+      m_slew_rate = 0x8000;
+    } else {
+      m_slew_rate = 132 - controller_value;
+    }
   }
 
   INLINE static uint16_t clock(uint16_t input) {

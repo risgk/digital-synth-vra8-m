@@ -1,7 +1,7 @@
 require_relative 'common'
 
 class SlewRateLimiter
-  UPDATE_INTERVAL = 5
+  UPDATE_INTERVAL = 25
 
   def initialize
     @count = 0
@@ -10,7 +10,11 @@ class SlewRateLimiter
   end
 
   def set_slew_time(controller_value)
-    @slew_rate = 0x8000 >> (controller_value >> 3)
+    if (controller_value < 4)
+      @slew_rate = 0x8000
+    else
+      @slew_rate = 132 - controller_value
+    end
   end
 
   def clock(input)
