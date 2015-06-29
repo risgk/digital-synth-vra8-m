@@ -1,7 +1,7 @@
 require_relative 'common'
 
 class SlewRateLimiter
-  UPDATE_INTERVAL = 25
+  UPDATE_INTERVAL = 10
 
   def initialize
     @count = 0
@@ -13,7 +13,7 @@ class SlewRateLimiter
     if (controller_value < 4)
       @slew_rate = 0x8000
     else
-      @slew_rate = 132 - controller_value
+      @slew_rate = 33 - (controller_value >> 2)
     end
   end
 

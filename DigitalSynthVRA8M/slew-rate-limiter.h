@@ -4,7 +4,7 @@
 
 template <uint8_t T>
 class SlewRateLimiter {
-  static const uint8_t UPDATE_INTERVAL = 25;
+  static const uint8_t UPDATE_INTERVAL = 10;
 
   static uint8_t  m_count;
   static uint16_t m_level;
@@ -21,7 +21,7 @@ public:
     if (controller_value < 4) {
       m_slew_rate = 0x8000;
     } else {
-      m_slew_rate = 132 - controller_value;
+      m_slew_rate = 33 - (controller_value >> 2);
     }
   }
 

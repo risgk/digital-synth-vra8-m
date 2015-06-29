@@ -44,7 +44,7 @@ control_change(EG_DECAY_RELEASE,  96 )
 control_change(EG_SUSTAIN,        127)
 control_change(LFO_RATE,          32 )
 control_change(LFO_VCO_COLOR_AMT, 32 )
-control_change(PORTAMENTO,        96 )
+control_change(PORTAMENTO,        64 )
 
 play_cegbdfac(2)
 play_cegbdfac(3)

@@ -32,7 +32,7 @@ public:
     control_change(EG_SUSTAIN,        127);
     control_change(LFO_RATE,          32 );
     control_change(LFO_VCO_COLOR_AMT, 32 );
-    control_change(PORTAMENTO,        96 );
+    control_change(PORTAMENTO,        64 );
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
