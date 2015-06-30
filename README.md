@@ -23,9 +23,7 @@
 - We recommend Google Chrome, which implements Web MIDI API
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
 
-## Other Softwares
-
-### VRA8-M Ruby Edition
+## VRA8-M Ruby Edition
 
 - Software Synthesizer for Windows, Faithful Simulator of VRA8-M
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
@@ -37,11 +35,6 @@
     - `jruby main.rb sample-midi-stream.bin` makes a sample WAV file
 - Known Issues
     - VRA8-M Ruby Edition spends the full power of 2 CPU cores...
-
-### VRA8-M HTML Edition
-
-- Software Synthesizer Web App, Simulator of VRA8-M
-- We recommend Google Chrome, which implements Web MIDI API
 
 ## Controllers
 
