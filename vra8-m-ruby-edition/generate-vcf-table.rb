@@ -2,7 +2,7 @@ require_relative 'common'
 
 $file = File.open("vcf-table.rb", "w")
 
-OCTAVES = 6
+OCTAVES = 128.0 / 24.0
 
 def generate_vcf_lpf_table(name, q)
   $file.printf("$vcf_lpf_table_%s = [\n  ", name)

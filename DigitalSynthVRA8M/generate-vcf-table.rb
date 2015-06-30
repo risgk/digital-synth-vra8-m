@@ -4,7 +4,7 @@ $file = File.open("vcf-table.h", "w")
 
 $file.printf("#pragma once\n\n")
 
-OCTAVES = 6
+OCTAVES = 128.0 / 24.0
 
 def generate_vcf_lpf_table(name, q)
   $file.printf("const uint8_t g_vcf_lpf_table_%s[] = {\n  ", name)
