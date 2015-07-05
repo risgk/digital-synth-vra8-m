@@ -57,7 +57,7 @@ public:
 
     int16_t mixed = saw_down      * 127 +
                     saw_up        * static_cast<uint8_t>(127 - m_pulse_saw_mix) +
-                    saw_down_copy * high_byte(m_pulse_saw_mix * 192);
+                    saw_down_copy * m_pulse_saw_mix;
 
     return mixed >> 1;
   }

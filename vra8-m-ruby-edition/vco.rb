@@ -48,7 +48,7 @@ class VCO
                        (1 << VCO_PHASE_RESOLUTION_BITS))
     mixed = saw_down      * 127 +
             saw_up        * (127 - @pulse_saw_mix) +
-            saw_down_copy * high_byte(@pulse_saw_mix * 192)
+            saw_down_copy * @pulse_saw_mix
 
     return mixed >> 1
   end
