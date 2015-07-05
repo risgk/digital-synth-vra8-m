@@ -9,6 +9,7 @@ NOTE_NUMBER_MAX = 96
 VCO_TUNE_RATE_TABLE_STEPS_BITS         = 6
 VCO_TUNE_RATE_DENOMINATOR_BITS         = 16
 VCO_PHASE_RESOLUTION_BITS              = 16
+VCO_WAVE_TABLE_AMPLITUDE               = 96
 VCO_WAVE_TABLE_SAMPLES_BITS            = 8
 VCF_TABLE_FRACTION_BITS                = 14
 EG_LEVEL_MAX                           = (127 << 1) << 8

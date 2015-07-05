@@ -1,7 +1,5 @@
 require_relative 'common'
 
-AMPLITUDE = 96
-
 $file = File.open("vco-table.h", "w")
 
 $file.printf("#pragma once\n\n")
@@ -56,7 +54,7 @@ def generate_vco_wave_table(last)
     (1..last).each do |k|
       level += yield(n, k)
     end
-    level = (level * AMPLITUDE).round.to_i
+    level = (level * VCO_WAVE_TABLE_AMPLITUDE).round.to_i
 
     $file.printf("%+4d,", level)
     if n == (1 << VCO_WAVE_TABLE_SAMPLES_BITS)
