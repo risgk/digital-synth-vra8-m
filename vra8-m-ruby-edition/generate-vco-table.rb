@@ -7,7 +7,7 @@ $file = File.open("vco-table.rb", "w")
 def freq_from_note_number(note_number)
   cent = (note_number * 100.0) - 6900.0
   hz = 440.0 * (2.0 ** (cent / 1200.0))
-  freq = (hz * VCO_PHASE_RESOLUTION / SAMPLING_RATE * 2.0).floor
+  freq = (hz * (1 << VCO_PHASE_RESOLUTION_BITS) / SAMPLING_RATE * 2.0).floor
   freq = freq + 1 if freq.odd?
   freq
 end
@@ -32,12 +32,12 @@ end
 $file.printf("]\n\n")
 
 $file.printf("$vco_tune_rate_table = [\n  ")
-(0..(2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1).each do |i|
-  tune_rate = ((2.0 ** (i / (12.0 * (2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS)))) *
-               VCO_TUNE_RATE_DENOMINATOR / 2.0).round
+(0..(1 << VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1).each do |i|
+  tune_rate = ((2.0 ** (i / (12.0 * (1 << VCO_TUNE_RATE_TABLE_STEPS_BITS)))) *
+               (1 << VCO_TUNE_RATE_DENOMINATOR_BITS) / 2.0).round
 
   $file.printf("%5d,", tune_rate)
-  if i == (2 ** VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1
+  if i == (1 << VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1
     $file.printf("\n")
   elsif i % 8 == 7
     $file.printf("\n  ")
@@ -86,7 +86,7 @@ $vco_harmonics_restriction_table = []
 end
 
 def last_harmonic(freq)
-  last = (freq != 0) ? ((FREQUENCY_MAX * VCO_PHASE_RESOLUTION) / ((freq / 2) * SAMPLING_RATE)) : 0
+  last = (freq != 0) ? ((FREQUENCY_MAX * (1 << VCO_PHASE_RESOLUTION_BITS)) / ((freq / 2) * SAMPLING_RATE)) : 0
   last = 127 if last > 127
   last
 end

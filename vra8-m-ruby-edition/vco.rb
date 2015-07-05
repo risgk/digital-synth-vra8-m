@@ -37,13 +37,15 @@ class VCO
                        $vco_tune_rate_table[fine_pitch >>
                                             (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)])
     @phase += freq
-    @phase &= (VCO_PHASE_RESOLUTION - 1)
+    @phase %= (1 << VCO_PHASE_RESOLUTION_BITS)
 
     saw_down      = +get_saw_wave_level(@phase)
     saw_up        = -get_saw_wave_level(
-                       (@phase + @pulse_width - (phase_control * @color_lfo_amt)) & 0xFFFF)
+                       (@phase + @pulse_width - (phase_control * @color_lfo_amt)) %
+                       (1 << VCO_PHASE_RESOLUTION_BITS))
     saw_down_copy = +get_saw_wave_level(
-                       (@phase + @saw_shift + (phase_control * @color_lfo_amt)) & 0xFFFF)
+                       (@phase + @saw_shift + (phase_control * @color_lfo_amt)) %
+                       (1 << VCO_PHASE_RESOLUTION_BITS))
     mixed = saw_down      * 127 +
             saw_up        * (127 - @pulse_saw_mix) +
             saw_down_copy * high_byte(@pulse_saw_mix * 192)
