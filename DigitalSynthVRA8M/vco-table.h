@@ -1,18 +1,13 @@
 #pragma once
 
 const uint16_t g_vco_freq_table[] = {
-      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      0,
     548,   582,   616,   652,   692,   732,   776,   822,   870,   922,   978,  1036,
    1098,  1162,  1232,  1304,  1382,  1464,  1552,  1644,  1742,  1846,  1956,  2072,
    2194,  2326,  2464,  2610,  2766,  2930,  3104,  3288,  3484,  3690,  3910,  4142,
    4390,  4650,  4926,  5220,  5530,  5860,  6208,  6576,  6968,  7382,  7820,  8286,
    8778,  9300,  9854, 10440, 11060, 11718, 12414, 13154, 13936, 14764, 15642, 16572,
-  17558,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      0,     0,     0,     0,     0,     0,     0,     0,
-};
+  17558, };
 
 const uint16_t g_vco_tune_rate_table[] = {
   32768, 32798, 32827, 32857, 32887, 32916, 32946, 32976,
@@ -966,37 +961,20 @@ const uint8_t g_vco_wave_table_0[] PROGMEM = {
 };
 
 const uint8_t* g_vco_wave_tables[] = {
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_103, g_vco_wave_table_98 , g_vco_wave_table_92 , g_vco_wave_table_87 ,
-  g_vco_wave_table_82 , g_vco_wave_table_77 , g_vco_wave_table_73 , g_vco_wave_table_69 ,
-  g_vco_wave_table_65 , g_vco_wave_table_61 , g_vco_wave_table_58 , g_vco_wave_table_55 ,
-  g_vco_wave_table_51 , g_vco_wave_table_49 , g_vco_wave_table_46 , g_vco_wave_table_43 ,
-  g_vco_wave_table_41 , g_vco_wave_table_38 , g_vco_wave_table_36 , g_vco_wave_table_34 ,
-  g_vco_wave_table_32 , g_vco_wave_table_30 , g_vco_wave_table_29 , g_vco_wave_table_27 ,
-  g_vco_wave_table_25 , g_vco_wave_table_24 , g_vco_wave_table_23 , g_vco_wave_table_21 ,
-  g_vco_wave_table_20 , g_vco_wave_table_19 , g_vco_wave_table_18 , g_vco_wave_table_17 ,
-  g_vco_wave_table_16 , g_vco_wave_table_15 , g_vco_wave_table_14 , g_vco_wave_table_13 ,
-  g_vco_wave_table_12 , g_vco_wave_table_12 , g_vco_wave_table_11 , g_vco_wave_table_10 ,
-  g_vco_wave_table_10 , g_vco_wave_table_9  , g_vco_wave_table_9  , g_vco_wave_table_8  ,
-  g_vco_wave_table_8  , g_vco_wave_table_7  , g_vco_wave_table_7  , g_vco_wave_table_6  ,
-  g_vco_wave_table_6  , g_vco_wave_table_6  , g_vco_wave_table_5  , g_vco_wave_table_5  ,
-  g_vco_wave_table_5  , g_vco_wave_table_4  , g_vco_wave_table_4  , g_vco_wave_table_4  ,
-  g_vco_wave_table_4  , g_vco_wave_table_3  , g_vco_wave_table_3  , g_vco_wave_table_3  ,
-  g_vco_wave_table_3  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-  g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  , g_vco_wave_table_0  ,
-};
+  g_vco_wave_table_0  , g_vco_wave_table_103, g_vco_wave_table_98 , g_vco_wave_table_92 ,
+  g_vco_wave_table_87 , g_vco_wave_table_82 , g_vco_wave_table_77 , g_vco_wave_table_73 ,
+  g_vco_wave_table_69 , g_vco_wave_table_65 , g_vco_wave_table_61 , g_vco_wave_table_58 ,
+  g_vco_wave_table_55 , g_vco_wave_table_51 , g_vco_wave_table_49 , g_vco_wave_table_46 ,
+  g_vco_wave_table_43 , g_vco_wave_table_41 , g_vco_wave_table_38 , g_vco_wave_table_36 ,
+  g_vco_wave_table_34 , g_vco_wave_table_32 , g_vco_wave_table_30 , g_vco_wave_table_29 ,
+  g_vco_wave_table_27 , g_vco_wave_table_25 , g_vco_wave_table_24 , g_vco_wave_table_23 ,
+  g_vco_wave_table_21 , g_vco_wave_table_20 , g_vco_wave_table_19 , g_vco_wave_table_18 ,
+  g_vco_wave_table_17 , g_vco_wave_table_16 , g_vco_wave_table_15 , g_vco_wave_table_14 ,
+  g_vco_wave_table_13 , g_vco_wave_table_12 , g_vco_wave_table_12 , g_vco_wave_table_11 ,
+  g_vco_wave_table_10 , g_vco_wave_table_10 , g_vco_wave_table_9  , g_vco_wave_table_9  ,
+  g_vco_wave_table_8  , g_vco_wave_table_8  , g_vco_wave_table_7  , g_vco_wave_table_7  ,
+  g_vco_wave_table_6  , g_vco_wave_table_6  , g_vco_wave_table_6  , g_vco_wave_table_5  ,
+  g_vco_wave_table_5  , g_vco_wave_table_5  , g_vco_wave_table_4  , g_vco_wave_table_4  ,
+  g_vco_wave_table_4  , g_vco_wave_table_4  , g_vco_wave_table_3  , g_vco_wave_table_3  ,
+  g_vco_wave_table_3  , g_vco_wave_table_3  , };
 

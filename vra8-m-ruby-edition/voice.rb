@@ -18,8 +18,10 @@ class Voice
   end
 
   def note_on(note_number)
-    @note_number = note_number
-    @eg.note_on
+    if ((note_number >= NOTE_NUMBER_MIN) && (note_number <= NOTE_NUMBER_MAX))
+      @note_number = note_number
+      @eg.note_on
+    end
   end
 
   def note_off

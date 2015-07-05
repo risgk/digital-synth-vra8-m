@@ -43,8 +43,8 @@ public:
     uint8_t coarse_pitch = high_byte(pitch_control);
     uint8_t fine_pitch = low_byte(pitch_control);
 
-    m_wave_table = g_vco_wave_tables[coarse_pitch];
-    uint16_t freq = mul_q16_q16(g_vco_freq_table[coarse_pitch],
+    m_wave_table = g_vco_wave_tables[coarse_pitch - (NOTE_NUMBER_MIN - 1)];
+    uint16_t freq = mul_q16_q16(g_vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                                 g_vco_tune_rate_table[fine_pitch >>
                                                       (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)]);
     m_phase += freq;

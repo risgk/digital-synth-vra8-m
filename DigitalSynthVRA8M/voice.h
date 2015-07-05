@@ -22,8 +22,10 @@ public:
   }
 
   INLINE static void note_on(uint8_t note_number) {
-    m_note_number = note_number;
-    EG<0>::note_on();
+    if ((note_number >= NOTE_NUMBER_MIN) && (note_number <= NOTE_NUMBER_MAX)) {
+      m_note_number = note_number;
+      EG<0>::note_on();
+    }
   }
 
   INLINE static void note_off() {

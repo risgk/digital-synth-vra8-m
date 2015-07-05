@@ -32,8 +32,8 @@ class VCO
     coarse_pitch = high_byte(pitch_control)
     fine_pitch = low_byte(pitch_control)
 
-    @wave_table = $vco_wave_tables[coarse_pitch]
-    freq = mul_q16_q16($vco_freq_table[coarse_pitch],
+    @wave_table = $vco_wave_tables[coarse_pitch - (NOTE_NUMBER_MIN - 1)]
+    freq = mul_q16_q16($vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                        $vco_tune_rate_table[fine_pitch >>
                                             (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)])
     @phase += freq
