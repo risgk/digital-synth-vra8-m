@@ -45,12 +45,13 @@ $file.printf("$vco_tune_rate_table = [\n  ")
 end
 $file.printf("]\n\n")
 
-def generate_vco_wave_table(last)
+def generate_vco_wave_table_sawtooth(last)
   $file.printf("$vco_wave_table_%d = [\n  ", last)
   (0..(1 << VCO_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
     (1..last).each do |k|
-      level += yield(n, k)
+      level += (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
+               (1 << VCO_WAVE_TABLE_SAMPLES_BITS)) * k) / k
     end
     level = (level * VCO_WAVE_TABLE_AMPLITUDE).round.to_i
 
@@ -64,12 +65,6 @@ def generate_vco_wave_table(last)
     end
   end
   $file.printf("]\n\n")
-end
-
-def generate_vco_wave_table_sawtooth(last)
-  generate_vco_wave_table(last) do |n, k|
-    (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) / (1 << VCO_WAVE_TABLE_SAMPLES_BITS)) * k) / k
-  end
 end
 
 $vco_harmonics_restriction_table = []
