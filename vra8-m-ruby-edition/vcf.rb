@@ -44,7 +44,8 @@ class VCF
     b_2_over_a_0_high = @lpf_table[i + 1]
     a_1_over_a_0_high = @lpf_table[i + 2]
     b_2_over_a_0 = b_2_over_a_0_low | (b_2_over_a_0_high << 8)
-    a_2_over_a_0 = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) - VCF_TABLE_ONE
+    a_2_over_a_0 = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) -
+                                         (1 << VCF_TABLE_FRACTION_BITS)
 
     x_0  = audio_input >> 2
     tmp  = mul_q15_q15(x_0 + (@x_1 << 1) + @x_2, b_2_over_a_0)

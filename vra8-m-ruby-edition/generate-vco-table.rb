@@ -49,7 +49,7 @@ $file.printf("]\n\n")
 
 def generate_vco_wave_table(last)
   $file.printf("$vco_wave_table_%d = [\n  ", last)
-  (0..VCO_WAVE_TABLE_SAMPLES).each do |n|
+  (0..(1 << VCO_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
     (1..last).each do |k|
       level += yield(n, k)
@@ -57,7 +57,7 @@ def generate_vco_wave_table(last)
     level = (level * AMPLITUDE).round.to_i
 
     $file.printf("%+4d,", level)
-    if n == VCO_WAVE_TABLE_SAMPLES
+    if n == (1 << VCO_WAVE_TABLE_SAMPLES_BITS)
       $file.printf("\n")
     elsif n % 16 == 15
       $file.printf("\n  ")
@@ -70,7 +70,7 @@ end
 
 def generate_vco_wave_table_sawtooth(last)
   generate_vco_wave_table(last) do |n, k|
-    (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) / VCO_WAVE_TABLE_SAMPLES) * k) / k
+    (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) / (1 << VCO_WAVE_TABLE_SAMPLES_BITS)) * k) / k
   end
 end
 

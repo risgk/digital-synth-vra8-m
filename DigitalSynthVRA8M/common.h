@@ -8,14 +8,13 @@ const uint8_t  BIT_DEPTH       = 8;
 const uint8_t  NOTE_NUMBER_MIN = 36;
 const uint8_t  NOTE_NUMBER_MAX = 96;
 
-const uint16_t VCO_TUNE_RATE_TABLE_STEPS_BITS    = 6;
-const uint32_t VCO_TUNE_RATE_DENOMINATOR_BITS    = 16;
-const uint32_t VCO_PHASE_RESOLUTION_BITS         = 16;
-const uint16_t VCO_WAVE_TABLE_SAMPLES            = 256;
-const int16_t  VCF_TABLE_ONE                     = 16384;
-const uint8_t  VCF_TABLE_FRACTION_BITS           = 14;
-const uint16_t EG_LEVEL_MAX                      = (127 << 1) << 8;
-const uint32_t EG_DECAY_RELEASE_RATE_DENOMINATOR = 256;
+const uint16_t VCO_TUNE_RATE_TABLE_STEPS_BITS         = 6;
+const uint32_t VCO_TUNE_RATE_DENOMINATOR_BITS         = 16;
+const uint32_t VCO_PHASE_RESOLUTION_BITS              = 16;
+const uint16_t VCO_WAVE_TABLE_SAMPLES_BITS            = 8;
+const uint8_t  VCF_TABLE_FRACTION_BITS                = 14;
+const uint16_t EG_LEVEL_MAX                           = (127 << 1) << 8;
+const uint32_t EG_DECAY_RELEASE_RATE_DENOMINATOR_BITS = 8;
 
 const uint8_t DATA_BYTE_MAX         = 0x7F;
 const uint8_t STATUS_BYTE_INVALID   = 0x7F;

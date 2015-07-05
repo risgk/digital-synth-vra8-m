@@ -23,7 +23,7 @@ $file.printf("};\n\n")
 
 HALF_LIFE = 16
 eg_decay_release_rate = (((1.0 / 2.0) ** (1.0 / HALF_LIFE)) *
-                         (EG_DECAY_RELEASE_RATE_DENOMINATOR)).round
+                         (1 << EG_DECAY_RELEASE_RATE_DENOMINATOR_BITS)).round
 $file.printf("const uint16_t EG_DECAY_RELEASE_RATE = %d;\n", eg_decay_release_rate)
 $file.printf("\n")
 
@@ -32,7 +32,7 @@ $file.printf("const uint16_t g_eg_decay_release_update_interval_table[] PROGMEM 
   sec = 12.8 / (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0)))
   update_interval = ((sec * SAMPLING_RATE) /
                      (Math.log(1.0 / 1024.0) /
-                      Math.log(eg_decay_release_rate.to_f / EG_DECAY_RELEASE_RATE_DENOMINATOR))
+                      Math.log(eg_decay_release_rate.to_f / (1 << EG_DECAY_RELEASE_RATE_DENOMINATOR_BITS)))
                     ).round.to_i
 
   $file.printf("%5d,", update_interval)
