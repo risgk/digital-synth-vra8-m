@@ -5,6 +5,8 @@ require_relative 'mul-q'
 require_relative 'vcf-table'
 
 class VCF
+  AUDIO_FRACTION_BITS = 14
+
   def initialize
     @x_1 = 0
     @x_2 = 0
@@ -47,19 +49,19 @@ class VCF
     a_2_over_a_0 = (b_2_over_a_0 << 2) - (a_1_over_a_0_high << 8) -
                                          (1 << VCF_TABLE_FRACTION_BITS)
 
-    x_0  = audio_input >> 2
+    x_0  = audio_input >> (16 - AUDIO_FRACTION_BITS)
     tmp  = mul_q15_q15(x_0 + (@x_1 << 1) + @x_2, b_2_over_a_0)
     tmp -= mul_q15_q7( @y_1,       a_1_over_a_0_high)
     tmp -= mul_q15_q15(@y_2,       a_2_over_a_0)
     y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
-    if (y_0 > 8191)
+    if (y_0 > ((1 << (AUDIO_FRACTION_BITS - 1)) - 1))
       # printf("y_0 overflow: %d\n", y_0)
-      y_0 = 8191
+      y_0 = ((1 << (AUDIO_FRACTION_BITS - 1)) - 1)
     end
-    if (y_0 < -8192)
+    if (y_0 < -(1 << (AUDIO_FRACTION_BITS - 1)))
       # printf("y_0 overflow: %d\n", y_0)
-      y_0 = -8192
+      y_0 = -(1 << (AUDIO_FRACTION_BITS - 1))
     end
 
     @x_2 = @x_1
