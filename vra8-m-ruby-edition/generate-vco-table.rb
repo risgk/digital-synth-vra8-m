@@ -12,7 +12,7 @@ end
 
 $file.printf("$vco_freq_table = [\n  ")
 ((NOTE_NUMBER_MIN - 1)..NOTE_NUMBER_MAX).each do |note_number|
-  if (note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)
+  if (note_number < (NOTE_NUMBER_MIN - 1)) || (note_number > NOTE_NUMBER_MAX)
     freq = 0
   else
     freq = freq_from_note_number(note_number)
@@ -70,7 +70,7 @@ end
 $vco_harmonics_restriction_table = []
 
 ((NOTE_NUMBER_MIN - 1)..NOTE_NUMBER_MAX).each do |note_number|
-  if (note_number < NOTE_NUMBER_MIN) || (note_number > NOTE_NUMBER_MAX)
+  if (note_number < (NOTE_NUMBER_MIN - 1)) || (note_number > NOTE_NUMBER_MAX)
     freq = 0
   else
     freq = freq_from_note_number(note_number + 1)

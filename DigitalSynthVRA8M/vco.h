@@ -12,6 +12,7 @@ class VCO {
    static uint16_t       m_pulse_width;
    static uint16_t       m_saw_shift;
    static uint8_t        m_color_lfo_amt;
+   static uint8_t        m_vibrato;
 
 public:
   INLINE static void initialize() {
@@ -21,6 +22,7 @@ public:
     set_pulse_width(0);
     set_saw_shift(0);
     set_color_lfo_amt(0);
+    set_vibrato(0);
   }
 
   INLINE static void set_pulse_saw_mix(uint8_t controller_value) {
@@ -39,7 +41,11 @@ public:
     m_color_lfo_amt = controller_value << 1;
   }
 
-  INLINE static int16_t clock(uint16_t pitch_control, int8_t phase_control) {
+  INLINE static void  set_vibrato(uint8_t controller_value) {
+    m_vibrato = controller_value >> 2;
+  }
+
+  INLINE static int16_t clock(uint16_t pitch_control, int8_t modulation_control) {
     uint8_t coarse_pitch = high_byte(pitch_control);
     uint8_t fine_pitch = low_byte(pitch_control);
 
@@ -47,13 +53,14 @@ public:
     uint16_t freq = mul_q16_q16(g_vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                                 g_vco_tune_rate_table[fine_pitch >>
                                                       (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)]);
+    freq += high_sbyte(modulation_control * m_vibrato);
     m_phase += freq;
 
     int8_t saw_down      = +get_saw_wave_level(m_phase);
     int8_t saw_up        = -get_saw_wave_level(
-                              (m_phase + m_pulse_width - (phase_control * m_color_lfo_amt)));
+                              (m_phase + m_pulse_width - (modulation_control * m_color_lfo_amt)));
     int8_t saw_down_copy = +get_saw_wave_level(
-                              (m_phase + m_saw_shift + (phase_control * m_color_lfo_amt)));
+                              (m_phase + m_saw_shift + (modulation_control * m_color_lfo_amt)));
 
     int16_t mixed = saw_down      * 127 +
                     saw_up        * static_cast<uint8_t>(127 - m_pulse_saw_mix) +
@@ -90,3 +97,4 @@ template <uint8_t T> uint8_t        VCO<T>::m_pulse_saw_mix;
 template <uint8_t T> uint16_t       VCO<T>::m_pulse_width;
 template <uint8_t T> uint16_t       VCO<T>::m_saw_shift;
 template <uint8_t T> uint8_t        VCO<T>::m_color_lfo_amt;
+template <uint8_t T> uint8_t        VCO<T>::m_vibrato;
