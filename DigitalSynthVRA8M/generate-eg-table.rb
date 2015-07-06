@@ -5,9 +5,12 @@ $file = File.open("eg-table.h", "w")
 $file.printf("#pragma once\n\n")
 
 $file.printf("const uint16_t g_eg_attack_rate_table[] PROGMEM = {\n  ")
-(0..DATA_BYTE_MAX).each do |time|
+(0..((1 << EG_CONTROLLER_STEPS_BITS) - 1)).each do |time|
+  t = time
+  t = 1 if t == 0
   sec = (EG_LEVEL_MAX.to_f / SAMPLING_RATE) /
-        (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0))) / 2.0
+        (10.0 ** ((((1 << EG_CONTROLLER_STEPS_BITS) - 1) - t) /
+                  (((1 << EG_CONTROLLER_STEPS_BITS) - 2) / 3.0))) / 2.0
   rate = (EG_LEVEL_MAX / (sec * SAMPLING_RATE)).round.to_i
 
   $file.printf("%5d,", rate)
@@ -28,8 +31,11 @@ $file.printf("const uint16_t EG_DECAY_RELEASE_RATE = %d;\n", eg_decay_release_ra
 $file.printf("\n")
 
 $file.printf("const uint16_t g_eg_decay_release_update_interval_table[] PROGMEM = {\n  ")
-(0..DATA_BYTE_MAX).each do |time|
-  sec = 12.8 / (10.0 ** ((DATA_BYTE_MAX - time) / (DATA_BYTE_MAX / 3.0)))
+(0..((1 << EG_CONTROLLER_STEPS_BITS) - 1)).each do |time|
+  t = time
+  t = 1 if t == 0
+  sec = 12.8 / (10.0 ** ((((1 << EG_CONTROLLER_STEPS_BITS) - 1) - t) /
+                         (((1 << EG_CONTROLLER_STEPS_BITS) - 2) / 3.0)))
   update_interval = ((sec * SAMPLING_RATE) /
                      (Math.log(1.0 / 1024.0) /
                       Math.log(eg_decay_release_rate.to_f / (1 << EG_DECAY_RELEASE_RATE_DENOMINATOR_BITS)))

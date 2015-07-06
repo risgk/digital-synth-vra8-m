@@ -18,11 +18,12 @@ class EG
   end
 
   def set_attack(controller_value)
-    @attack_rate = $eg_attack_rate_table[controller_value]
+    @attack_rate = $eg_attack_rate_table[controller_value >> (7 - EG_CONTROLLER_STEPS_BITS)]
   end
 
   def set_decay_release(controller_value)
-    @decay_release_update_interval = $eg_decay_release_update_interval_table[controller_value]
+    @decay_release_update_interval =
+      $eg_decay_release_update_interval_table[controller_value >> (7 - EG_CONTROLLER_STEPS_BITS)]
   end
 
   def set_sustain(controller_value)

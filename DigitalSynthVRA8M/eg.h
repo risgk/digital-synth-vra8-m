@@ -29,12 +29,13 @@ public:
   }
 
   INLINE static void set_attack(uint8_t controller_value) {
-    m_attack_rate = pgm_read_word(g_eg_attack_rate_table + controller_value);
+    m_attack_rate = pgm_read_word(g_eg_attack_rate_table +
+                                  (controller_value >> (7 - EG_CONTROLLER_STEPS_BITS)));
   }
 
   INLINE static void set_decay_release(uint8_t controller_value) {
     m_decay_release_update_interval = pgm_read_word(g_eg_decay_release_update_interval_table +
-                                                    controller_value);
+                                                    (controller_value >> (7 - EG_CONTROLLER_STEPS_BITS)));
   }
 
   INLINE static void set_sustain(uint8_t controller_value) {

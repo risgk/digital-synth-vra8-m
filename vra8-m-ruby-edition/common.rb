@@ -13,6 +13,7 @@ VCO_WAVE_TABLE_AMPLITUDE               = 96
 VCO_WAVE_TABLE_SAMPLES_BITS            = 8
 VCF_TABLE_FRACTION_BITS                = 14
 EG_LEVEL_MAX                           = (127 << 1) << 8
+EG_CONTROLLER_STEPS_BITS               = 5
 EG_DECAY_RELEASE_RATE_DENOMINATOR_BITS = 8
 
 DATA_BYTE_MAX         = 0x7F
