@@ -10,9 +10,8 @@ class VCO
     set_mix_eg_amt(0)
     set_pulse_width(0)
     set_saw_shift(0)
-    set_color_eg_amt(0)
     set_color_lfo_amt(0)
-    set_vibrato(0)
+    set_pitch_lfo_amt(0)
   end
 
   def set_mix(controller_value)
@@ -31,16 +30,12 @@ class VCO
     @saw_shift = controller_value << 8
   end
 
-  def set_color_eg_amt(controller_value)
-    @color_eg_amt = controller_value << 1
-  end
-
   def set_color_lfo_amt(controller_value)
     @color_lfo_amt = controller_value << 1
   end
 
-  def set_vibrato(controller_value)
-    @vibrato = controller_value >> 2
+  def set_pitch_lfo_amt(controller_value)
+    @pitch_lfo_amt = controller_value
   end
 
   def clock(pitch_control, mod_eg_control, mod_lfo_control)
@@ -51,16 +46,15 @@ class VCO
     freq = mul_q16_q16($vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                        $vco_tune_rate_table[fine_pitch >>
                                             (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)])
-    freq += high_sbyte(modulation_control * @vibrato)
+    freq += high_sbyte(mod_lfo_control * @pitch_lfo_amt)
     @phase += freq
     @phase %= (1 << VCO_PHASE_RESOLUTION_BITS)
 
-    shift_eg  = (mod_eg_control  * @color_eg_amt)
     shift_lfo = (mod_lfo_control * @color_lfo_amt)
     saw_down      = +get_saw_wave_level(@phase)
-    saw_up        = -get_saw_wave_level((@phase + @pulse_width + shift_eg - shift_lfo) %
+    saw_up        = -get_saw_wave_level((@phase + @pulse_width - shift_lfo) %
                        (1 << VCO_PHASE_RESOLUTION_BITS))
-    saw_down_copy = +get_saw_wave_level((@phase + @saw_shift + shift_eg + shift_lfo) %
+    saw_down_copy = +get_saw_wave_level((@phase + @saw_shift + shift_lfo) %
                        (1 << VCO_PHASE_RESOLUTION_BITS))
 
     mix = @mix + high_byte(@mix_eg_amt * mod_eg_control);

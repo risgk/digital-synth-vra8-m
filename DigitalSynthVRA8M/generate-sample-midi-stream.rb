@@ -32,14 +32,14 @@ end
 control_change(ALL_NOTES_OFF,     0  )
 
 # Preset Lead
+control_change(LFO_LEVEL_EG_COEF, 64 )
 control_change(LFO_RATE         , 64 )
-control_change(LFO_RATE_EG_AMT  , 64 )
 control_change(VCO_MIX          , 64 )
 control_change(VCO_MIX_EG_AMT   , 64 )
 control_change(VCO_PULSE_WIDTH  , 64 )
 control_change(VCO_SAW_SHIFT    , 64 )
-control_change(VCO_COLOR_EG_AMT , 64 )
 control_change(VCO_COLOR_LFO_AMT, 64 )
+control_change(VCO_PITCH_LFO_AMT, 64 )
 control_change(VCF_CUTOFF       , 64 )
 control_change(VCF_CUTOFF_EG_AMT, 64 )
 control_change(VCF_RESONANCE    , 64 )
