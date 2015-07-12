@@ -62,7 +62,7 @@
     | EG Decay/Release       | 10.2 ms       | 0.4 s         | 10.2 s        |
     | EG Sustain             | 0%            | 50%           | 99.2%         |
     +------------------------+---------------+---------------+---------------+
-    | Portamento             | 0.0 s/Oct     | 0.1 s/Oct     | 1.0 s/Oct     |
+    | MISC Portamento        | 0.0 s/Oct     | 0.1 s/Oct     | 1.0 s/Oct     |
     +------------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart
@@ -105,7 +105,7 @@
     |                            28 | x             | o             | VCF Cutoff            |
     |                            29 | x             | o             | VCF Resonance         |
     |                            30 | x             | o             | VCA Gain              |
-    |                            31 | x             | o             | Portamento            |
+    |                            31 | x             | o             | MISC Portamento       |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |
