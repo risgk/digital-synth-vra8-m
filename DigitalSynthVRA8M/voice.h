@@ -34,14 +34,29 @@ public:
 
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
+    case LFO_RATE:
+      LFO<0>::set_rate(controller_value);
+      break;
+    case LFO_RATE_EG_AMT:
+      // todo
+      break;
     case VCO_MIX:
       VCO<0>::set_pulse_saw_mix(controller_value);
+      break;
+    case VCO_MIX_EG_AMT:
+      // todo
       break;
     case VCO_PULSE_WIDTH:
       VCO<0>::set_pulse_width(controller_value);
       break;
     case VCO_SAW_SHIFT:
       VCO<0>::set_saw_shift(controller_value);
+      break;
+    case VCO_COLOR_EG_AMT:
+      // todo
+      break;
+    case VCO_COLOR_LFO_AMT:
+      VCO<0>::set_color_lfo_amt(controller_value);
       break;
     case VCF_CUTOFF:
       VCF<0>::set_cutoff(controller_value);
@@ -63,12 +78,6 @@ public:
       break;
     case EG_SUSTAIN:
       EG<0>::set_sustain(controller_value);
-      break;
-    case LFO_RATE:
-      LFO<0>::set_rate(controller_value);
-      break;
-    case VCO_COLOR_LFO_AMT:
-      VCO<0>::set_color_lfo_amt(controller_value);
       break;
     case PORTAMENTO:
       SlewRateLimiter<0>::set_slew_time(controller_value);

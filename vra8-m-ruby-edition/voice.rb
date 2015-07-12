@@ -30,12 +30,22 @@ class Voice
 
   def control_change(controller_number, controller_value)
     case (controller_number)
+    when LFO_RATE
+      @lfo.set_rate(controller_value)
+    when LFO_RATE_EG_AMT
+      # todo
     when VCO_MIX
       @vco.set_pulse_saw_mix(controller_value)
+    when VCO_MIX_EG_AMT
+      # todo
     when VCO_PULSE_WIDTH
       @vco.set_pulse_width(controller_value)
     when VCO_SAW_SHIFT
       @vco.set_saw_shift(controller_value)
+    when VCO_COLOR_EG_AMT:
+      # todo
+    when VCO_COLOR_LFO_AMT
+      @vco.set_color_lfo_amt(controller_value)
     when VCF_CUTOFF
       @vcf.set_cutoff(controller_value)
     when VCF_RESONANCE
@@ -50,10 +60,6 @@ class Voice
       @eg.set_decay_release(controller_value)
     when EG_SUSTAIN
       @eg.set_sustain(controller_value)
-    when LFO_RATE
-      @lfo.set_rate(controller_value)
-    when VCO_COLOR_LFO_AMT
-      @vco.set_color_lfo_amt(controller_value)
     when PORTAMENTO
       @srl.set_slew_time(controller_value)
     when ALL_NOTES_OFF
