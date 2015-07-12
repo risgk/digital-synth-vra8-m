@@ -14,6 +14,7 @@ class VCO {
    static uint16_t       m_saw_shift;
    static uint8_t        m_color_eg_amt;
    static uint8_t        m_color_lfo_amt;
+   static uint8_t        m_vibrato;
 
 public:
   INLINE static void initialize() {
@@ -25,6 +26,7 @@ public:
     set_saw_shift(0);
     set_color_eg_amt(0);
     set_color_lfo_amt(0);
+    set_vibrato(0);
   }
 
   INLINE static void set_mix(uint8_t controller_value) {
@@ -51,6 +53,10 @@ public:
     m_color_lfo_amt = controller_value << 1;
   }
 
+  INLINE static void  set_vibrato(uint8_t controller_value) {
+    m_vibrato = controller_value >> 2;
+  }
+
   INLINE static int16_t clock(uint16_t pitch_control, uint8_t mod_eg_control,
                                                       int8_t mod_lfo_control) {
     uint8_t coarse_pitch = high_byte(pitch_control);
@@ -60,6 +66,7 @@ public:
     uint16_t freq = mul_q16_q16(g_vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                                 g_vco_tune_rate_table[fine_pitch >>
                                                       (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)]);
+    freq += high_sbyte(modulation_control * m_vibrato);
     m_phase += freq;
 
     uint16_t shift_eg  = (mod_eg_control  * m_color_eg_amt);
@@ -109,3 +116,4 @@ template <uint8_t T> uint16_t       VCO<T>::m_pulse_width;
 template <uint8_t T> uint16_t       VCO<T>::m_saw_shift;
 template <uint8_t T> uint8_t        VCO<T>::m_color_eg_amt;
 template <uint8_t T> uint8_t        VCO<T>::m_color_lfo_amt;
+template <uint8_t T> uint8_t        VCO<T>::m_vibrato;

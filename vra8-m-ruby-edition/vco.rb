@@ -12,6 +12,7 @@ class VCO
     set_saw_shift(0)
     set_color_eg_amt(0)
     set_color_lfo_amt(0)
+    set_vibrato(0)
   end
 
   def set_mix(controller_value)
@@ -38,6 +39,10 @@ class VCO
     @color_lfo_amt = controller_value << 1
   end
 
+  def set_vibrato(controller_value)
+    @vibrato = controller_value >> 2
+  end
+
   def clock(pitch_control, mod_eg_control, mod_lfo_control)
     coarse_pitch = high_byte(pitch_control)
     fine_pitch = low_byte(pitch_control)
@@ -46,6 +51,7 @@ class VCO
     freq = mul_q16_q16($vco_freq_table[coarse_pitch - (NOTE_NUMBER_MIN - 1)],
                        $vco_tune_rate_table[fine_pitch >>
                                             (8 - VCO_TUNE_RATE_TABLE_STEPS_BITS)])
+    freq += high_sbyte(modulation_control * @vibrato)
     @phase += freq
     @phase %= (1 << VCO_PHASE_RESOLUTION_BITS)
 
