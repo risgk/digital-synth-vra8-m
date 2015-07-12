@@ -32,8 +32,8 @@ public:
     control_change(VCF_CUTOFF_EG_AMT, 127);
     control_change(VCF_RESONANCE    , 127);
     control_change(VCA_GAIN         , 127);
-    control_change(EG_ATTACK        , 64 );
-    control_change(EG_DECAY_RELEASE , 64 );
+    control_change(EG_ATTACK        , 32 );
+    control_change(EG_DECAY_RELEASE , 96 );
     control_change(EG_SUSTAIN       , 127);
     control_change(PORTAMENTO       , 64 );
   }
