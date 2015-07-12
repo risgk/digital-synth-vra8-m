@@ -48,7 +48,7 @@ public:
   }
 
   INLINE static void  set_pitch_lfo_amt(uint8_t controller_value) {
-    m_pitch_lfo_amt = controller_value;
+    m_pitch_lfo_amt = controller_value >> 1;
   }
 
   INLINE static int16_t clock(uint16_t pitch_control, uint8_t mod_eg_control,
@@ -85,17 +85,10 @@ private:
     uint16_t tmp = pgm_read_word(m_wave_table + curr_index);
     int8_t curr_data = low_byte(tmp);
     int8_t next_data = high_byte(tmp);
-
-    uint8_t curr_weight = -low_byte(phase);
-    uint8_t next_weight = -curr_weight;
+    uint8_t next_weight = low_byte(phase);
 
     // lerp
-    int8_t level;
-    if (next_weight == 0) {
-      level = curr_data;
-    } else {
-      level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight));
-    }
+    int8_t level = curr_data + high_sbyte((next_data - curr_data) * next_weight);
 
     return level;
   }

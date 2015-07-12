@@ -20,7 +20,7 @@ public:
   }
 
   INLINE static void set_rate(uint8_t controller_value) {
-    m_rate = (controller_value >> 2) + 1;
+    m_rate = (controller_value >> 1) + 1;
   }
 
   INLINE static int8_t clock(uint8_t rate_eg_control) {
@@ -32,7 +32,7 @@ public:
     level -= 0x4000;
     level = high_sbyte(high_sbyte(level << 1) *
                        (high_byte(m_level_eg_coef * rate_eg_control) +
-                        static_cast<uint8_t>(-m_level_eg_coef)));
+                        static_cast<uint8_t>(254 - m_level_eg_coef)));
     return level;
   }
 };

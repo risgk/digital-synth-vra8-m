@@ -12,7 +12,7 @@ class LFO
   end
 
   def set_rate(controller_value)
-    @rate = (controller_value >> 2) + 1
+    @rate = (controller_value >> 1) + 1
   end
 
   def clock(rate_eg_control)
@@ -25,7 +25,7 @@ class LFO
     level -= 0x4000
     level = high_sbyte(high_sbyte(level << 1) *
                        (high_byte(@level_eg_coef * rate_eg_control) +
-                        (0x100 - @level_eg_coef)))
+                        (254 - @level_eg_coef)))
     return level
   end
 end

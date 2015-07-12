@@ -35,7 +35,7 @@ class VCO
   end
 
   def set_pitch_lfo_amt(controller_value)
-    @pitch_lfo_amt = controller_value
+    @pitch_lfo_amt = controller_value >> 1
   end
 
   def clock(pitch_control, mod_eg_control, mod_lfo_control)
@@ -73,16 +73,10 @@ class VCO
     curr_index = high_byte(phase)
     curr_data = @wave_table[curr_index]
     next_data = @wave_table[curr_index + 1]
-
-    curr_weight = 0x100 - low_byte(phase)
-    next_weight = 0x100 - curr_weight
+    next_weight = low_byte(phase)
 
     # lerp
-    if (next_weight == 0)
-      level = curr_data
-    else
-      level = high_sbyte((curr_data * curr_weight) + (next_data * next_weight))
-    end
+    level = curr_data + high_sbyte((next_data - curr_data) * next_weight)
 
     return level
   end
