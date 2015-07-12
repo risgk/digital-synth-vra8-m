@@ -14,7 +14,7 @@ class VCF {
   static int16_t        m_y_2;
   static uint16_t       m_cutoff;
   static const uint8_t* m_lpf_table;
-  static uint8_t        m_cv_amt;
+  static uint8_t        m_cutoff_eg_amt;
 
   static const uint8_t AUDIO_FRACTION_BITS = 14;
 
@@ -26,7 +26,7 @@ public:
     m_y_2 = 0;
     set_cutoff(127);
     set_resonance(0);
-    set_cv_amt(0);
+    set_cutoff_eg_amt(0);
   }
 
   INLINE static void set_cutoff(uint8_t controller_value) {
@@ -43,12 +43,12 @@ public:
     }
   }
 
-  INLINE static void set_cv_amt(uint8_t controller_value) {
-    m_cv_amt = controller_value;
+  INLINE static void set_cutoff_eg_amt(uint8_t controller_value) {
+    m_cutoff_eg_amt = controller_value;
   }
 
-  INLINE static int16_t clock(int16_t audio_input, uint8_t cutoff_control) {
-    uint8_t cutoff = m_cutoff + high_byte(m_cv_amt * cutoff_control);
+  INLINE static int16_t clock(int16_t audio_input, uint8_t cutoff_eg_control) {
+    uint8_t cutoff = m_cutoff + high_byte(m_cutoff_eg_amt * cutoff_eg_control);
     if (cutoff > 127) {
       cutoff = 127;
     }
@@ -89,4 +89,4 @@ template <uint8_t T> int16_t        VCF<T>::m_y_1;
 template <uint8_t T> int16_t        VCF<T>::m_y_2;
 template <uint8_t T> uint16_t       VCF<T>::m_cutoff;
 template <uint8_t T> const uint8_t* VCF<T>::m_lpf_table;
-template <uint8_t T> uint8_t        VCF<T>::m_cv_amt;
+template <uint8_t T> uint8_t        VCF<T>::m_cutoff_eg_amt;

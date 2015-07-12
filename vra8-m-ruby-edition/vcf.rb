@@ -14,7 +14,7 @@ class VCF
     @y_2 = 0
     set_cutoff(127)
     set_resonance(0)
-    set_cv_amt(0)
+    set_cutoff_eg_amt(0)
   end
 
   def set_cutoff(controller_value)
@@ -31,12 +31,12 @@ class VCF
     end
   end
 
-  def set_cv_amt(controller_value)
-    @cv_amt = controller_value
+  def set_cutoff_eg_amt(controller_value)
+    @cutoff_eg_amt = controller_value
   end
 
-  def clock(audio_input, cutoff_control)
-    cutoff = @cutoff + high_byte(@cv_amt * cutoff_control)
+  def clock(audio_input, cutoff_eg_control)
+    cutoff = @cutoff + high_byte(@cutoff_eg_amt * cutoff_eg_control)
     if (cutoff > 127)
       cutoff = 127
     end

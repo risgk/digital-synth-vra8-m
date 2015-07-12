@@ -38,13 +38,13 @@ public:
       LFO<0>::set_rate(controller_value);
       break;
     case LFO_RATE_EG_AMT:
-      // todo
+      LFO<0>::set_rate_eg_amt(controller_value);
       break;
     case VCO_MIX:
-      VCO<0>::set_pulse_saw_mix(controller_value);
+      VCO<0>::set_mix(controller_value);
       break;
     case VCO_MIX_EG_AMT:
-      // todo
+      VCO<0>::set_mix_eg_amt(controller_value);
       break;
     case VCO_PULSE_WIDTH:
       VCO<0>::set_pulse_width(controller_value);
@@ -53,7 +53,7 @@ public:
       VCO<0>::set_saw_shift(controller_value);
       break;
     case VCO_COLOR_EG_AMT:
-      // todo
+      VCO<0>::set_color_eg_amt(controller_value);
       break;
     case VCO_COLOR_LFO_AMT:
       VCO<0>::set_color_lfo_amt(controller_value);
@@ -65,7 +65,7 @@ public:
       VCF<0>::set_resonance(controller_value);
       break;
     case VCF_CUTOFF_EG_AMT:
-      VCF<0>::set_cv_amt(controller_value);
+      VCF<0>::set_cutoff_eg_amt(controller_value);
       break;
     case VCA_GAIN:
       VCA<0>::set_gain(controller_value);
@@ -90,9 +90,9 @@ public:
 
   INLINE static int8_t clock() {
     uint8_t  eg_output = EG<0>::clock();
-    uint8_t  lfo_output = LFO<0>::clock();
+    int8_t   lfo_output = LFO<0>::clock(eg_output);
     uint16_t srl_output = SlewRateLimiter<0>::clock(m_note_number << 8);
-    int16_t  vco_output = VCO<0>::clock(srl_output, lfo_output);
+    int16_t  vco_output = VCO<0>::clock(srl_output, eg_output, lfo_output);
     int16_t  vcf_output = VCF<0>::clock(vco_output, eg_output);
     int16_t  vca_output = VCA<0>::clock(vcf_output, eg_output);
     return high_sbyte(vca_output);

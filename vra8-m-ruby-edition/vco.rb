@@ -6,14 +6,20 @@ class VCO
   def initialize
     @wave_table = nil
     @phase = 0
-    set_pulse_saw_mix(0)
+    set_mix(0)
+    set_mix_eg_amt(0)
     set_pulse_width(0)
     set_saw_shift(0)
+    set_color_eg_amt(0)
     set_color_lfo_amt(0)
   end
 
-  def set_pulse_saw_mix(controller_value)
-    @pulse_saw_mix = controller_value
+  def set_mix(controller_value)
+    @mix = controller_value
+  end
+
+  def set_mix_eg_amt(controller_value)
+    @mix_eg_amt = controller_value
   end
 
   def set_pulse_width(controller_value)
@@ -24,11 +30,15 @@ class VCO
     @saw_shift = controller_value << 8
   end
 
+  def set_color_eg_amt(controller_value)
+    @color_eg_amt = controller_value << 1
+  end
+
   def set_color_lfo_amt(controller_value)
     @color_lfo_amt = controller_value << 1
   end
 
-  def clock(pitch_control, modulation_control)
+  def clock(pitch_control, mod_eg_control, mod_lfo_control)
     coarse_pitch = high_byte(pitch_control)
     fine_pitch = low_byte(pitch_control)
 
@@ -39,16 +49,21 @@ class VCO
     @phase += freq
     @phase %= (1 << VCO_PHASE_RESOLUTION_BITS)
 
+    shift_eg  = (mod_eg_control  * @color_eg_amt)
+    shift_lfo = (mod_lfo_control * @color_lfo_amt)
     saw_down      = +get_saw_wave_level(@phase)
-    saw_up        = -get_saw_wave_level(
-                       (@phase + @pulse_width - (modulation_control * @color_lfo_amt)) %
+    saw_up        = -get_saw_wave_level((@phase + @pulse_width + shift_eg - shift_lfo) %
                        (1 << VCO_PHASE_RESOLUTION_BITS))
-    saw_down_copy = +get_saw_wave_level(
-                       (@phase + @saw_shift + (modulation_control * @color_lfo_amt)) %
+    saw_down_copy = +get_saw_wave_level((@phase + @saw_shift + shift_eg + shift_lfo) %
                        (1 << VCO_PHASE_RESOLUTION_BITS))
+
+    mix = @mix + high_byte(@mix_eg_amt * mod_eg_control);
+    if (mix > 127)
+      mix = 127;
+    end
     mixed = saw_down      * 127 +
-            saw_up        * (127 - @pulse_saw_mix) +
-            saw_down_copy * @pulse_saw_mix
+            saw_up        * (127 - mix) +
+            saw_down_copy * mix
 
     return mixed >> 1
   end

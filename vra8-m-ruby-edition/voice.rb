@@ -33,17 +33,17 @@ class Voice
     when LFO_RATE
       @lfo.set_rate(controller_value)
     when LFO_RATE_EG_AMT
-      # todo
+      @lfo.set_rate_eg_amt(controller_value)
     when VCO_MIX
-      @vco.set_pulse_saw_mix(controller_value)
+      @vco.set_mix(controller_value)
     when VCO_MIX_EG_AMT
-      # todo
+      @vco.set_mix_eg_amt(controller_value)
     when VCO_PULSE_WIDTH
       @vco.set_pulse_width(controller_value)
     when VCO_SAW_SHIFT
       @vco.set_saw_shift(controller_value)
-    when VCO_COLOR_EG_AMT:
-      # todo
+    when VCO_COLOR_EG_AMT
+      @vco.set_color_eg_amt(controller_value)
     when VCO_COLOR_LFO_AMT
       @vco.set_color_lfo_amt(controller_value)
     when VCF_CUTOFF
@@ -51,7 +51,7 @@ class Voice
     when VCF_RESONANCE
       @vcf.set_resonance(controller_value)
     when VCF_CUTOFF_EG_AMT
-      @vcf.set_cv_amt(controller_value)
+      @vcf.set_cutoff_eg_amt(controller_value)
     when VCA_GAIN
       @vca.set_gain(controller_value)
     when EG_ATTACK
@@ -69,9 +69,9 @@ class Voice
 
   def clock
     eg_output = @eg.clock
-    lfo_output = @lfo.clock
+    lfo_output = @lfo.clock(eg_output)
     srl_output = @srl.clock(@note_number << 8)
-    vco_output = @vco.clock(srl_output, lfo_output)
+    vco_output = @vco.clock(srl_output, eg_output, lfo_output)
     vcf_output = @vcf.clock(vco_output, eg_output)
     vca_output = @vca.clock(vcf_output, eg_output)
     return high_sbyte(vca_output)
