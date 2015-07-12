@@ -104,6 +104,7 @@ var midiOutputs = null;
 var midiOutput  = null;
 
 function onMIDIMessage(event) {
+  console.log(event.data);
   if (midiOutput) {
     midiOutput.send(event.data);
   }
