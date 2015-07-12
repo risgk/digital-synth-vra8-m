@@ -34,7 +34,7 @@ public:
 
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
-    case VCO_PULSE_SAW_MIX:
+    case VCO_MIX:
       VCO<0>::set_pulse_saw_mix(controller_value);
       break;
     case VCO_PULSE_WIDTH:
@@ -49,7 +49,7 @@ public:
     case VCF_RESONANCE:
       VCF<0>::set_resonance(controller_value);
       break;
-    case VCF_EG_AMT:
+    case VCF_CUTOFF_EG_AMT:
       VCF<0>::set_cv_amt(controller_value);
       break;
     case VCA_GAIN:
@@ -67,7 +67,7 @@ public:
     case LFO_RATE:
       LFO<0>::set_rate(controller_value);
       break;
-    case LFO_VCO_COLOR_AMT:
+    case VCO_COLOR_LFO_AMT:
       VCO<0>::set_color_lfo_amt(controller_value);
       break;
     case PORTAMENTO:
