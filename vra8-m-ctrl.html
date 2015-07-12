@@ -47,6 +47,7 @@ const PORTAMENTO        = 31;
 const ALL_NOTES_OFF     = 123;
 
 const CONTROLLERS_FIRST = 16;
+const CONTROLLERS_HALF  = 24;
 const CONTROLLERS_LAST  = 31;
 </script>
 <script>
@@ -173,20 +174,20 @@ function onChangeControlChange(number, value) {
 function preset(number) {
   var presetControllers = {};
   presetControllers[LFO_LEVEL_EG_COEF] = [127, 127, 127, 0  , 0  , 0  , 0  ];
-  presetControllers[LFO_RATE         ] = [64 , 64 , 64 , 64 , 64 , 64 , 64 ];
+  presetControllers[LFO_RATE         ] = [48 , 48,  48 , 48 , 48 , 48 , 48 ];
   presetControllers[VCO_MIX          ] = [0  , 0  , 0  , 127, 0  , 0  , 0  ];
-  presetControllers[VCO_MIX_EG_AMT   ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
+  presetControllers[VCO_MIX_EG_AMT   ] = [64 , 0  , 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCO_PULSE_WIDTH  ] = [0  , 0  , 0  , 0  , 0  , 64 , 96 ];
   presetControllers[VCO_SAW_SHIFT    ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
-  presetControllers[VCO_COLOR_LFO_AMT] = [32 , 32 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[VCO_PITCH_LFO_AMT] = [32 , 32 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[VCF_CUTOFF       ] = [32 , 32 , 32 , 127, 127, 127, 127];
-  presetControllers[VCF_CUTOFF_EG_AMT] = [127, 127, 127, 0  , 0  , 0  , 0  ];
+  presetControllers[VCO_COLOR_LFO_AMT] = [16 , 16 , 32 , 0  , 0  , 0  , 0  ];
+  presetControllers[VCO_PITCH_LFO_AMT] = [16 , 32 , 16 , 0  , 0  , 0  , 0  ];
+  presetControllers[VCF_CUTOFF       ] = [0  , 0  , 0  , 127, 127, 127, 127];
+  presetControllers[VCF_CUTOFF_EG_AMT] = [127, 64 , 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCF_RESONANCE    ] = [127, 127, 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCA_GAIN         ] = [127, 127, 127, 127, 127, 127, 127];
-  presetControllers[EG_ATTACK        ] = [32 , 96 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_DECAY_RELEASE ] = [96 , 96 , 96 , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN       ] = [96 , 96 , 0  , 127, 127, 127, 127];
+  presetControllers[EG_ATTACK        ] = [64 , 112, 32 , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_DECAY_RELEASE ] = [64 , 112, 96 , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN       ] = [127, 64 , 0  , 127, 127, 127, 127];
   presetControllers[PORTAMENTO       ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
@@ -194,8 +195,19 @@ function preset(number) {
   }
 }
 
-function setRandomly() {
+function setRandomlyA() {
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
+    if (i == VCA_GAIN) {
+      onChangeControlChange(i, 127);
+    } else {
+      onChangeControlChange(i, rand());
+    }
+  }
+}
+
+function setRandomlyB() {
+  preset(0);
+  for (var i = CONTROLLERS_FIRST; i < CONTROLLERS_HALF; i++) {
     if (i == VCA_GAIN) {
       onChangeControlChange(i, 127);
     } else {
@@ -255,8 +267,7 @@ function noteOff(noteNumber) {
 <tr>
 <td>MIDI IN</td>
 <td colspan="2"><select id="selectInputPort" size="1" onchange="onChangeInputPort()"></select></td>
-</tr>
-<tr>
+<td>&nbsp;</td>
 <td>MIDI OUT</td>
 <td colspan="2"><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
 </tr>
@@ -308,12 +319,14 @@ function noteOff(noteNumber) {
 <p><input type="button" value="Preset Lead" onclick="preset(0)">
    <input type="button" value="Preset Pad"  onclick="preset(1)">
    <input type="button" value="Preset Bass" onclick="preset(2)">
+   &nbsp;
    <input type="button" value="Saw"         onclick="preset(3)">
    <input type="button" value="Square"      onclick="preset(4)">
    <input type="button" value="Pulse 25%"   onclick="preset(5)">
    <input type="button" value="Pulse 12.5%" onclick="preset(6)">
    &nbsp;
-   <input type="button" value="Random"       onclick="setRandomly()"></p>
+   <input type="button" value="Random A"    onclick="setRandomlyA()">
+   <input type="button" value="Random B"    onclick="setRandomlyB()"></p>
 
 <p><input type="button" value="Load #0" onclick="loadControllers(0)">
    <input type="button" value="Load #1" onclick="loadControllers(1)">

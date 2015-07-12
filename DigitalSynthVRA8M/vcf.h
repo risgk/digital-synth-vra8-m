@@ -63,8 +63,8 @@ public:
 
     int16_t x_0  = audio_input >> (16 - AUDIO_FRACTION_BITS);
     int16_t tmp  = mul_q15_q15(x_0 + (m_x_1 << 1) + m_x_2, b_2_over_a_0);
-    tmp         -= mul_q15_q7( m_y_1,       a_1_over_a_0_high);
-    tmp         -= mul_q15_q15(m_y_2,       a_2_over_a_0);
+    tmp         -= mul_q15_q7( m_y_1,                      a_1_over_a_0_high);
+    tmp         -= mul_q15_q15(m_y_2,                      a_2_over_a_0);
     int16_t y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS);
 
     if (y_0 > ((1 << (AUDIO_FRACTION_BITS - 1)) - 1)) {

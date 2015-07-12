@@ -41,16 +41,16 @@
     +------------------------+---------------+---------------+---------------+
     | Controller             | Value 0       | Value 64      | Value 127     |
     +------------------------+---------------+---------------+---------------+
+    | LFO Level EG Coef      | 0%            | 49.6%         | 100%          |
     | LFO Rate               | 0.2 Hz        | 7.9 Hz        | 15.3 Hz       |
-    | LFO Rate EG Amt        | 0%            | 49.6%         | 100%          |
     +------------------------+---------------+---------------+---------------+
     | VCO Mix (Pulse/Saw)    | Pulse 100%    | Pulse 50.4%   | Pulse 0%      |
     |                        | Saw 0%        | Saw 49.6%     | Saw 100%      |
     | VCO Mix EG Amt         | 0%            | 50%           | 99.2%         |
     | VCO Pulse Width        | 50%           | 25%           | 0.4%          |
     | VCO Saw Shift          | 0%            | 25%           | 49.6%         |
-    | VCO Color EG Amt       | 0%            | 50%           | 99.2%         |
     | VCO Color LFO Amt      | 0%            | 50%           | 99.2%         |
+    | VCO Pitch LFO Amt      | 0 cent        | 50 cent       | 100 cent      |
     +------------------------+---------------+---------------+---------------+
     | VCF Cutoff             | 0.2 kHz       | 1.2 kHz       | 7.6 kHz       |
     | VCF Cutoff EG Amt      | 0%            | 50%           | 99.2%         |
@@ -90,15 +90,15 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | LFO Rate EG Amt       |
+    | Control                    16 | x             | o             | LFO Rate              |
     | Change                     17 | x             | o             | VCO Mix EG Amt        |
-    |                            18 | x             | o             | VCO Color EG Amt      |
-    |                            19 | x             | o             | VCO Color LFO Amt     |
+    |                            18 | x             | o             | VCO Color LFO Amt     |
+    |                            19 | x             | o             | VCO Pitch LFO Amt     |
     |                            20 | x             | o             | VCF Cutoff EG Amt     |
     |                            21 | x             | o             | EG Attack             |
     |                            22 | x             | o             | EG Decay/Release      |
     |                            23 | x             | o             | EG Sustain            |
-    |                            24 | x             | o             | LFO Rate              |
+    |                            24 | x             | o             | LFO Level EG Coef     |
     |                            25 | x             | o             | VCO Mix (Pulse/Saw)   |
     |                            26 | x             | o             | VCO Pulse Width       |
     |                            27 | x             | o             | VCO Saw Shift         |

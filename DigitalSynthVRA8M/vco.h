@@ -48,7 +48,7 @@ public:
   }
 
   INLINE static void  set_pitch_lfo_amt(uint8_t controller_value) {
-    m_pitch_lfo_amt = controller_value >> 1;
+    m_pitch_lfo_amt = controller_value;
   }
 
   INLINE static int16_t clock(uint16_t pitch_control, uint8_t mod_eg_control,

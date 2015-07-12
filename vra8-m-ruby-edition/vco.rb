@@ -35,7 +35,7 @@ class VCO
   end
 
   def set_pitch_lfo_amt(controller_value)
-    @pitch_lfo_amt = controller_value >> 1
+    @pitch_lfo_amt = controller_value
   end
 
   def clock(pitch_control, mod_eg_control, mod_lfo_control)
