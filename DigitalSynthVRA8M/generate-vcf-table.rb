@@ -4,12 +4,13 @@ $file = File.open("vcf-table.h", "w")
 
 $file.printf("#pragma once\n\n")
 
-OCTAVES = 128.0 / 24.0
+OCTAVES = 5
 
 def generate_vcf_lpf_table(name, q)
   $file.printf("const uint8_t g_vcf_lpf_table_%s[] = {\n  ", name)
   (0..DATA_BYTE_MAX).each do |i|
-    f_0_over_fs = (2.0 ** (i / ((DATA_BYTE_MAX + 1).to_f / OCTAVES))) /
+    f = [[0, i - 4].max, 119].min
+    f_0_over_fs = (2.0 ** (f / (120.0 / OCTAVES))) /
                   (2.0 ** (OCTAVES.to_f + 1.0))
 
     w_0 = 2.0 * Math::PI * f_0_over_fs
