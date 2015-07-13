@@ -195,7 +195,7 @@ function preset(number) {
   }
 }
 
-function setRandomlyA() {
+function setRandomA() {
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     if (i == VCA_GAIN) {
       onChangeControlChange(i, 127);
@@ -205,7 +205,7 @@ function setRandomlyA() {
   }
 }
 
-function setRandomlyB() {
+function setRandomP() {
   preset(0);
   for (var i = CONTROLLERS_FIRST; i < CONTROLLERS_HALF; i++) {
     if (i == VCA_GAIN) {
@@ -325,8 +325,8 @@ function noteOff(noteNumber) {
    <input type="button" value="Pulse 25%"   onclick="preset(5)">
    <input type="button" value="Pulse 12.5%" onclick="preset(6)">
    &nbsp;
-   <input type="button" value="Random A"    onclick="setRandomlyA()">
-   <input type="button" value="Random B"    onclick="setRandomlyB()"></p>
+   <input type="button" value="Random A"    onclick="setRandomA()">
+   <input type="button" value="Random P"    onclick="setRandomP()"></p>
 
 <p><input type="button" value="Load #0" onclick="loadControllers(0)">
    <input type="button" value="Load #1" onclick="loadControllers(1)">
