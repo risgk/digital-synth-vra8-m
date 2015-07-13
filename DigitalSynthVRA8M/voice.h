@@ -34,11 +34,17 @@ public:
 
   INLINE static void control_change(uint8_t controller_number, uint8_t controller_value) {
     switch (controller_number) {
+    case LFO_RATE:
+      LFO<0>::set_rate(controller_value);
+      break;
+    case LFO_RATE_EG_AMT:
+      LFO<0>::set_rate_eg_amt(controller_value);
+      break;
     case LFO_LEVEL_EG_COEF:
       LFO<0>::set_level_eg_coef(controller_value);
       break;
-    case LFO_RATE:
-      LFO<0>::set_rate(controller_value);
+    case VCO_COLOR_LFO_AMT:
+      VCO<0>::set_color_lfo_amt(controller_value);
       break;
     case VCO_MIX:
       VCO<0>::set_mix(controller_value);
@@ -52,11 +58,8 @@ public:
     case VCO_SAW_SHIFT:
       VCO<0>::set_saw_shift(controller_value);
       break;
-    case VCO_COLOR_LFO_AMT:
-      VCO<0>::set_color_lfo_amt(controller_value);
-      break;
-    case VCO_PITCH_LFO_AMT:
-      VCO<0>::set_pitch_lfo_amt(controller_value);
+    case VCO_PORTAMENTO:
+      SlewRateLimiter<0>::set_slew_time(controller_value);
       break;
     case VCF_CUTOFF:
       VCF<0>::set_cutoff(controller_value);
@@ -78,9 +81,6 @@ public:
       break;
     case EG_SUSTAIN:
       EG<0>::set_sustain(controller_value);
-      break;
-    case PORTAMENTO:
-      SlewRateLimiter<0>::set_slew_time(controller_value);
       break;
     case ALL_NOTES_OFF:
       EG<0>::note_off();

@@ -28,22 +28,22 @@ const NOTE_OFF       = 0x80;
 const NOTE_ON        = 0x90;
 const CONTROL_CHANGE = 0xB0;
 
-const LFO_RATE          = 16;
-const VCO_MIX_EG_AMT    = 17;
-const VCO_COLOR_LFO_AMT = 18;
-const VCO_PITCH_LFO_AMT = 19;
-const VCF_CUTOFF_EG_AMT = 20;
+const LFO_RATE_EG_AMT   = 16;
+const VCO_COLOR_LFO_AMT = 17;
+const VCO_MIX_EG_AMT    = 18;
+const VCF_CUTOFF_EG_AMT = 19;
+const VCF_RESONANCE     = 20;
 const EG_ATTACK         = 21;
 const EG_DECAY_RELEASE  = 22;
 const EG_SUSTAIN        = 23;
-const LFO_LEVEL_EG_COEF = 24;
-const VCO_MIX           = 25;
-const VCO_PULSE_WIDTH   = 26;
-const VCO_SAW_SHIFT     = 27;
-const VCF_CUTOFF        = 28;
-const VCF_RESONANCE     = 29;
-const VCA_GAIN          = 30;
-const PORTAMENTO        = 31;
+const LFO_RATE          = 24;
+const LFO_LEVEL_EG_COEF = 25;
+const VCO_MIX           = 26;
+const VCF_CUTOFF        = 27;
+const VCO_PULSE_WIDTH   = 28;
+const VCO_SAW_SHIFT     = 29;
+const VCO_PORTAMENTO    = 30;
+const VCA_GAIN          = 31;
 const ALL_NOTES_OFF     = 123;
 
 const CONTROLLERS_FIRST = 16;
@@ -173,14 +173,15 @@ function onChangeControlChange(number, value) {
 
 function preset(number) {
   var presetControllers = {};
+  presetControllers[LFO_RATE         ] = [0  , 0  , 0  , 16 , 16 , 16 , 16 ];
+  presetControllers[LFO_RATE_EG_AMT  ] = [16 , 16 , 16 , 0  , 0  , 0  , 0  ];
   presetControllers[LFO_LEVEL_EG_COEF] = [127, 127, 127, 0  , 0  , 0  , 0  ];
-  presetControllers[LFO_RATE         ] = [48 , 48,  48 , 48 , 48 , 48 , 48 ];
+  presetControllers[VCO_COLOR_LFO_AMT] = [16 , 16 , 32 , 0  , 0  , 0  , 0  ];
   presetControllers[VCO_MIX          ] = [0  , 0  , 0  , 127, 0  , 0  , 0  ];
   presetControllers[VCO_MIX_EG_AMT   ] = [64 , 0  , 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCO_PULSE_WIDTH  ] = [0  , 0  , 0  , 0  , 0  , 64 , 96 ];
   presetControllers[VCO_SAW_SHIFT    ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
-  presetControllers[VCO_COLOR_LFO_AMT] = [16 , 16 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[VCO_PITCH_LFO_AMT] = [16 , 32 , 16 , 0  , 0  , 0  , 0  ];
+  presetControllers[VCO_PORTAMENTO   ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
   presetControllers[VCF_CUTOFF       ] = [0  , 0  , 0  , 127, 127, 127, 127];
   presetControllers[VCF_CUTOFF_EG_AMT] = [127, 64 , 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCF_RESONANCE    ] = [127, 127, 127, 0  , 0  , 0  , 0  ];
@@ -188,7 +189,6 @@ function preset(number) {
   presetControllers[EG_ATTACK        ] = [32 , 112, 32 , 0  , 0  , 0  , 0  ];
   presetControllers[EG_DECAY_RELEASE ] = [96 , 112, 96 , 0  , 0  , 0  , 0  ];
   presetControllers[EG_SUSTAIN       ] = [127, 64 , 0  , 127, 127, 127, 127];
-  presetControllers[PORTAMENTO       ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -278,34 +278,34 @@ function noteOff(noteNumber) {
 <h2>Controllers</h2>
 
 <table>
-<tr><td>LFO<br>Level EG Coef  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<tr><td>LFO<br>Rate           </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>LFO<br>Level EG Coef  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
     <td>VCO<br>Mix (Pulse/Saw)</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>VCO<br>Pulse Width    </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td>VCO<br>Saw Shift      </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+    <td>VCF<br>Cutoff         </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td><input id="inputCC24" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(24, value)"></td><td><span id="spanCC24">-1</span></td>
     <td><input id="inputCC25" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(25, value)"></td><td><span id="spanCC25">-1</span></td>
     <td><input id="inputCC26" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(26, value)"></td><td><span id="spanCC26">-1</span></td>
     <td><input id="inputCC27" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(27, value)"></td><td><span id="spanCC27">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>LFO<br>Rate           </td><td></td>
-    <td>VCO<br>Mix EG Amt     </td><td></td>
+<tr><td>LFO<br>Rate EG Amt    </td><td></td>
     <td>VCO<br>Color LFO Amt  </td><td></td>
-    <td>VCO<br>Pitch LFO Amt  </td><td></td></tr>
+    <td>VCO<br>Mix EG Amt     </td><td></td>
+    <td>VCF<br>Cutoff EG Amt  </td><td></td></tr>
 <tr><td><input id="inputCC16" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(16, value)"></td><td><span id="spanCC16">-1</span></td>
     <td><input id="inputCC17" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(17, value)"></td><td><span id="spanCC17">-1</span></td>
     <td><input id="inputCC18" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(18, value)"></td><td><span id="spanCC18">-1</span></td>
     <td><input id="inputCC19" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(19, value)"></td><td><span id="spanCC19">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>VCF<br>Cutoff         </td><td></td>
-    <td>VCF<br>Resonance      </td><td></td>
-    <td>VCA<br>Gain           </td><td></td>
-    <td>MISC<br>Portamento    </td><td></td></tr>
+<tr><td>VCO<br>Pulse Width    </td><td></td>
+    <td>VCO<br>Saw Shift      </td><td></td>
+    <td>VCO<br>Portamento     </td><td></td>
+    <td>VCA<br>Gain           </td><td></td></tr>
 <tr><td><input id="inputCC28" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(28, value)"></td><td><span id="spanCC28">-1</span></td>
     <td><input id="inputCC29" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(29, value)"></td><td><span id="spanCC29">-1</span></td>
     <td><input id="inputCC30" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(30, value)"></td><td><span id="spanCC30">-1</span></td>
     <td><input id="inputCC31" type="range" min="0" max="127" step="1" oninput="onChangeControlChange(31, value)"></td><td><span id="spanCC31">-1</span></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>VCF<br>Cutoff EG Amt  </td><td></td>
+<tr><td>VCF<br>Resonance      </td><td></td>
     <td>EG<br>Attack          </td><td></td>
     <td>EG<br>Decay/Release   </td><td></td>
     <td>EG<br>Sustain         </td><td></td></tr>

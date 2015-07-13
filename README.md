@@ -41,16 +41,17 @@
     +------------------------+---------------+---------------+---------------+
     | Controller             | Value 0       | Value 64      | Value 127     |
     +------------------------+---------------+---------------+---------------+
-    | LFO Level EG Coef      | 0%            | 49.6%         | 100%          |
     | LFO Rate               | 0.2 Hz        | 7.9 Hz        | 15.3 Hz       |
+    | LFO Rate EG Amt        | 0%            | 50%           | 99.2%         |
+    | LFO Level EG Coef      | 0%            | 49.6%         | 100%          |
     +------------------------+---------------+---------------+---------------+
+    | VCO Color LFO Amt      | 0%            | 50%           | 99.2%         |
     | VCO Mix (Pulse/Saw)    | Pulse 100%    | Pulse 50.4%   | Pulse 0%      |
     |                        | Saw 0%        | Saw 49.6%     | Saw 100%      |
     | VCO Mix EG Amt         | 0%            | 50%           | 99.2%         |
     | VCO Pulse Width        | 50%           | 25%           | 0.4%          |
     | VCO Saw Shift          | 0%            | 25%           | 49.6%         |
-    | VCO Color LFO Amt      | 0%            | 50%           | 99.2%         |
-    | VCO Pitch LFO Amt      | 0 cent        | 50 cent       | 100 cent      |
+    | VCO Portamento         | 0.0 s/Oct     | 0.1 s/Oct     | 1.0 s/Oct     |
     +------------------------+---------------+---------------+---------------+
     | VCF Cutoff             | 0.2 kHz       | 1.2 kHz       | 7.6 kHz       |
     | VCF Cutoff EG Amt      | 0%            | 50%           | 99.2%         |
@@ -61,8 +62,6 @@
     | EG Attack              | 2.1 ms        | 0.07 s        | 2.1 s         |
     | EG Decay/Release       | 10.2 ms       | 0.4 s         | 10.2 s        |
     | EG Sustain             | 0%            | 50%           | 99.2%         |
-    +------------------------+---------------+---------------+---------------+
-    | MISC Portamento        | 0.0 s/Oct     | 0.1 s/Oct     | 1.0 s/Oct     |
     +------------------------+---------------+---------------+---------------+
 
 ## MIDI Implementation Chart
@@ -90,22 +89,22 @@
     +-------------------------------+---------------+---------------+-----------------------+
     | Pitch Bend                    | x             | x             |                       |
     +-------------------------------+---------------+---------------+-----------------------+
-    | Control                    16 | x             | o             | LFO Rate              |
-    | Change                     17 | x             | o             | VCO Mix EG Amt        |
-    |                            18 | x             | o             | VCO Color LFO Amt     |
-    |                            19 | x             | o             | VCO Pitch LFO Amt     |
-    |                            20 | x             | o             | VCF Cutoff EG Amt     |
+    | Control                    16 | x             | o             | LFO Rate EG Amt       |
+    | Change                     17 | x             | o             | VCO Color LFO Amt     |
+    |                            18 | x             | o             | VCO Mix EG Amt        |
+    |                            19 | x             | o             | VCF Cutoff EG Amt     |
+    |                            20 | x             | o             | VCF Resonance         |
     |                            21 | x             | o             | EG Attack             |
     |                            22 | x             | o             | EG Decay/Release      |
     |                            23 | x             | o             | EG Sustain            |
-    |                            24 | x             | o             | LFO Level EG Coef     |
-    |                            25 | x             | o             | VCO Mix (Pulse/Saw)   |
-    |                            26 | x             | o             | VCO Pulse Width       |
-    |                            27 | x             | o             | VCO Saw Shift         |
-    |                            28 | x             | o             | VCF Cutoff            |
-    |                            29 | x             | o             | VCF Resonance         |
-    |                            30 | x             | o             | VCA Gain              |
-    |                            31 | x             | o             | MISC Portamento       |
+    |                            24 | x             | o             | LFO Rate              |
+    |                            25 | x             | o             | LFO Level EG Coef     |
+    |                            26 | x             | o             | VCO Mix (Pulse/Saw)   |
+    |                            27 | x             | o             | VCF Cutoff            |
+    |                            28 | x             | o             | VCO Pulse Width       |
+    |                            29 | x             | o             | VCO Saw Shift         |
+    |                            30 | x             | o             | VCO Portamento        |
+    |                            31 | x             | o             | VCO Gain              |
     +-------------------------------+---------------+---------------+-----------------------+
     | Program                       | x             | x             |                       |
     | Change       : True #         | ************* |               |                       |

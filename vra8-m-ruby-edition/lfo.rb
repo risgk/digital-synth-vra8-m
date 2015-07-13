@@ -12,11 +12,21 @@ class LFO
   end
 
   def set_rate(controller_value)
-    @rate = (controller_value >> 1) + 1
+    @rate = controller_value
+  end
+
+  def set_rate_eg_amt(controller_value)
+    @rate_eg_amt = controller_value << 1
   end
 
   def clock(rate_eg_control)
-    @phase += @rate
+    rate = @rate + high_byte(@rate_eg_amt * rate_eg_control)
+    if (rate > 127)
+      rate = 127
+    end
+    rate = (rate >> 1) + 1;
+
+    @phase += rate
     @phase &= 0xFFFF
     level = @phase
     if ((level & 0x8000) != 0)
