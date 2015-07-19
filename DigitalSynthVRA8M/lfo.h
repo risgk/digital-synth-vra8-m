@@ -4,7 +4,7 @@
 
 template <uint8_t T>
 class LFO {
-  static const uint8_t UPDATE_INTERVAL = 2;
+  static const uint8_t UPDATE_INTERVAL = 4;
 
   static uint16_t m_phase;
   static uint8_t  m_count;

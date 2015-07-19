@@ -1,7 +1,7 @@
 require_relative 'common'
 
 class LFO
-  UPDATE_INTERVAL = 2
+  UPDATE_INTERVAL = 4
 
   def initialize
     @phase = 0x4000
