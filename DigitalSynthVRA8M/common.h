@@ -5,8 +5,8 @@ const uint16_t SERIAL_SPEED    = 38400;
 const uint16_t SAMPLING_RATE   = 15625;
 const uint16_t FREQUENCY_MAX   = 7200;
 const uint8_t  BIT_DEPTH       = 8;
-const uint8_t  NOTE_NUMBER_MIN = 36;
-const uint8_t  NOTE_NUMBER_MAX = 96;
+const uint8_t  NOTE_NUMBER_MIN = 24;
+const uint8_t  NOTE_NUMBER_MAX = 84;
 
 const uint8_t  VCO_TUNE_RATE_TABLE_STEPS_BITS         = 6;
 const uint8_t  VCO_TUNE_RATE_DENOMINATOR_BITS         = 16;

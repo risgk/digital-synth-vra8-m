@@ -67,7 +67,7 @@ control_change(VCA_GAIN         , 127)
 control_change(EG_ATTACK        , 32 )
 control_change(EG_DECAY_RELEASE , 96 )
 control_change(EG_SUSTAIN       , 0  )
-play_cegbdfac(2)
+play_cegbdfac(1)
 
 # Preset Pad
 control_change(LFO_RATE         , 0  )
@@ -86,6 +86,6 @@ control_change(VCA_GAIN         , 127)
 control_change(EG_ATTACK        , 112)
 control_change(EG_DECAY_RELEASE , 112)
 control_change(EG_SUSTAIN       , 64 )
-play_cegbdfac(4)
+play_cegbdfac(5)
 
 $file.close
