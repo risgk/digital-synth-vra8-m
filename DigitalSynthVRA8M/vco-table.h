@@ -20,7 +20,7 @@ const uint16_t g_vco_tune_rate_table[] = {
   34467, 34498, 34529, 34560, 34591, 34623, 34654, 34685,
 };
 
-const uint8_t g_vco_wave_table_127[] PROGMEM = {
+const uint8_t g_vco_wave_table_h127[] PROGMEM = {
    +83,  +97,  +93,  +94,  +92,  +92,  +91,  +91,  +89,  +89,  +88,  +88,  +86,  +86,  +85,  +85,
    +83,  +83,  +82,  +82,  +80,  +80,  +79,  +79,  +77,  +77,  +76,  +76,  +74,  +74,  +73,  +73,
    +71,  +71,  +70,  +70,  +68,  +68,  +67,  +67,  +65,  +65,  +64,  +64,  +62,  +62,  +61,  +61,
@@ -40,7 +40,7 @@ const uint8_t g_vco_wave_table_127[] PROGMEM = {
    +83,
 };
 
-const uint8_t g_vco_wave_table_123[] PROGMEM = {
+const uint8_t g_vco_wave_table_h123[] PROGMEM = {
    +81,  +99,  +91,  +96,  +90,  +94,  +89,  +92,  +88,  +91,  +86,  +89,  +85,  +87,  +84,  +86,
    +82,  +84,  +81,  +82,  +80,  +81,  +79,  +79,  +77,  +77,  +76,  +75,  +75,  +74,  +73,  +72,
    +72,  +71,  +71,  +69,  +69,  +67,  +68,  +66,  +66,  +64,  +65,  +63,  +63,  +61,  +62,  +60,
@@ -60,7 +60,7 @@ const uint8_t g_vco_wave_table_123[] PROGMEM = {
    +81,
 };
 
-const uint8_t g_vco_wave_table_116[] PROGMEM = {
+const uint8_t g_vco_wave_table_h116[] PROGMEM = {
    +78, +103,  +88,  +99,  +88,  +96,  +88,  +93,  +88,  +90,  +88,  +87,  +87,  +85,  +86,  +83,
    +85,  +82,  +83,  +81,  +81,  +80,  +79,  +79,  +77,  +78,  +75,  +76,  +74,  +75,  +73,  +73,
    +71,  +71,  +70,  +69,  +69,  +67,  +68,  +66,  +66,  +64,  +64,  +63,  +63,  +62,  +61,  +61,
@@ -80,7 +80,7 @@ const uint8_t g_vco_wave_table_116[] PROGMEM = {
    +78,
 };
 
-const uint8_t g_vco_wave_table_110[] PROGMEM = {
+const uint8_t g_vco_wave_table_h110[] PROGMEM = {
    +74, +106,  +86, +100,  +88,  +95,  +90,  +90,  +91,  +87,  +90,  +85,  +88,  +85,  +85,  +85,
    +83,  +84,  +81,  +82,  +80,  +80,  +79,  +78,  +78,  +76,  +77,  +75,  +75,  +74,  +73,  +73,
    +71,  +72,  +70,  +70,  +69,  +68,  +68,  +66,  +66,  +64,  +64,  +63,  +62,  +62,  +61,  +61,
@@ -100,7 +100,7 @@ const uint8_t g_vco_wave_table_110[] PROGMEM = {
    +74,
 };
 
-const uint8_t g_vco_wave_table_103[] PROGMEM = {
+const uint8_t g_vco_wave_table_h103[] PROGMEM = {
    +71, +108,  +85,  +99,  +91,  +91,  +94,  +87,  +92,  +88,  +88,  +89,  +85,  +88,  +84,  +84,
    +84,  +82,  +83,  +80,  +81,  +80,  +78,  +79,  +77,  +77,  +76,  +75,  +75,  +73,  +74,  +72,
    +71,  +72,  +69,  +70,  +69,  +68,  +68,  +66,  +66,  +65,  +64,  +64,  +62,  +62,  +61,  +60,
@@ -120,7 +120,7 @@ const uint8_t g_vco_wave_table_103[] PROGMEM = {
    +71,
 };
 
-const uint8_t g_vco_wave_table_98[] PROGMEM = {
+const uint8_t g_vco_wave_table_h98[] PROGMEM = {
    +68, +110,  +85,  +97,  +94,  +88,  +95,  +88,  +90,  +90,  +86,  +89,  +86,  +85,  +87,  +83,
    +84,  +83,  +81,  +83,  +80,  +80,  +80,  +77,  +79,  +77,  +76,  +76,  +74,  +74,  +73,  +72,
    +72,  +70,  +70,  +70,  +68,  +69,  +67,  +66,  +66,  +64,  +64,  +63,  +62,  +62,  +61,  +60,
@@ -140,7 +140,7 @@ const uint8_t g_vco_wave_table_98[] PROGMEM = {
    +68,
 };
 
-const uint8_t g_vco_wave_table_92[] PROGMEM = {
+const uint8_t g_vco_wave_table_h92[] PROGMEM = {
    +64, +111,  +87,  +93,  +97,  +87,  +93,  +91,  +87,  +91,  +88,  +86,  +89,  +84,  +85,  +86,
    +82,  +84,  +83,  +80,  +82,  +80,  +78,  +80,  +77,  +77,  +77,  +74,  +75,  +74,  +72,  +73,
    +72,  +70,  +71,  +69,  +68,  +69,  +67,  +66,  +66,  +64,  +65,  +64,  +62,  +62,  +61,  +60,
@@ -160,7 +160,7 @@ const uint8_t g_vco_wave_table_92[] PROGMEM = {
    +64,
 };
 
-const uint8_t g_vco_wave_table_87[] PROGMEM = {
+const uint8_t g_vco_wave_table_h87[] PROGMEM = {
    +61, +112,  +89,  +90,  +99,  +88,  +90,  +94,  +87,  +89,  +90,  +85,  +87,  +88,  +83,  +85,
    +85,  +81,  +83,  +82,  +79,  +81,  +80,  +77,  +78,  +77,  +75,  +76,  +75,  +73,  +74,  +72,
    +71,  +72,  +70,  +69,  +69,  +68,  +67,  +67,  +65,  +65,  +65,  +63,  +62,  +63,  +61,  +60,
@@ -180,7 +180,7 @@ const uint8_t g_vco_wave_table_87[] PROGMEM = {
    +61,
 };
 
-const uint8_t g_vco_wave_table_82[] PROGMEM = {
+const uint8_t g_vco_wave_table_h82[] PROGMEM = {
    +58, +112,  +92,  +87,  +99,  +92,  +87,  +94,  +90,  +86,  +90,  +88,  +84,  +87,  +86,  +82,
    +84,  +84,  +81,  +82,  +82,  +79,  +79,  +80,  +77,  +77,  +77,  +75,  +74,  +75,  +73,  +72,
    +73,  +71,  +69,  +70,  +69,  +67,  +68,  +66,  +65,  +65,  +64,  +63,  +63,  +62,  +60,  +61,
@@ -200,7 +200,7 @@ const uint8_t g_vco_wave_table_82[] PROGMEM = {
    +58,
 };
 
-const uint8_t g_vco_wave_table_77[] PROGMEM = {
+const uint8_t g_vco_wave_table_h77[] PROGMEM = {
    +55, +111,  +96,  +85,  +97,  +95,  +86,  +91,  +93,  +87,  +87,  +90,  +86,  +84,  +87,  +85,
    +82,  +83,  +84,  +80,  +80,  +81,  +79,  +77,  +79,  +77,  +75,  +76,  +75,  +73,  +73,  +73,
    +71,  +70,  +71,  +69,  +68,  +68,  +68,  +66,  +66,  +66,  +64,  +63,  +63,  +62,  +60,  +61,
@@ -220,7 +220,7 @@ const uint8_t g_vco_wave_table_77[] PROGMEM = {
    +55,
 };
 
-const uint8_t g_vco_wave_table_73[] PROGMEM = {
+const uint8_t g_vco_wave_table_h73[] PROGMEM = {
    +52, +110,  +99,  +84,  +94,  +97,  +88,  +88,  +93,  +90,  +85,  +88,  +89,  +84,  +84,  +86,
    +84,  +81,  +83,  +83,  +79,  +79,  +81,  +78,  +76,  +77,  +77,  +74,  +74,  +75,  +73,  +71,
    +72,  +72,  +69,  +69,  +70,  +68,  +66,  +67,  +66,  +64,  +64,  +64,  +63,  +61,  +62,  +61,
@@ -240,7 +240,7 @@ const uint8_t g_vco_wave_table_73[] PROGMEM = {
    +52,
 };
 
-const uint8_t g_vco_wave_table_69[] PROGMEM = {
+const uint8_t g_vco_wave_table_h69[] PROGMEM = {
    +50, +108, +102,  +85,  +90,  +98,  +91,  +86,  +91,  +92,  +86,  +85,  +89,  +87,  +83,  +84,
    +86,  +83,  +80,  +82,  +82,  +79,  +78,  +79,  +79,  +76,  +76,  +77,  +75,  +73,  +73,  +73,
    +71,  +70,  +71,  +70,  +68,  +67,  +68,  +67,  +65,  +65,  +65,  +63,  +62,  +62,  +62,  +60,
@@ -260,7 +260,7 @@ const uint8_t g_vco_wave_table_69[] PROGMEM = {
    +50,
 };
 
-const uint8_t g_vco_wave_table_65[] PROGMEM = {
+const uint8_t g_vco_wave_table_h65[] PROGMEM = {
    +47, +106, +105,  +86,  +87,  +97,  +95,  +86,  +87,  +92,  +90,  +84,  +86,  +89,  +86,  +82,
    +83,  +85,  +82,  +79,  +81,  +82,  +79,  +77,  +78,  +78,  +76,  +74,  +75,  +75,  +73,  +71,
    +72,  +72,  +70,  +68,  +69,  +69,  +67,  +66,  +66,  +66,  +63,  +63,  +63,  +62,  +60,  +60,
@@ -280,7 +280,7 @@ const uint8_t g_vco_wave_table_65[] PROGMEM = {
    +47,
 };
 
-const uint8_t g_vco_wave_table_61[] PROGMEM = {
+const uint8_t g_vco_wave_table_h61[] PROGMEM = {
    +44, +103, +108,  +89,  +84,  +94,  +97,  +89,  +85,  +89,  +92,  +87,  +83,  +86,  +88,  +85,
    +81,  +82,  +84,  +82,  +79,  +79,  +81,  +79,  +76,  +76,  +77,  +77,  +74,  +73,  +74,  +74,
    +71,  +70,  +70,  +71,  +69,  +67,  +67,  +67,  +66,  +64,  +64,  +64,  +63,  +61,  +61,  +61,
@@ -300,7 +300,7 @@ const uint8_t g_vco_wave_table_61[] PROGMEM = {
    +44,
 };
 
-const uint8_t g_vco_wave_table_58[] PROGMEM = {
+const uint8_t g_vco_wave_table_h58[] PROGMEM = {
    +42, +101, +110,  +92,  +83,  +91,  +97,  +92,  +85,  +86,  +91,  +90,  +85,  +83,  +86,  +87,
    +83,  +80,  +82,  +83,  +82,  +78,  +78,  +80,  +79,  +76,  +75,  +76,  +76,  +74,  +72,  +72,
    +73,  +72,  +69,  +68,  +69,  +69,  +67,  +65,  +66,  +66,  +64,  +62,  +62,  +63,  +62,  +60,
@@ -320,7 +320,7 @@ const uint8_t g_vco_wave_table_58[] PROGMEM = {
    +42,
 };
 
-const uint8_t g_vco_wave_table_55[] PROGMEM = {
+const uint8_t g_vco_wave_table_h55[] PROGMEM = {
    +40,  +98, +111,  +95,  +83,  +88,  +96,  +95,  +87,  +84,  +89,  +91,  +88,  +83,  +83,  +86,
    +86,  +82,  +80,  +81,  +83,  +81,  +78,  +77,  +78,  +79,  +76,  +74,  +74,  +75,  +74,  +72,
    +70,  +71,  +71,  +70,  +68,  +67,  +68,  +67,  +65,  +64,  +64,  +64,  +63,  +61,  +60,  +61,
@@ -340,7 +340,7 @@ const uint8_t g_vco_wave_table_55[] PROGMEM = {
    +40,
 };
 
-const uint8_t g_vco_wave_table_51[] PROGMEM = {
+const uint8_t g_vco_wave_table_h51[] PROGMEM = {
    +37,  +94, +111,  +99,  +85,  +85,  +93,  +97,  +92,  +85,  +84,  +89,  +90,  +87,  +82,  +82,
    +85,  +86,  +83,  +79,  +79,  +81,  +81,  +79,  +76,  +76,  +77,  +77,  +75,  +72,  +72,  +73,
    +73,  +71,  +69,  +68,  +69,  +69,  +67,  +65,  +65,  +66,  +65,  +63,  +62,  +61,  +62,  +61,
@@ -360,7 +360,7 @@ const uint8_t g_vco_wave_table_51[] PROGMEM = {
    +37,
 };
 
-const uint8_t g_vco_wave_table_49[] PROGMEM = {
+const uint8_t g_vco_wave_table_h49[] PROGMEM = {
    +36,  +92, +111, +102,  +87,  +83,  +91,  +96,  +94,  +87,  +83,  +86,  +90,  +89,  +84,  +81,
    +82,  +85,  +85,  +81,  +78,  +79,  +80,  +80,  +78,  +75,  +75,  +76,  +76,  +74,  +72,  +71,
    +72,  +72,  +71,  +68,  +67,  +68,  +68,  +67,  +65,  +64,  +64,  +64,  +64,  +62,  +60,  +60,
@@ -380,7 +380,7 @@ const uint8_t g_vco_wave_table_49[] PROGMEM = {
    +36,
 };
 
-const uint8_t g_vco_wave_table_46[] PROGMEM = {
+const uint8_t g_vco_wave_table_h46[] PROGMEM = {
    +34,  +88, +110, +105,  +90,  +83,  +87,  +94,  +96,  +90,  +84,  +83,  +87,  +90,  +88,  +83,
    +80,  +81,  +84,  +84,  +81,  +78,  +77,  +79,  +80,  +78,  +75,  +73,  +74,  +75,  +75,  +73,
    +70,  +69,  +70,  +71,  +70,  +67,  +66,  +66,  +66,  +66,  +64,  +62,  +62,  +62,  +62,  +61,
@@ -400,7 +400,7 @@ const uint8_t g_vco_wave_table_46[] PROGMEM = {
    +34,
 };
 
-const uint8_t g_vco_wave_table_43[] PROGMEM = {
+const uint8_t g_vco_wave_table_h43[] PROGMEM = {
    +32,  +84, +109, +108,  +94,  +83,  +84,  +91,  +96,  +94,  +87,  +83,  +83,  +87,  +89,  +87,
    +83,  +80,  +80,  +82,  +83,  +81,  +78,  +76,  +76,  +78,  +78,  +76,  +74,  +72,  +72,  +73,
    +73,  +72,  +69,  +68,  +68,  +69,  +69,  +67,  +65,  +64,  +64,  +64,  +64,  +62,  +60,  +59,
@@ -420,7 +420,7 @@ const uint8_t g_vco_wave_table_43[] PROGMEM = {
    +32,
 };
 
-const uint8_t g_vco_wave_table_41[] PROGMEM = {
+const uint8_t g_vco_wave_table_h41[] PROGMEM = {
    +30,  +81, +107, +109,  +97,  +85,  +82,  +88,  +94,  +95,  +90,  +84,  +82,  +84,  +87,  +88,
    +85,  +81,  +79,  +80,  +82,  +83,  +81,  +78,  +75,  +75,  +77,  +77,  +76,  +74,  +71,  +71,
    +72,  +73,  +72,  +69,  +67,  +66,  +67,  +68,  +67,  +65,  +63,  +62,  +62,  +63,  +62,  +61,
@@ -440,7 +440,7 @@ const uint8_t g_vco_wave_table_41[] PROGMEM = {
    +30,
 };
 
-const uint8_t g_vco_wave_table_38[] PROGMEM = {
+const uint8_t g_vco_wave_table_h38[] PROGMEM = {
    +28,  +76, +105, +110, +101,  +88,  +82,  +84,  +90,  +95,  +94,  +89,  +83,  +81,  +83,  +86,
    +87,  +86,  +82,  +78,  +78,  +79,  +81,  +81,  +79,  +76,  +74,  +74,  +75,  +76,  +75,  +73,
    +70,  +69,  +69,  +70,  +70,  +69,  +67,  +65,  +64,  +65,  +65,  +65,  +63,  +61,  +60,  +59,
@@ -460,7 +460,7 @@ const uint8_t g_vco_wave_table_38[] PROGMEM = {
    +28,
 };
 
-const uint8_t g_vco_wave_table_36[] PROGMEM = {
+const uint8_t g_vco_wave_table_h36[] PROGMEM = {
    +27,  +73, +102, +111, +104,  +91,  +83,  +82,  +87,  +93,  +94,  +92,  +86,  +82,  +81,  +83,
    +86,  +87,  +85,  +81,  +78,  +77,  +78,  +80,  +80,  +79,  +76,  +73,  +72,  +73,  +74,  +75,
    +73,  +71,  +68,  +68,  +68,  +69,  +69,  +68,  +65,  +63,  +63,  +63,  +63,  +63,  +62,  +60,
@@ -480,7 +480,7 @@ const uint8_t g_vco_wave_table_36[] PROGMEM = {
    +27,
 };
 
-const uint8_t g_vco_wave_table_34[] PROGMEM = {
+const uint8_t g_vco_wave_table_h34[] PROGMEM = {
    +25,  +70,  +99, +110, +106,  +95,  +85,  +81,  +84,  +89,  +94,  +93,  +89,  +84,  +80,  +80,
    +83,  +85,  +86,  +84,  +81,  +77,  +76,  +77,  +78,  +79,  +79,  +76,  +73,  +71,  +71,  +72,
    +73,  +73,  +71,  +69,  +67,  +66,  +66,  +67,  +67,  +66,  +64,  +62,  +61,  +61,  +61,  +62,
@@ -500,7 +500,7 @@ const uint8_t g_vco_wave_table_34[] PROGMEM = {
    +25,
 };
 
-const uint8_t g_vco_wave_table_32[] PROGMEM = {
+const uint8_t g_vco_wave_table_h32[] PROGMEM = {
    +24,  +66,  +96, +109, +108,  +98,  +88,  +81,  +81,  +86,  +91,  +94,  +92,  +88,  +83,  +80,
    +80,  +82,  +84,  +85,  +84,  +81,  +77,  +75,  +75,  +76,  +78,  +78,  +77,  +74,  +71,  +70,
    +70,  +71,  +72,  +72,  +70,  +68,  +66,  +64,  +64,  +65,  +66,  +65,  +64,  +62,  +60,  +59,
@@ -520,7 +520,7 @@ const uint8_t g_vco_wave_table_32[] PROGMEM = {
    +24,
 };
 
-const uint8_t g_vco_wave_table_30[] PROGMEM = {
+const uint8_t g_vco_wave_table_h30[] PROGMEM = {
    +22,  +63,  +92, +108, +109, +102,  +91,  +83,  +80,  +82,  +87,  +92,  +93,  +91,  +86,  +82,
    +79,  +79,  +81,  +83,  +84,  +83,  +81,  +77,  +75,  +74,  +74,  +76,  +77,  +77,  +75,  +72,
    +70,  +68,  +68,  +69,  +70,  +70,  +69,  +67,  +65,  +63,  +62,  +63,  +63,  +64,  +63,  +61,
@@ -540,7 +540,7 @@ const uint8_t g_vco_wave_table_30[] PROGMEM = {
    +22,
 };
 
-const uint8_t g_vco_wave_table_29[] PROGMEM = {
+const uint8_t g_vco_wave_table_h29[] PROGMEM = {
    +22,  +61,  +90, +107, +110, +104,  +93,  +85,  +80,  +81,  +85,  +90,  +93,  +92,  +88,  +84,
    +80,  +78,  +79,  +81,  +83,  +84,  +82,  +80,  +76,  +74,  +73,  +74,  +75,  +76,  +76,  +74,
    +72,  +69,  +68,  +67,  +68,  +69,  +69,  +68,  +67,  +65,  +63,  +61,  +61,  +62,  +62,  +62,
@@ -560,7 +560,7 @@ const uint8_t g_vco_wave_table_29[] PROGMEM = {
    +22,
 };
 
-const uint8_t g_vco_wave_table_27[] PROGMEM = {
+const uint8_t g_vco_wave_table_h27[] PROGMEM = {
    +20,  +57,  +86, +104, +110, +106,  +98,  +88,  +82,  +80,  +82,  +86,  +90,  +92,  +91,  +88,
    +83,  +79,  +77,  +77,  +79,  +81,  +83,  +82,  +80,  +77,  +74,  +72,  +72,  +72,  +73,  +74,
    +74,  +73,  +71,  +68,  +66,  +65,  +65,  +66,  +67,  +67,  +66,  +64,  +62,  +60,  +59,  +59,
@@ -580,7 +580,7 @@ const uint8_t g_vco_wave_table_27[] PROGMEM = {
    +20,
 };
 
-const uint8_t g_vco_wave_table_25[] PROGMEM = {
+const uint8_t g_vco_wave_table_h25[] PROGMEM = {
    +19,  +54,  +82, +100, +109, +108, +102,  +93,  +85,  +80,  +79,  +81,  +85,  +89,  +91,  +91,
    +88,  +84,  +80,  +77,  +76,  +77,  +79,  +80,  +81,  +81,  +79,  +76,  +73,  +71,  +70,  +70,
    +71,  +72,  +73,  +72,  +71,  +68,  +66,  +64,  +63,  +63,  +64,  +64,  +65,  +64,  +63,  +61,
@@ -600,7 +600,7 @@ const uint8_t g_vco_wave_table_25[] PROGMEM = {
    +19,
 };
 
-const uint8_t g_vco_wave_table_24[] PROGMEM = {
+const uint8_t g_vco_wave_table_h24[] PROGMEM = {
    +18,  +52,  +79,  +98, +108, +109, +104,  +95,  +87,  +81,  +79,  +80,  +83,  +87,  +90,  +91,
    +89,  +86,  +82,  +78,  +76,  +75,  +76,  +78,  +80,  +81,  +80,  +78,  +75,  +72,  +70,  +69,
    +69,  +70,  +71,  +72,  +71,  +70,  +68,  +66,  +64,  +62,  +62,  +62,  +63,  +63,  +63,  +63,
@@ -620,7 +620,7 @@ const uint8_t g_vco_wave_table_24[] PROGMEM = {
    +18,
 };
 
-const uint8_t g_vco_wave_table_23[] PROGMEM = {
+const uint8_t g_vco_wave_table_h23[] PROGMEM = {
    +17,  +50,  +77,  +96, +107, +109, +105,  +98,  +90,  +83,  +79,  +79,  +81,  +84,  +88,  +90,
    +90,  +88,  +84,  +80,  +77,  +75,  +75,  +76,  +77,  +79,  +80,  +79,  +78,  +75,  +72,  +70,
    +68,  +68,  +68,  +69,  +70,  +71,  +70,  +68,  +66,  +64,  +62,  +61,  +60,  +61,  +61,  +62,
@@ -640,7 +640,7 @@ const uint8_t g_vco_wave_table_23[] PROGMEM = {
    +17,
 };
 
-const uint8_t g_vco_wave_table_21[] PROGMEM = {
+const uint8_t g_vco_wave_table_h21[] PROGMEM = {
    +16,  +46,  +71,  +91, +103, +108, +108, +102,  +95,  +87,  +82,  +78,  +78,  +80,  +83,  +86,
    +88,  +89,  +88,  +86,  +82,  +78,  +75,  +74,  +73,  +74,  +75,  +77,  +78,  +78,  +77,  +75,
    +72,  +70,  +67,  +66,  +66,  +66,  +67,  +68,  +68,  +68,  +67,  +65,  +63,  +61,  +59,  +58,
@@ -660,7 +660,7 @@ const uint8_t g_vco_wave_table_21[] PROGMEM = {
    +16,
 };
 
-const uint8_t g_vco_wave_table_20[] PROGMEM = {
+const uint8_t g_vco_wave_table_h20[] PROGMEM = {
    +15,  +44,  +69,  +88, +101, +108, +108, +104,  +98,  +90,  +84,  +79,  +77,  +78,  +80,  +83,
    +86,  +88,  +88,  +87,  +85,  +81,  +78,  +75,  +73,  +72,  +73,  +74,  +75,  +76,  +77,  +76,
    +75,  +73,  +70,  +68,  +66,  +65,  +64,  +65,  +65,  +66,  +67,  +66,  +65,  +64,  +62,  +60,
@@ -680,7 +680,7 @@ const uint8_t g_vco_wave_table_20[] PROGMEM = {
    +15,
 };
 
-const uint8_t g_vco_wave_table_19[] PROGMEM = {
+const uint8_t g_vco_wave_table_h19[] PROGMEM = {
    +14,  +42,  +66,  +85,  +99, +106, +108, +106, +100,  +93,  +87,  +81,  +78,  +77,  +78,  +80,
    +83,  +86,  +87,  +88,  +87,  +84,  +81,  +77,  +74,  +72,  +71,  +71,  +72,  +74,  +75,  +76,
    +76,  +75,  +73,  +71,  +68,  +66,  +64,  +63,  +63,  +63,  +64,  +64,  +65,  +65,  +64,  +63,
@@ -700,7 +700,7 @@ const uint8_t g_vco_wave_table_19[] PROGMEM = {
    +14,
 };
 
-const uint8_t g_vco_wave_table_18[] PROGMEM = {
+const uint8_t g_vco_wave_table_h18[] PROGMEM = {
    +13,  +39,  +63,  +82,  +96, +105, +108, +107, +103,  +96,  +90,  +84,  +79,  +77,  +76,  +77,
    +80,  +83,  +85,  +87,  +87,  +86,  +84,  +81,  +77,  +74,  +72,  +70,  +70,  +71,  +72,  +73,
    +74,  +74,  +74,  +73,  +71,  +69,  +67,  +64,  +63,  +62,  +61,  +61,  +62,  +62,  +63,  +63,
@@ -720,7 +720,7 @@ const uint8_t g_vco_wave_table_18[] PROGMEM = {
    +13,
 };
 
-const uint8_t g_vco_wave_table_17[] PROGMEM = {
+const uint8_t g_vco_wave_table_h17[] PROGMEM = {
    +13,  +37,  +60,  +78,  +93, +102, +107, +108, +105,  +99,  +93,  +87,  +81,  +78,  +76,  +76,
    +77,  +79,  +82,  +84,  +86,  +86,  +85,  +83,  +81,  +78,  +75,  +72,  +70,  +69,  +69,  +69,
    +71,  +72,  +73,  +73,  +73,  +72,  +70,  +68,  +65,  +63,  +61,  +60,  +59,  +59,  +60,  +60,
@@ -740,7 +740,7 @@ const uint8_t g_vco_wave_table_17[] PROGMEM = {
    +13,
 };
 
-const uint8_t g_vco_wave_table_16[] PROGMEM = {
+const uint8_t g_vco_wave_table_h16[] PROGMEM = {
    +12,  +35,  +57,  +75,  +89, +100, +106, +107, +106, +102,  +96,  +90,  +85,  +80,  +77,  +75,
    +75,  +76,  +78,  +81,  +83,  +85,  +85,  +85,  +83,  +81,  +78,  +75,  +72,  +70,  +68,  +68,
    +68,  +68,  +69,  +70,  +71,  +71,  +71,  +70,  +69,  +67,  +65,  +62,  +60,  +59,  +58,  +57,
@@ -760,7 +760,7 @@ const uint8_t g_vco_wave_table_16[] PROGMEM = {
    +12,
 };
 
-const uint8_t g_vco_wave_table_15[] PROGMEM = {
+const uint8_t g_vco_wave_table_h15[] PROGMEM = {
    +11,  +33,  +53,  +71,  +86,  +96, +103, +107, +107, +104, +100,  +94,  +88,  +83,  +79,  +76,
    +74,  +74,  +75,  +77,  +79,  +81,  +83,  +84,  +84,  +83,  +81,  +79,  +76,  +73,  +70,  +68,
    +67,  +66,  +66,  +66,  +67,  +68,  +69,  +69,  +69,  +69,  +68,  +66,  +64,  +62,  +60,  +58,
@@ -780,7 +780,7 @@ const uint8_t g_vco_wave_table_15[] PROGMEM = {
    +11,
 };
 
-const uint8_t g_vco_wave_table_14[] PROGMEM = {
+const uint8_t g_vco_wave_table_h14[] PROGMEM = {
    +10,  +31,  +50,  +67,  +82,  +93, +101, +105, +107, +106, +102,  +98,  +92,  +87,  +82,  +78,
    +75,  +73,  +73,  +74,  +75,  +77,  +79,  +81,  +82,  +83,  +83,  +81,  +80,  +77,  +74,  +72,
    +69,  +67,  +65,  +64,  +64,  +64,  +65,  +66,  +67,  +67,  +67,  +67,  +67,  +65,  +64,  +62,
@@ -800,7 +800,7 @@ const uint8_t g_vco_wave_table_14[] PROGMEM = {
    +10,
 };
 
-const uint8_t g_vco_wave_table_13[] PROGMEM = {
+const uint8_t g_vco_wave_table_h13[] PROGMEM = {
    +10,  +29,  +47,  +63,  +77,  +89,  +97, +103, +106, +106, +104, +101,  +96,  +91,  +86,  +82,
    +78,  +75,  +73,  +72,  +72,  +73,  +75,  +77,  +79,  +80,  +81,  +82,  +81,  +80,  +78,  +76,
    +73,  +71,  +68,  +66,  +64,  +63,  +62,  +62,  +62,  +63,  +64,  +64,  +65,  +65,  +65,  +64,
@@ -820,7 +820,7 @@ const uint8_t g_vco_wave_table_13[] PROGMEM = {
    +10,
 };
 
-const uint8_t g_vco_wave_table_12[] PROGMEM = {
+const uint8_t g_vco_wave_table_h12[] PROGMEM = {
     +9,  +27,  +43,  +59,  +73,  +84,  +93, +100, +104, +106, +105, +103, +100,  +96,  +91,  +86,
    +82,  +78,  +75,  +72,  +71,  +71,  +71,  +73,  +74,  +76,  +77,  +79,  +80,  +80,  +80,  +79,
    +77,  +75,  +73,  +70,  +68,  +66,  +64,  +62,  +61,  +60,  +60,  +60,  +60,  +61,  +61,  +62,
@@ -840,7 +840,7 @@ const uint8_t g_vco_wave_table_12[] PROGMEM = {
     +9,
 };
 
-const uint8_t g_vco_wave_table_11[] PROGMEM = {
+const uint8_t g_vco_wave_table_h11[] PROGMEM = {
     +8,  +24,  +40,  +55,  +68,  +79,  +88,  +96, +101, +104, +105, +105, +103,  +99,  +96,  +91,
    +87,  +82,  +78,  +75,  +72,  +71,  +70,  +69,  +70,  +71,  +72,  +74,  +75,  +76,  +77,  +78,
    +78,  +77,  +76,  +75,  +73,  +71,  +68,  +66,  +64,  +62,  +60,  +59,  +58,  +57,  +57,  +57,
@@ -860,7 +860,7 @@ const uint8_t g_vco_wave_table_11[] PROGMEM = {
     +8,
 };
 
-const uint8_t g_vco_wave_table_10[] PROGMEM = {
+const uint8_t g_vco_wave_table_h10[] PROGMEM = {
     +7,  +22,  +37,  +50,  +62,  +73,  +83,  +91,  +97, +101, +103, +104, +104, +102,  +99,  +96,
    +92,  +88,  +84,  +80,  +76,  +73,  +71,  +69,  +68,  +68,  +68,  +69,  +70,  +71,  +72,  +74,
    +75,  +75,  +76,  +76,  +75,  +74,  +73,  +71,  +69,  +67,  +65,  +63,  +60,  +59,  +57,  +56,
@@ -880,7 +880,7 @@ const uint8_t g_vco_wave_table_10[] PROGMEM = {
     +7,
 };
 
-const uint8_t g_vco_wave_table_9[] PROGMEM = {
+const uint8_t g_vco_wave_table_h9[] PROGMEM = {
     +7,  +20,  +33,  +45,  +57,  +67,  +77,  +85,  +91,  +96, +100, +102, +103, +103, +102, +100,
    +97,  +93,  +90,  +86,  +82,  +78,  +75,  +72,  +70,  +68,  +67,  +66,  +66,  +66,  +67,  +67,
    +69,  +70,  +71,  +72,  +72,  +73,  +73,  +73,  +72,  +71,  +70,  +68,  +67,  +65,  +62,  +60,
@@ -900,7 +900,7 @@ const uint8_t g_vco_wave_table_9[] PROGMEM = {
     +7,
 };
 
-const uint8_t g_vco_wave_table_8[] PROGMEM = {
+const uint8_t g_vco_wave_table_h8[] PROGMEM = {
     +6,  +18,  +30,  +41,  +51,  +61,  +70,  +78,  +85,  +91,  +95,  +99, +101, +102, +102, +102,
   +100,  +98,  +95,  +92,  +89,  +85,  +82,  +78,  +75,  +72,  +69,  +67,  +66,  +64,  +64,  +63,
    +63,  +64,  +64,  +65,  +66,  +67,  +68,  +68,  +69,  +70,  +70,  +70,  +69,  +69,  +68,  +66,
@@ -920,7 +920,7 @@ const uint8_t g_vco_wave_table_8[] PROGMEM = {
     +6,
 };
 
-const uint8_t g_vco_wave_table_7[] PROGMEM = {
+const uint8_t g_vco_wave_table_h7[] PROGMEM = {
     +5,  +16,  +26,  +36,  +45,  +54,  +63,  +70,  +77,  +83,  +88,  +93,  +96,  +98, +100, +101,
   +101, +100,  +99,  +97,  +95,  +92,  +89,  +86,  +83,  +79,  +76,  +73,  +70,  +68,  +66,  +64,
    +62,  +61,  +61,  +60,  +60,  +60,  +60,  +61,  +62,  +62,  +63,  +64,  +64,  +65,  +65,  +66,
@@ -940,7 +940,7 @@ const uint8_t g_vco_wave_table_7[] PROGMEM = {
     +5,
 };
 
-const uint8_t g_vco_wave_table_6[] PROGMEM = {
+const uint8_t g_vco_wave_table_h6[] PROGMEM = {
     +4,  +13,  +22,  +31,  +39,  +47,  +55,  +62,  +69,  +75,  +80,  +85,  +89,  +92,  +95,  +97,
    +98,  +99,  +99,  +99,  +98,  +96,  +95,  +93,  +90,  +88,  +85,  +82,  +79,  +76,  +73,  +71,
    +68,  +66,  +64,  +62,  +60,  +59,  +58,  +57,  +56,  +56,  +56,  +56,  +56,  +56,  +57,  +57,
@@ -961,20 +961,20 @@ const uint8_t g_vco_wave_table_6[] PROGMEM = {
 };
 
 const uint8_t* g_vco_wave_tables[] = {
-  g_vco_wave_table_127, g_vco_wave_table_127, g_vco_wave_table_127, g_vco_wave_table_127,
-  g_vco_wave_table_127, g_vco_wave_table_127, g_vco_wave_table_127, g_vco_wave_table_127,
-  g_vco_wave_table_127, g_vco_wave_table_127, g_vco_wave_table_123, g_vco_wave_table_116,
-  g_vco_wave_table_110, g_vco_wave_table_103, g_vco_wave_table_98 , g_vco_wave_table_92 ,
-  g_vco_wave_table_87 , g_vco_wave_table_82 , g_vco_wave_table_77 , g_vco_wave_table_73 ,
-  g_vco_wave_table_69 , g_vco_wave_table_65 , g_vco_wave_table_61 , g_vco_wave_table_58 ,
-  g_vco_wave_table_55 , g_vco_wave_table_51 , g_vco_wave_table_49 , g_vco_wave_table_46 ,
-  g_vco_wave_table_43 , g_vco_wave_table_41 , g_vco_wave_table_38 , g_vco_wave_table_36 ,
-  g_vco_wave_table_34 , g_vco_wave_table_32 , g_vco_wave_table_30 , g_vco_wave_table_29 ,
-  g_vco_wave_table_27 , g_vco_wave_table_25 , g_vco_wave_table_24 , g_vco_wave_table_23 ,
-  g_vco_wave_table_21 , g_vco_wave_table_20 , g_vco_wave_table_19 , g_vco_wave_table_18 ,
-  g_vco_wave_table_17 , g_vco_wave_table_16 , g_vco_wave_table_15 , g_vco_wave_table_14 ,
-  g_vco_wave_table_13 , g_vco_wave_table_12 , g_vco_wave_table_12 , g_vco_wave_table_11 ,
-  g_vco_wave_table_10 , g_vco_wave_table_10 , g_vco_wave_table_9  , g_vco_wave_table_9  ,
-  g_vco_wave_table_8  , g_vco_wave_table_8  , g_vco_wave_table_7  , g_vco_wave_table_7  ,
-  g_vco_wave_table_6  , g_vco_wave_table_6  , };
+  g_vco_wave_table_h127, g_vco_wave_table_h127, g_vco_wave_table_h127, g_vco_wave_table_h127,
+  g_vco_wave_table_h127, g_vco_wave_table_h127, g_vco_wave_table_h127, g_vco_wave_table_h127,
+  g_vco_wave_table_h127, g_vco_wave_table_h127, g_vco_wave_table_h123, g_vco_wave_table_h116,
+  g_vco_wave_table_h110, g_vco_wave_table_h103, g_vco_wave_table_h98 , g_vco_wave_table_h92 ,
+  g_vco_wave_table_h87 , g_vco_wave_table_h82 , g_vco_wave_table_h77 , g_vco_wave_table_h73 ,
+  g_vco_wave_table_h69 , g_vco_wave_table_h65 , g_vco_wave_table_h61 , g_vco_wave_table_h58 ,
+  g_vco_wave_table_h55 , g_vco_wave_table_h51 , g_vco_wave_table_h49 , g_vco_wave_table_h46 ,
+  g_vco_wave_table_h43 , g_vco_wave_table_h41 , g_vco_wave_table_h38 , g_vco_wave_table_h36 ,
+  g_vco_wave_table_h34 , g_vco_wave_table_h32 , g_vco_wave_table_h30 , g_vco_wave_table_h29 ,
+  g_vco_wave_table_h27 , g_vco_wave_table_h25 , g_vco_wave_table_h24 , g_vco_wave_table_h23 ,
+  g_vco_wave_table_h21 , g_vco_wave_table_h20 , g_vco_wave_table_h19 , g_vco_wave_table_h18 ,
+  g_vco_wave_table_h17 , g_vco_wave_table_h16 , g_vco_wave_table_h15 , g_vco_wave_table_h14 ,
+  g_vco_wave_table_h13 , g_vco_wave_table_h12 , g_vco_wave_table_h12 , g_vco_wave_table_h11 ,
+  g_vco_wave_table_h10 , g_vco_wave_table_h10 , g_vco_wave_table_h9  , g_vco_wave_table_h9  ,
+  g_vco_wave_table_h8  , g_vco_wave_table_h8  , g_vco_wave_table_h7  , g_vco_wave_table_h7  ,
+  g_vco_wave_table_h6  , g_vco_wave_table_h6  , };
 

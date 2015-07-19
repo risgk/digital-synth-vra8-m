@@ -46,7 +46,7 @@ end
 $file.printf("]\n\n")
 
 def generate_vco_wave_table_sawtooth(last)
-  $file.printf("$vco_wave_table_%d = [\n  ", last)
+  $file.printf("$vco_wave_table_h%d = [\n  ", last)
   (0..(1 << VCO_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
     (1..last).each do |k|
@@ -90,7 +90,7 @@ end
 
 $file.printf("$vco_wave_tables = [\n  ")
 $vco_harmonics_restriction_table.each_with_index do |freq, idx|
-  $file.printf("$vco_wave_table_%-3d,", last_harmonic(freq))
+  $file.printf("$vco_wave_table_h%-3d,", last_harmonic(freq))
   if idx == DATA_BYTE_MAX
     $file.printf("\n")
   elsif idx % 4 == 3
