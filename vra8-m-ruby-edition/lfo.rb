@@ -1,8 +1,11 @@
 require_relative 'common'
 
 class LFO
+  UPDATE_INTERVAL = 2
+
   def initialize
     @phase = 0x4000
+    @count = 0
     set_level_eg_coef(0)
     set_rate(0)
   end
@@ -20,13 +23,17 @@ class LFO
   end
 
   def clock(rate_eg_control)
-    rate = @rate + high_byte(@rate_eg_amt * rate_eg_control)
-    if (rate > 127)
-      rate = 127
+    @count += 1;
+    if (@count >= UPDATE_INTERVAL)
+      @count = 0;
+      rate = @rate + high_byte(@rate_eg_amt * rate_eg_control)
+      if (rate > 127)
+        rate = 127
+      end
+      rate += 1;
+      @phase += rate
     end
-    rate = (rate >> 1) + 1;
 
-    @phase += rate
     @phase &= 0xFFFF
     level = @phase
     if ((level & 0x8000) != 0)
