@@ -32,9 +32,9 @@ class LFO
       end
       rate += 1;
       @phase += rate
+      @phase &= 0xFFFF
     end
 
-    @phase &= 0xFFFF
     level = @phase
     if ((level & 0x8000) != 0)
       level = ~level + 0x10000

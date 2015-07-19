@@ -41,7 +41,7 @@ public:
         rate = 127;
       }
       rate++;
-      m_phase += rate + 1;
+      m_phase += rate;
     }
 
     uint16_t level = m_phase;
