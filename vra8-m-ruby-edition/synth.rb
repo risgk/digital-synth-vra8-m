@@ -21,11 +21,11 @@ class Synth
     control_change(VCO_SAW_SHIFT    , 64 )
     control_change(VCO_PORTAMENTO   , 64 )
     control_change(VCF_CUTOFF       , 0  )
-    control_change(VCF_CUTOFF_EG_AMT, 127)
-    control_change(VCF_RESONANCE    , 127)
+    control_change(VCF_CUTOFF_EG_AMT, 124)
+    control_change(VCF_RESONANCE    , 64 )
     control_change(VCA_GAIN         , 127)
-    control_change(EG_ATTACK        , 32 )
-    control_change(EG_DECAY_RELEASE , 96 )
+    control_change(EG_ATTACK        , 24 )
+    control_change(EG_DECAY_RELEASE , 84 )
     control_change(EG_SUSTAIN       , 127)
   end
 
