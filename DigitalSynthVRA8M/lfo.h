@@ -4,10 +4,7 @@
 
 template <uint8_t T>
 class LFO {
-  static const uint8_t UPDATE_INTERVAL = 4;
-
   static uint16_t m_phase;
-  static uint8_t  m_count;
   static uint8_t  m_rate;
   static uint8_t  m_rate_eg_amt;
   static uint8_t  m_level_eg_coef;
@@ -15,7 +12,6 @@ class LFO {
 public:
   INLINE static void initialize() {
     m_phase = 0x4000;
-    m_count = 0;
     set_level_eg_coef(0);
     set_rate(0);
   }
@@ -33,16 +29,12 @@ public:
   }
 
   INLINE static int8_t clock(uint8_t rate_eg_control) {
-    m_count++;
-    if (m_count >= UPDATE_INTERVAL) {
-      m_count = 0;
-      uint8_t rate = m_rate + high_byte(m_rate_eg_amt * rate_eg_control);
-      if (rate > 127) {
-        rate = 127;
-      }
-      rate++;
-      m_phase += rate;
+    uint8_t rate = m_rate + high_byte(m_rate_eg_amt * rate_eg_control);
+    if (rate > 127) {
+      rate = 127;
     }
+    rate = (rate >> 1) + 2;
+    m_phase += rate;
 
     uint16_t level = m_phase;
     if ((level & 0x8000) != 0) {
@@ -58,6 +50,5 @@ public:
 
 template <uint8_t T> uint16_t LFO<T>::m_phase;
 template <uint8_t T> uint8_t  LFO<T>::m_rate;
-template <uint8_t T> uint8_t  LFO<T>::m_count;
 template <uint8_t T> uint8_t  LFO<T>::m_rate_eg_amt;
 template <uint8_t T> uint8_t  LFO<T>::m_level_eg_coef;
