@@ -22,6 +22,7 @@
 - Parameter Editor (MIDI Controller) for VRA8-M, Web App
 - We recommend Google Chrome, which implements Web MIDI API
 - Recommending [loopMIDI](http://www.tobias-erichsen.de/software/loopmidi.html) (virtual loopback MIDI cable) to connect VRA8-M
+- CAUTION: Click sounds occur sometimes when you change the controllers
 
 ## VRA8-M Ruby Edition
 
