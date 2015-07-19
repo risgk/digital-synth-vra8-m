@@ -50,7 +50,7 @@ def decay_release_update_interval(t)
   # error correction
   case t
   when 22..31
-    sec = sec * 1.25
+    sec = sec * 1.125
   end
 
   update_interval = ((sec * SAMPLING_RATE) /
