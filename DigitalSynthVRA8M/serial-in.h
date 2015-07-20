@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+template <uint8_t T>
 class SerialIn {
 public:
   INLINE static void open() {

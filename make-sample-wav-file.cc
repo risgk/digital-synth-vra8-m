@@ -27,23 +27,23 @@ const uint16_t RECORDING_SEC = 60;
 
 int main(int argc, char *argv[]) {
   // setup
-  Synth::initialize();
+  Synth<0>::initialize();
   FILE* bin_file = ::fopen(argv[1], "rb");
-  WAVFileOut::open(argv[2], RECORDING_SEC);
+  WAVFileOut<0>::open(argv[2], RECORDING_SEC);
 
   // loop
   int c;
   while ((c = ::fgetc(bin_file)) != EOF) {
-    Synth::receive_midi_byte(c);
+    Synth<0>::receive_midi_byte(c);
     uint16_t r = SAMPLING_RATE / (SERIAL_SPEED / 10);
     for (uint16_t i = 0; i < r; i++) {
-      uint8_t level = Synth::clock();
-      WAVFileOut::write(level);
+      uint8_t level = Synth<0>::clock();
+      WAVFileOut<0>::write(level);
     }
   }
 
   // teardown
-  WAVFileOut::close();
+  WAVFileOut<0>::close();
   ::fclose(bin_file);
 
   return 0;

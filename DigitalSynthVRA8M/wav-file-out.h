@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "common.h"
 
+template <uint8_t T>
 class WAVFileOut {
   static FILE*    m_file;
   static uint32_t m_max_size;
@@ -57,7 +58,7 @@ public:
   }
 };
 
-FILE*    WAVFileOut::m_file;
-uint32_t WAVFileOut::m_max_size;
-uint32_t WAVFileOut::m_data_size;
-boolean  WAVFileOut::m_closed;
+template <uint8_t T> FILE*    WAVFileOut<T>::m_file;
+template <uint8_t T> uint32_t WAVFileOut<T>::m_max_size;
+template <uint8_t T> uint32_t WAVFileOut<T>::m_data_size;
+template <uint8_t T> boolean  WAVFileOut<T>::m_closed;

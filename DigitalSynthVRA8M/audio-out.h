@@ -4,6 +4,7 @@
 
 #include "common.h"
 
+template <uint8_t T>
 class AudioOut {
   static const int SPEAKER_PIN = 6;   // PD6 (OC0A)
   static const int LED_PIN     = 13;  // PB5

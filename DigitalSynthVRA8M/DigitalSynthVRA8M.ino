@@ -5,18 +5,18 @@
 #include "audio-out.h"
 
 void setup() {
-  Synth::initialize();
-  SerialIn::open();
-  AudioOut::open();
+  Synth<0>::initialize();
+  SerialIn<0>::open();
+  AudioOut<0>::open();
 }
 
 void loop() {
   while(true) {
-    if (SerialIn::available()) {
-      uint8_t b = SerialIn::read();
-      Synth::receive_midi_byte(b);
+    if (SerialIn<0>::available()) {
+      uint8_t b = SerialIn<0>::read();
+      Synth<0>::receive_midi_byte(b);
     }
-    int8_t level = Synth::clock();
-    AudioOut::write(level);
+    int8_t level = Synth<0>::clock();
+    AudioOut<0>::write(level);
   }
 }

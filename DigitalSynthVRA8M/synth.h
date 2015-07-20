@@ -3,6 +3,7 @@
 #include "common.h"
 #include "voice.h"
 
+template <uint8_t T>
 class Synth {
   static uint8_t m_system_exclusive;
   static uint8_t m_system_data_remaining;
@@ -148,8 +149,8 @@ private:
   }
 };
 
-uint8_t Synth::m_system_exclusive;
-uint8_t Synth::m_system_data_remaining;
-uint8_t Synth::m_running_status;
-uint8_t Synth::m_first_data;
-uint8_t Synth::m_note_number;
+template <uint8_t T> uint8_t Synth<T>::m_system_exclusive;
+template <uint8_t T> uint8_t Synth<T>::m_system_data_remaining;
+template <uint8_t T> uint8_t Synth<T>::m_running_status;
+template <uint8_t T> uint8_t Synth<T>::m_first_data;
+template <uint8_t T> uint8_t Synth<T>::m_note_number;
