@@ -3,20 +3,20 @@ require_relative 'synth'
 require_relative 'audio-out'
 require_relative 'wav-file-out'
 
-RECORDING_FILE = "a.wav"
 RECORDING_SEC = 60
 RECORDING_REAL_TIME = false
+RECORDING_REAL_TIME_FILE = "a.wav"
 
 AUDIO_OUT_BUFFER_SIZE = 500
 AUDIO_OUT_NUM_OF_BUFFER = 4
 
 $synth = Synth.new
 
-if ARGV.length == 1
+if ARGV.length == 2
   # make WAV file
   File.open(ARGV[0], "rb") do |bin_file|
     wav_file_out = WAVFileOut.new
-    wav_file_out.open(RECORDING_FILE, RECORDING_SEC)
+    wav_file_out.open(ARGV[1], RECORDING_SEC)
     while(c = bin_file.read(1)) do
       b = c.ord
       $synth.receive_midi_byte(b)
@@ -57,7 +57,7 @@ q = Queue.new
 
 t = Thread.new do
   wav_file_out = WAVFileOut.new
-  wav_file_out.open(RECORDING_FILE, RECORDING_SEC) if RECORDING_REAL_TIME
+  wav_file_out.open(RECORDING_REAL_TIME_FILE, RECORDING_SEC) if RECORDING_REAL_TIME
   AudioOut.open(AUDIO_OUT_BUFFER_SIZE, AUDIO_OUT_NUM_OF_BUFFER)
   loop do
     if (!q.empty?)

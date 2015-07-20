@@ -1,4 +1,4 @@
-require_relative 'common'
+require_relative 'DigitalSynthVRA8M/common'
 
 $file = File.open("sample-midi-stream.bin", "wb")
 

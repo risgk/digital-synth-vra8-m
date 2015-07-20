@@ -19,19 +19,17 @@ inline uint16_t pgm_read_word(const void* addr) {
 }
 
 #include <stdio.h>
-#include "common.h"
-#include "synth.h"
-#include "wav-file-out.h"
+#include "./DigitalSynthVRA8M/common.h"
+#include "./DigitalSynthVRA8M/synth.h"
+#include "./DigitalSynthVRA8M/wav-file-out.h"
 
-const char*    MIDI_STREAM_FILE = "sample-midi-stream.bin";
-const char*    RECORDING_FILE = "a.wav";
 const uint16_t RECORDING_SEC = 60;
 
-int main() {
+int main(int argc, char *argv[]) {
   // setup
   Synth::initialize();
-  FILE* bin_file = ::fopen(MIDI_STREAM_FILE, "rb");
-  WAVFileOut::open(RECORDING_FILE, RECORDING_SEC);
+  FILE* bin_file = ::fopen(argv[1], "rb");
+  WAVFileOut::open(argv[2], RECORDING_SEC);
 
   // loop
   int c;
