@@ -14,8 +14,8 @@
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
-    - "DigitalSynthVRA8M.ino" for Arduino Uno
-    - "MakeSampleWavFile.cc" for Debugging on PC, that makes a sample WAV file
+    - `DigitalSynthVRA8M/DigitalSynthVRA8M.ino` is for Arduino Uno
+    - `MakeSampleWavFile.cc` is for Debugging on PC, `make-sample-wav-file-cc.bat` makes a sample WAV file
 
 ## VRA8-M CTRL
 
@@ -32,8 +32,8 @@
     - `jgem install unimidi`
     - `jgem install win32-sound`
 - Usage
-    - `jruby main.rb` starts VRA8-M Ruby Edition
-    - `jruby main.rb sample-midi-stream.bin` makes a sample WAV file
+    - `start-var8-rb.bat` starts VRA8-M Ruby Edition
+    - `make-sample-wav-file-rb.bat` makes a sample WAV file
 - Known Issues
     - VRA8-M Ruby Edition spends the full power of 2 CPU cores...
 
