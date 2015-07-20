@@ -56,11 +56,11 @@ class VCF
     y_0  = tmp << (16 - VCF_TABLE_FRACTION_BITS)
 
     if (y_0 > ((1 << (AUDIO_FRACTION_BITS - 1)) - 1))
-      # printf("y_0 overflow: %d\n", y_0)
+      # printf("y_0 overflow: %d\n", y_0)  # for tests
       y_0 = ((1 << (AUDIO_FRACTION_BITS - 1)) - 1)
     end
     if (y_0 < -(1 << (AUDIO_FRACTION_BITS - 1)))
-      # printf("y_0 overflow: %d\n", y_0)
+      # printf("y_0 overflow: %d\n", y_0)  # for tests
       y_0 = -(1 << (AUDIO_FRACTION_BITS - 1))
     end
 

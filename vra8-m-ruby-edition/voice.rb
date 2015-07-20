@@ -1,19 +1,13 @@
 require_relative 'common'
-require_relative 'vco'
-require_relative 'vcf'
-require_relative 'vca'
-require_relative 'eg'
-require_relative 'lfo'
-require_relative 'slew-rate-limiter'
 
 class Voice
   def initialize
-    @vco = VCO.new
-    @vcf = VCF.new
-    @vca = VCA.new
-    @eg  = EG.new
-    @lfo = LFO.new
-    @srl = SlewRateLimiter.new
+    @vco = IVCO.new
+    @vcf = IVCF.new
+    @vca = IVCA.new
+    @eg  = IEG.new
+    @lfo = ILFO.new
+    @srl = ISlewRateLimiter.new
     @note_number = NOTE_NUMBER_MIN
   end
 
