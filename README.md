@@ -36,7 +36,7 @@
         - `gem install unimidi`
         - `gem install win32-sound`
 - Usage
-    - `start-var8-rb.bat` starts VRA8-M Ruby Edition
+    - `start-var8-m-rb.bat` starts VRA8-M Ruby Edition
     - `make-sample-wav-file-rb.bat` makes a sample WAV file
 - Known Issues
     - VRA8-M Ruby Edition spends the full power of 2 CPU cores...
