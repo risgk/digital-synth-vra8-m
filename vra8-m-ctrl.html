@@ -65,13 +65,26 @@ window.onload = function() {
     onChangeTranspose(0);
     preset(0);
   }
-
-  if (midiOutput) {
-    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), ALL_NOTES_OFF, 0]);
-  }
 };
 
+function sleep(msec) {
+  var t1 = new Date().getTime();
+  var t2;
+  do {
+    t2 = new Date().getTime();
+  } while (t2 < t1 + msec);
+}
+
+function soundOff() {
+  if (midiOutput) {
+    onChangeControlChange(EG_DECAY_RELEASE, 0);
+    midiOutput.send([(CONTROL_CHANGE | MIDI_CH), ALL_NOTES_OFF, 0]);
+    sleep(100);
+  }
+}
+
 function restoreControllers() {
+  soundOff();
   var value;
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyCC" + String(i));
@@ -172,6 +185,7 @@ function onChangeControlChange(number, value) {
 }
 
 function preset(number) {
+  soundOff();
   var presetControllers = {};
   presetControllers[LFO_RATE         ] = [0  , 0  , 0  , 16 , 16 , 16 , 16 ];
   presetControllers[LFO_RATE_EG_AMT  ] = [16 , 0  , 8  , 0  , 0  , 0  , 0  ];
@@ -196,6 +210,7 @@ function preset(number) {
 }
 
 function setRandomA() {
+  soundOff();
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     if (i == VCA_GAIN) {
       onChangeControlChange(i, 127);
@@ -221,6 +236,7 @@ function rand() {
 }
 
 function loadControllers(number) {
+  soundOff();
   var value;
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
