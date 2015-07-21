@@ -3,7 +3,7 @@
 const uint8_t   MIDI_CH         = 0;
 const uint16_t  SERIAL_SPEED    = 38400;
 const uint16_t  SAMPLING_RATE   = 15625;
-const uint16_t  FREQUENCY_MAX   = 7200;
+const uint16_t  FREQUENCY_MAX   = 7812;
 const uint8_t   BIT_DEPTH       = 8;
 const uint8_t   NOTE_NUMBER_MIN = 24;
 const uint8_t   NOTE_NUMBER_MAX = 84;
