@@ -9,8 +9,8 @@ OCTAVES = 5
 def generate_vcf_lpf_table(name, q)
   $file.printf("const uint8_t g_vcf_lpf_table_%s[] = {\n  ", name)
   (0..DATA_BYTE_MAX).each do |i|
-    f = [[0, i - 4].max, 119].min
-    f_0_over_fs = (2.0 ** (f / (120.0 / OCTAVES))) /
+    f = [[0, i - 4].max, 120].min
+    f_0_over_fs = (2.0 ** (f / (120.0 / OCTAVES))) * 0.9 /
                   (2.0 ** (OCTAVES.to_f + 1.0))
 
     w_0 = 2.0 * Math::PI * f_0_over_fs
