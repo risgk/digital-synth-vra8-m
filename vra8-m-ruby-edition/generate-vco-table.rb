@@ -5,9 +5,7 @@ $file = File.open("vco-table.rb", "w")
 def freq_from_note_number(note_number)
   cent = (note_number * 100.0) - 6900.0
   hz = 440.0 * (2.0 ** (cent / 1200.0))
-  freq = (hz * (1 << VCO_PHASE_RESOLUTION_BITS) / SAMPLING_RATE * 2.0).floor
-  freq = freq + 1 if freq.odd?
-  freq
+  freq = (hz * (1 << VCO_PHASE_RESOLUTION_BITS) / SAMPLING_RATE).floor.to_i * 2
 end
 
 $file.printf("$vco_freq_table = [\n  ")
@@ -32,7 +30,7 @@ $file.printf("]\n\n")
 $file.printf("$vco_tune_rate_table = [\n  ")
 (0..(1 << VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1).each do |i|
   tune_rate = ((2.0 ** (i / (12.0 * (1 << VCO_TUNE_RATE_TABLE_STEPS_BITS)))) *
-               (1 << VCO_TUNE_RATE_DENOMINATOR_BITS) / 2.0).round
+               (1 << VCO_TUNE_RATE_DENOMINATOR_BITS) / 2.0).floor
 
   $file.printf("%5d,", tune_rate)
   if i == (1 << VCO_TUNE_RATE_TABLE_STEPS_BITS) - 1
@@ -53,7 +51,7 @@ def generate_vco_wave_table_sawtooth(last)
       level += (2.0 / Math::PI) * Math.sin((2.0 * Math::PI) * ((n + 0.5) /
                (1 << VCO_WAVE_TABLE_SAMPLES_BITS)) * k) / k
     end
-    level = (level * VCO_WAVE_TABLE_AMPLITUDE).round.to_i
+    level = (level * VCO_WAVE_TABLE_AMPLITUDE).floor.to_i
 
     $file.printf("%+4d,", level)
     if n == (1 << VCO_WAVE_TABLE_SAMPLES_BITS)

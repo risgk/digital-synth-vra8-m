@@ -20,10 +20,10 @@ def generate_vcf_lpf_table(name, q)
     a_0 = 1.0 + alpha
     a_1 = (-2.0) * Math.cos(w_0)
 
-    b_2_over_a_0 = ((b_2 / a_0) * (1 << VCF_TABLE_FRACTION_BITS)).round.to_i
+    b_2_over_a_0 = ((b_2 / a_0) * (1 << VCF_TABLE_FRACTION_BITS)).floor.to_i
     b_2_over_a_0_low = b_2_over_a_0 & 0xFF
     b_2_over_a_0_high = b_2_over_a_0 >> 8
-    a_1_over_a_0 = ((a_1 / a_0) * (1 << VCF_TABLE_FRACTION_BITS)).round.to_i
+    a_1_over_a_0 = ((a_1 / a_0) * (1 << VCF_TABLE_FRACTION_BITS)).floor.to_i
     a_1_over_a_0_high = a_1_over_a_0 >> 8
 
     $file.printf("%+4d, %+4d, %+4d,", b_2_over_a_0_low, b_2_over_a_0_high, a_1_over_a_0_high)
