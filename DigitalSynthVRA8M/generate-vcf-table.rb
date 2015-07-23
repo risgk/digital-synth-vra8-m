@@ -38,8 +38,8 @@ def generate_vcf_lpf_table(name, q)
   $file.printf("};\n\n")
 end
 
-generate_vcf_lpf_table("q_2_sqrt_2", 2.0 * Math.sqrt(2.0))
-generate_vcf_lpf_table("q_1_sqrt_2", 1.0 * Math.sqrt(2.0))
+generate_vcf_lpf_table("q_4_sqrt_2",      4.0 * Math.sqrt(2.0))
+generate_vcf_lpf_table("q_2",             2.0)
 generate_vcf_lpf_table("q_1_over_sqrt_2", 1.0 / Math.sqrt(2.0))
 
 $file.close

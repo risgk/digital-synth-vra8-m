@@ -23,9 +23,9 @@ class VCF
 
   def set_resonance(controller_value)
     if (controller_value >= 96)
-      @lpf_table = $vcf_lpf_table_q_2_sqrt_2
+      @lpf_table = $vcf_lpf_table_q_4_sqrt_2
     elsif (controller_value >= 32)
-      @lpf_table = $vcf_lpf_table_q_1_sqrt_2
+      @lpf_table = $vcf_lpf_table_q_2
     else
       @lpf_table = $vcf_lpf_table_q_1_over_sqrt_2
     end
