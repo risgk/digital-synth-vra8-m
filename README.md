@@ -47,13 +47,13 @@
     | Controller            | Value 0       | Value 64      | Value 127     | Default       |
     +-----------------------+---------------+---------------+---------------+---------------+
     | LFO Rate              | 0.48 Hz       | 8.1 Hz        | 15.5 Hz       | 0             |
-    | LFO Rate EG Amt       | 0%            | 50%           | 99.2%         | 16            |
+    | LFO Rate EG Amt       | 0%            | 50%           | 99.2%         | 0             |
     | LFO Level EG Coef     | 0%            | 49.6%         | 100%          | 127           |
     +-----------------------+---------------+---------------+---------------+---------------+
-    | VCO Color LFO Amt     | 0%            | 50%           | 99.2%         | 16            |
+    | VCO Color LFO Amt     | 0%            | 50%           | 99.2%         | 64            |
     | VCO Mix (Pulse/Saw)   | Pulse 100%    | Pulse 50.4%   | Pulse 0%      | 0             |
     |                       | Saw 0%        | Saw 49.6%     | Saw 100%      |               |
-    | VCO Mix EG Amt        | 0%            | 50%           | 99.2%         | 64            |
+    | VCO Mix EG Amt        | 0%            | 50%           | 99.2%         | 127           |
     | VCO Pulse Width       | 50%           | 25%           | 0.4%          | 0             |
     | VCO Saw Shift         | 0%            | 25%           | 49.6%         | 64            |
     | VCO Portamento        | 0.0 s/Oct     | 0.13 s/Oct    | 1.0 s/Oct     | 64            |
