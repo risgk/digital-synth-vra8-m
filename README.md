@@ -12,6 +12,7 @@
 - Sketch for Arduino Uno
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
+- VCF Type (Attenuation Slope): LPF (-12 dB/oct)
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
     - `DigitalSynthVRA8M/DigitalSynthVRA8M.ino` is for Arduino Uno
