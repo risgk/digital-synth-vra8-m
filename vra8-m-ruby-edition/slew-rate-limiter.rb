@@ -4,7 +4,7 @@ class SlewRateLimiter
   UPDATE_INTERVAL = 10
 
   def initialize
-    @count = 0
+    @count = UPDATE_INTERVAL
     @level = NOTE_NUMBER_MIN << 8
     set_slew_time(NOTE_NUMBER_MIN)
   end
@@ -18,9 +18,9 @@ class SlewRateLimiter
   end
 
   def clock(input)
-    @count += 1
-    if (@count >= UPDATE_INTERVAL)
-      @count = 0
+    @count -= 1
+    if (@count == 0)
+      @count = UPDATE_INTERVAL
       if (@level > input + @slew_rate)
         @level -= @slew_rate
       elsif (@level + @slew_rate < input)
