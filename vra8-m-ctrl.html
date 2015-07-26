@@ -97,7 +97,7 @@ function soundOff() {
     midiOutput.send([(CONTROL_CHANGE | MIDI_CH), EG_DECAY_RELEASE, 0]);
     sleep(2);
     midiOutput.send([(CONTROL_CHANGE | MIDI_CH), ALL_NOTES_OFF, 0]);
-    sleep(100);
+    sleep(50);
   }
 }
 
