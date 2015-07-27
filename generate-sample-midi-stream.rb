@@ -25,11 +25,17 @@ def play_cegbdfac(c)
   play(14 + (c * 12), 1200)
   play(17 + (c * 12), 1200)
   play(21 + (c * 12), 1200)
-  play(24 + (c * 12), 4800)
-  wait(4800)
+  play(24 + (c * 12), 6400)
+  wait(6400)
 end
 
-control_change(ALL_NOTES_OFF,     0  )
+def sound_off
+  control_change(EG_DECAY_RELEASE,  0  )
+  control_change(ALL_NOTES_OFF,     0  )
+  wait(800)
+end
+
+sound_off
 
 # Preset Lead
 control_change(LFO_RATE         , 0  )
@@ -50,6 +56,8 @@ control_change(EG_DECAY_RELEASE , 96 )
 control_change(EG_SUSTAIN       , 127)
 play_cegbdfac(3)
 
+sound_off
+
 # Preset Pad
 control_change(LFO_RATE         , 0  )
 control_change(LFO_RATE_EG_AMT  , 16 )
@@ -68,6 +76,8 @@ control_change(EG_ATTACK        , 96 )
 control_change(EG_DECAY_RELEASE , 112)
 control_change(EG_SUSTAIN       , 64 )
 play_cegbdfac(4)
+
+sound_off
 
 # Preset Bass
 control_change(LFO_RATE         , 0  )
