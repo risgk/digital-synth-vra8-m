@@ -206,22 +206,22 @@ function onChangeControlChange(number, value) {
 function preset(number) {
   soundOff();
   var presetControllers = {};
-  presetControllers[LFO_RATE         ] = [0  , 0  , 0  , 16 , 16 , 16 , 16 ];
-  presetControllers[LFO_RATE_EG_AMT  ] = [0  , 16 , 8  , 0  , 0  , 0  , 0  ];
+  presetControllers[LFO_RATE         ] = [0  , 0  , 0  , 8  , 8  , 8  , 8  ];
+  presetControllers[LFO_RATE_EG_AMT  ] = [0  , 8  , 8  , 0  , 0  , 0  , 0  ];
   presetControllers[LFO_LEVEL_EG_COEF] = [127, 127, 127, 0  , 0  , 0  , 0  ];
   presetControllers[VCO_COLOR_LFO_AMT] = [64 , 32 , 32 , 0  , 0  , 0  , 0  ];
   presetControllers[VCO_MIX          ] = [0  , 0  , 0  , 127, 0  , 0  , 0  ];
-  presetControllers[VCO_MIX_EG_AMT   ] = [127, 0  , 64 , 0  , 0  , 0  , 0  ];
+  presetControllers[VCO_MIX_EG_AMT   ] = [127, 64 , 0  , 0  , 0  , 0  , 0  ];
   presetControllers[VCO_PULSE_WIDTH  ] = [0  , 0  , 0  , 0  , 0  , 64 , 96 ];
   presetControllers[VCO_SAW_SHIFT    ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
   presetControllers[VCO_PORTAMENTO   ] = [64 , 64 , 64 , 0  , 0  , 0  , 0  ];
   presetControllers[VCF_CUTOFF       ] = [0  , 0  , 0  , 127, 127, 127, 127];
-  presetControllers[VCF_CUTOFF_EG_AMT] = [127, 96 , 127, 0  , 0  , 0  , 0  ];
-  presetControllers[VCF_RESONANCE    ] = [64 , 0  , 127, 0  , 0  , 0  , 0  ];
+  presetControllers[VCF_CUTOFF_EG_AMT] = [127, 127, 127, 0  , 0  , 0  , 0  ];
+  presetControllers[VCF_RESONANCE    ] = [64 , 127, 0  , 0  , 0  , 0  , 0  ];
   presetControllers[VCA_GAIN         ] = [127, 127, 127, 127, 127, 127, 127];
-  presetControllers[EG_ATTACK        ] = [32 , 96 , 32 , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_DECAY_RELEASE ] = [96 , 112, 96 , 0  , 0  , 0  , 0  ];
-  presetControllers[EG_SUSTAIN       ] = [127, 64 , 0  , 127, 127, 127, 127];
+  presetControllers[EG_ATTACK        ] = [32 , 32 , 96 , 0  , 0  , 0  , 0  ];
+  presetControllers[EG_DECAY_RELEASE ] = [96 , 96 , 112, 0  , 0  , 0  , 0  ];
+  presetControllers[EG_SUSTAIN       ] = [127, 0  , 64 , 127, 127, 127, 127];
 
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     onChangeControlChange(i, presetControllers[i][number]);
@@ -312,8 +312,8 @@ function noteOff(noteNumber) {
 
 <table>
 <tr><td><input type="button" value="Preset Lead" onclick="preset(0)"></td>
-    <td><input type="button" value="Preset Pad"  onclick="preset(1)"></td>
-    <td><input type="button" value="Preset Bass" onclick="preset(2)"></td>
+    <td><input type="button" value="Preset Bass" onclick="preset(1)"></td>
+    <td><input type="button" value="Preset Pad"  onclick="preset(2)"></td>
     <td>&nbsp;</td>
     <td><input type="button" value="Saw"         onclick="preset(3)"></td>
     <td><input type="button" value="Square"      onclick="preset(4)"></td>
