@@ -75,7 +75,7 @@
     +---------------+---------------+---------------+---------------+
     | CC #16        | CC #17        | CC #18        | CC #19        |
     | LFO Rate      | VCO Color     | VCO Mix       | VCF Cutoff    |
-    |     (EG Amt)  |     (LFO Amt) |     (EG Amt)  |     (EG Amt)  |
+    | EG Amt        | LFO Amt       | EG Amt        | EG Amt        |
     +---------------+---------------+---------------+---------------+
     | CC #20        | CC #21        | CC #22        | CC #23        |
     | VCF Resonance | EG Attack     | EG Decay/     | EG Sustain    |
