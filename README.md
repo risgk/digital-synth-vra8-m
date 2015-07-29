@@ -17,7 +17,7 @@
 - Files
     - `DigitalSynthVRA8M/DigitalSynthVRA8M.ino` is for Arduino Uno
     - `MakeSampleWavFile.cc` is for Debugging on PC, `make-sample-wav-file-cc.bat` makes a sample WAV file
-        - Requiring g++ or other
+        - Requiring GCC (G++) or other
 
 ## VRA8-M CTRL
 
