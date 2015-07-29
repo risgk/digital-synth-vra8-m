@@ -33,20 +33,20 @@ class EG
 
   def note_on
     @state = STATE_ATTACK
-    @count = 0
+    @count = EG_ATTACK_UPDATE_INTERVAL
   end
 
   def note_off
     @state = STATE_RELEASE
-    @count = 0
+    @count = @decay_release_update_interval
   end
 
   def clock
     case (@state)
     when STATE_ATTACK
-      @count += 1
-      if (@count >= EG_ATTACK_UPDATE_INTERVAL)
-        @count = 0
+      @count -= 1
+      if (@count == 0)
+        @count = EG_ATTACK_UPDATE_INTERVAL
         if (@level >= EG_LEVEL_MAX - @attack_rate)
           @state = STATE_DECAY_SUSTAIN
           @level = EG_LEVEL_MAX
@@ -55,9 +55,9 @@ class EG
         end
       end
     when STATE_DECAY_SUSTAIN
-      @count += 1
-      if (@count >= @decay_release_update_interval)
-        @count = 0
+      @count -= 1
+      if (@count == 0)
+        @count = @decay_release_update_interval
         if (@level > @sustain_level)
           if (@level <= @sustain_level + (EG_LEVEL_MAX >> 10))
             @level = @sustain_level
@@ -68,9 +68,9 @@ class EG
         end
       end
     when STATE_RELEASE
-      @count += 1
-      if (@count >= @decay_release_update_interval)
-        @count = 0
+      @count -= 1
+      if (@count == 0)
+        @count = @decay_release_update_interval
         if (@level <= (EG_LEVEL_MAX >> 10))
           @state = STATE_IDLE
           @level = 0

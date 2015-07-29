@@ -46,20 +46,20 @@ public:
 
   INLINE static void note_on() {
     m_state = STATE_ATTACK;
-    m_count = 0;
+    m_count = EG_ATTACK_UPDATE_INTERVAL;
   }
 
   INLINE static void note_off() {
     m_state = STATE_RELEASE;
-    m_count = 0;
+    m_count = m_decay_release_update_interval;
   }
 
   INLINE static int8_t clock() {
     switch (m_state) {
     case STATE_ATTACK:
-      m_count++;
-      if (m_count >= EG_ATTACK_UPDATE_INTERVAL) {
-        m_count = 0;
+      m_count--;
+      if (m_count == 0) {
+        m_count = EG_ATTACK_UPDATE_INTERVAL;
         if (m_level >= EG_LEVEL_MAX - m_attack_rate) {
           m_state = STATE_DECAY_SUSTAIN;
           m_level = EG_LEVEL_MAX;
@@ -69,9 +69,9 @@ public:
       }
       break;
     case STATE_DECAY_SUSTAIN:
-      m_count++;
-      if (m_count >= m_decay_release_update_interval) {
-        m_count = 0;
+      m_count--;
+      if (m_count == 0) {
+        m_count = m_decay_release_update_interval;
         if (m_level > m_sustain_level) {
           if (m_level <= m_sustain_level + (EG_LEVEL_MAX >> 10)) {
             m_level = m_sustain_level;
@@ -83,9 +83,9 @@ public:
       }
       break;
     case STATE_RELEASE:
-      m_count++;
-      if (m_count >= m_decay_release_update_interval) {
-        m_count = 0;
+      m_count--;
+      if (m_count == 0) {
+        m_count = m_decay_release_update_interval;
         if (m_level <= (EG_LEVEL_MAX >> 10)) {
           m_state = STATE_IDLE;
           m_level = 0;

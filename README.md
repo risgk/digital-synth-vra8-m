@@ -1,6 +1,6 @@
-# Digital Synth VRA8-M 0.1.0
+# Digital Synth VRA8-M 1.0.0
 
-- 2015-07-20 ISGK Instruments
+- 2015-07-29 ISGK Instruments
 - <https://github.com/risgk/digital-synth-vra8-m>
 
 ## Concept
@@ -12,11 +12,12 @@
 - Sketch for Arduino Uno
 - Serial MIDI In (38400 bps), PWM Audio Out (Pin 6), PWM Rate: 62500 Hz
 - Sampling Rate: 15625 Hz, Bit Depth: 8 bits
+- VCF Type (Attenuation Slope): LPF (-12 dB/oct)
 - Recommending [Hairless MIDI<->Serial Bridge](http://projectgus.github.io/hairless-midiserial/) to connect PC
 - Files
     - `DigitalSynthVRA8M/DigitalSynthVRA8M.ino` is for Arduino Uno
     - `MakeSampleWavFile.cc` is for Debugging on PC, `make-sample-wav-file-cc.bat` makes a sample WAV file
-        - Requiring g++ or other
+        - Requiring GCC (G++) or other
 
 ## VRA8-M CTRL
 
@@ -44,28 +45,28 @@
 ## Controllers
 
     +-----------------------+---------------+---------------+---------------+---------------+
-    | Controller            | Value 0       | Value 64      | Value 127     | Preset Lead   |
+    | Controller            | Value 0       | Value 64      | Value 127     | Default       |
     +-----------------------+---------------+---------------+---------------+---------------+
     | LFO Rate              | 0.48 Hz       | 8.1 Hz        | 15.5 Hz       | 0             |
-    | LFO Rate EG Amt       | 0%            | 50%           | 99.2%         | 16            |
+    | LFO Rate EG Amt       | 0%            | 50%           | 99.2%         | 0             |
     | LFO Level EG Coef     | 0%            | 49.6%         | 100%          | 127           |
     +-----------------------+---------------+---------------+---------------+---------------+
-    | VCO Color LFO Amt     | 0%            | 50%           | 99.2%         | 16            |
+    | VCO Color LFO Amt     | 0%            | 50%           | 99.2%         | 64            |
     | VCO Mix (Pulse/Saw)   | Pulse 100%    | Pulse 50.4%   | Pulse 0%      | 0             |
     |                       | Saw 0%        | Saw 49.6%     | Saw 100%      |               |
-    | VCO Mix EG Amt        | 0%            | 50%           | 99.2%         | 64            |
+    | VCO Mix EG Amt        | 0%            | 50%           | 99.2%         | 127           |
     | VCO Pulse Width       | 50%           | 25%           | 0.4%          | 0             |
     | VCO Saw Shift         | 0%            | 25%           | 49.6%         | 64            |
     | VCO Portamento        | 0.0 s/Oct     | 0.13 s/Oct    | 1.0 s/Oct     | 64            |
     +-----------------------+---------------+---------------+---------------+---------------+
-    | VCF Cutoff            | 0.24 kHz      | 1.4 kHz       | 7.6 kHz       | 0             |
-    | VCF Cutoff EG Amt     | 0%            | 50%           | 99.2%         | 124           |
-    | VCF Resonance         | Q = 0.7       | Q = 1.4       | Q = 2.8       | 64            |
+    | VCF Cutoff            | 0.22 kHz      | 1.2 kHz       | 7.0 kHz       | 0             |
+    | VCF Cutoff EG Amt     | 0%            | 50%           | 99.2%         | 127           |
+    | VCF Resonance         | Q = 0.7       | Q = 2.0       | Q = 5.6       | 64            |
     +-----------------------+---------------+---------------+---------------+---------------+
     | VCA Gain              | 0%            | 50%           | 99.2%         | 127           |
     +-----------------------+---------------+---------------+---------------+---------------+
-    | EG Attack             | 4.2 ms        | 0.14 s        | 4.2 s         | 24            |
-    | EG Decay/Release      | 10.0 ms       | 0.33 s        | 10.0 s        | 84            |
+    | EG Attack             | 4.2 ms        | 0.14 s        | 4.2 s         | 32            |
+    | EG Decay/Release      | 10.0 ms       | 0.33 s        | 10.0 s        | 96            |
     | EG Sustain            | 0%            | 50%           | 99.2%         | 127           |
     +-----------------------+---------------+---------------+---------------+---------------+
 
@@ -74,7 +75,7 @@
     +---------------+---------------+---------------+---------------+
     | CC #16        | CC #17        | CC #18        | CC #19        |
     | LFO Rate      | VCO Color     | VCO Mix       | VCF Cutoff    |
-    |     (EG Amt)  |     (LFO Amt) |     (EG Amt)  |     (EG Amt)  |
+    | EG Amt        | LFO Amt       | EG Amt        | EG Amt        |
     +---------------+---------------+---------------+---------------+
     | CC #20        | CC #21        | CC #22        | CC #23        |
     | VCF Resonance | EG Attack     | EG Decay/     | EG Sustain    |
@@ -83,8 +84,8 @@
 
 ## MIDI Implementation Chart
 
-      [Monophonic Synthesizer]                                        Date: 2015-07-20       
-      Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 0.1.0         
+      [Monophonic Synthesizer]                                        Date: 2015-07-29       
+      Model  Digital Synth VRA8-M     MIDI Implementation Chart       Version: 1.0.0         
     +-------------------------------+---------------+---------------+-----------------------+
     | Function...                   | Transmitted   | Recognized    | Remarks               |
     +-------------------------------+---------------+---------------+-----------------------+

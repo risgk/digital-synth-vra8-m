@@ -31,7 +31,7 @@ public:
   }
 
   INLINE static void receive_midi_byte(uint8_t b) {
-    return ISynthCore<0>::receive_midi_byte(b);
+    ISynthCore<0>::receive_midi_byte(b);
   }
 
   INLINE static int8_t clock() {
