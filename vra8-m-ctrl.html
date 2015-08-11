@@ -137,6 +137,18 @@ var midiOutput  = null;
 
 function onMIDIMessage(event) {
   console.log(event.data);
+
+  // CAUTION: Running Status and System Exclusive are not taken into account
+  if (event.data[0] == (CONTROL_CHANGE | MIDI_CH)) {
+    var number = event.data[1];
+    var value = event.data[2];
+    if (number >= CONTROLLERS_FIRST && number <= CONTROLLERS_LAST) {
+      document.getElementById("inputCC" + String(number)).value = parseInt(value);
+      document.getElementById("spanCC" + String(number)).innerHTML = value;
+      localStorage.setItem("keyCC" + String(number), value);
+    }
+  }
+
   if (midiOutput) {
     midiOutput.send(event.data);
   }
@@ -296,7 +308,7 @@ function noteOff(noteNumber) {
 <body>
 
 <table>
-<tr><td><strong>VRA8-M CTRL 1.0.0</strong>&nbsp;&nbsp;Digital Synth VRA8-M Controller (<a href="https://github.com/risgk/digital-synth-vra8-m">View on GitHub</a>), We recommend Google Chrome</td></tr>
+<tr><td><strong>VRA8-M CTRL 1.1.0</strong>&nbsp;&nbsp;Digital Synth VRA8-M Controller (<a href="https://github.com/risgk/digital-synth-vra8-m">View on GitHub</a>), We recommend Google Chrome</td></tr>
 </table>
 
 <table>
