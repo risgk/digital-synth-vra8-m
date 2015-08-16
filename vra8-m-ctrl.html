@@ -319,7 +319,7 @@ function noteOff(noteNumber) {
     <td colspan="2"><select id="selectOutputPort" size="1" onchange="onChangeOutputPort()"></select></td>
     <td>&nbsp;</td>
     <td>KEYBOARD TRANSPOSE</td>
-    <td><input id="inputTranspose" type="range" min="-24" max="12" step="12" onchange="onChangeTranspose(value)" ></td><td><span id="spanTranspose" >-1</span></td></tr>
+    <td><input id="inputTranspose" type="range" min="-24" max="12" step="12" oninput="onChangeTranspose(value)" ></td><td><span id="spanTranspose" >-1</span></td></tr>
 </table>
 
 <table>
