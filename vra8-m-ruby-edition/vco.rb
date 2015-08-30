@@ -51,9 +51,9 @@ class VCO
     saw_down_copy = +get_saw_wave_level((@phase + @saw_shift + shift_lfo) %
                        (1 << VCO_PHASE_RESOLUTION_BITS))
 
-    mix = @mix + high_byte(@mix_eg_amt * mod_eg_control);
+    mix = @mix + high_byte(@mix_eg_amt * mod_eg_control)
     if (mix > 127)
-      mix = 127;
+      mix = 127
     end
     mixed = saw_down      * 127 +
             saw_up        * (127 - mix) +

@@ -24,7 +24,7 @@ class LFO
     if (rate > 127)
       rate = 127
     end
-    rate = (rate >> 1) + 2;
+    rate = (rate >> 1) + 2
     @phase += rate
     @phase &= 0xFFFF
 
