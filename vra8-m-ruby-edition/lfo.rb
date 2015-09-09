@@ -5,6 +5,7 @@ class LFO
     @phase = 0x4000
     set_level_eg_coef(0)
     set_rate(0)
+    set_rate_eg_amt(0)
   end
 
   def set_level_eg_coef(controller_value)

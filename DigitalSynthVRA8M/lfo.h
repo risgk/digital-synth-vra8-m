@@ -14,6 +14,7 @@ public:
     m_phase = 0x4000;
     set_level_eg_coef(0);
     set_rate(0);
+    set_rate_eg_amt(0);
   }
 
   INLINE static void set_level_eg_coef(uint8_t controller_value) {
