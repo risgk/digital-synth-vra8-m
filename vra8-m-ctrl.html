@@ -267,8 +267,12 @@ function rand() {
 }
 
 function loadControllers(number) {
-  soundOff();
   var value;
+  value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(CONTROLLERS_FIRST));
+  if (!value) {
+    return;
+  }
+  soundOff();
   for (var i = CONTROLLERS_FIRST; i <= CONTROLLERS_LAST; i++) {
     value = localStorage.getItem("keyMemory" + String(number) + "CC" + String(i));
     if (!value) {
