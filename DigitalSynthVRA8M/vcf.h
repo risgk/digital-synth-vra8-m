@@ -12,7 +12,7 @@ class VCF {
   static int16_t        m_x_2;
   static int16_t        m_y_1;
   static int16_t        m_y_2;
-  static uint16_t       m_cutoff;
+  static uint8_t        m_cutoff;
   static const uint8_t* m_lpf_table;
   static uint8_t        m_cutoff_eg_amt;
 
@@ -87,6 +87,6 @@ template <uint8_t T> int16_t        VCF<T>::m_x_1;
 template <uint8_t T> int16_t        VCF<T>::m_x_2;
 template <uint8_t T> int16_t        VCF<T>::m_y_1;
 template <uint8_t T> int16_t        VCF<T>::m_y_2;
-template <uint8_t T> uint16_t       VCF<T>::m_cutoff;
+template <uint8_t T> uint8_t        VCF<T>::m_cutoff;
 template <uint8_t T> const uint8_t* VCF<T>::m_lpf_table;
 template <uint8_t T> uint8_t        VCF<T>::m_cutoff_eg_amt;
