@@ -33,7 +33,7 @@ INLINE uint16_t mul_q16_q8(uint16_t x, uint8_t y) {
   return result;
 }
 
-INLINE int16_t mul_q15_q7(uint16_t x, int8_t y) {
+INLINE int16_t mul_q15_q7(int16_t x, int8_t y) {
   int16_t result  = high_sbyte(low_byte(x) * y);
   result         += high_sbyte(x) * y;
   return result;
